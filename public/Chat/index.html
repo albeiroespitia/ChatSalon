@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+	<link rel="stylesheet" href="estilos.css">
+
+	<title> Chat </title>
+</head>
+
+<body>
+	<script type='text/javascript'>
+		if (sessionStorage.getItem("datos") == null) {
+			window.location.replace("/");
+		}
+	</script>
+	<nav>
+		<div class="nav-wrapper">
+			<a href="#" class="brand-logo center black-text logo">Aplicacion para el salon con WebSockets</a>
+		</div>
+	</nav>
+	<div>
+		<div class="row">
+			<div class="col s1">
+				<div class="card-panel grey lighten-3 cardProfesor">
+					<div class="boxProfesor col s12">
+						<span>Profesor</span>
+						<img class="circle" width="30" src="img/profesor.svg" style="padding-top: 2px;">
+						<div id="wave">
+							<span class="dot"></span>
+							<span class="dot"></span>
+							<span class="dot"></span>
+						</div>
+
+					</div>
+				</div>
+			</div>
+			<div class="col s6">
+				<div class="card-panel grey lighten-3 cardGrilla">
+					<!-- Tabla -->
+					<table id="tablem" class="striped highlight centered responsive-table">
+						<tbody class="cuerpoTabla">
+							<tr>
+								<td class="box"> </td>
+								<td class="box">
+
+									<span class="col s11">J</span>
+
+									<img class="circle" width="30" src="img/man.svg" style="padding-top: 2px;">
+									<div class="waveDot">
+										<span class="dot"></span>
+										<span class="dot"></span>
+										<span class="dot"></span>
+									</div>
+
+								</td>
+								<td class="box"> </td>
+								<td class="box"> </td>
+								<td class="box"> </td>
+								<td class="box"> </td>
+								<td class="box"> </td>
+							</tr>
+							<tr>
+								<td class="box"> </td>
+								<td class="box"> </td>
+								<td class="box"> </td>
+								<td class="box"> </td>
+								<td class="box"> </td>
+								<td class="box"> </td>
+								<td class="box"> </td>
+							</tr>
+							<tr>
+								<td class="box"> </td>
+								<td class="box"> </td>
+								<td class="box"> </td>
+								<td class="box"> </td>
+								<td class="box"> </td>
+								<td class="box"> </td>
+								<td class="box"> </td>
+							</tr>
+							<tr>
+								<td class="box"> </td>
+								<td class="box"> </td>
+								<td class="box"> </td>
+								<td class="box"> </td>
+								<td class="box"> </td>
+								<td class="box"> </td>
+								<td class="box"> </td>
+							</tr>
+							<tr>
+								<td class="box"> </td>
+								<td class="box"> </td>
+								<td class="box"> </td>
+								<td class="box"> </td>
+								<td class="box"> </td>
+								<td class="box"> </td>
+								<td class="box"> </td>
+							</tr>
+							<tr>
+								<td class="box"> </td>
+								<td class="box"> </td>
+								<td class="box"> </td>
+								<td class="box"> </td>
+								<td class="box"> </td>
+								<td class="box"> </td>
+								<td class="box"> </td>
+							</tr>
+							<tr>
+								<td class="box"> </td>
+								<td class="box"> </td>
+								<td class="box"> </td>
+								<td class="box"> </td>
+								<td class="box"> </td>
+								<td class="box"> </td>
+								<td class="box"> </td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="card-panel grey lighten-3 cardInput">
+					<div class="input-field col s11">
+						<i class="material-icons prefix">message</i>
+						<input id="mensaje" type="text"></input>
+						<label for="textarea1">Escribe algo...</label>
+					</div>
+				</div>
+			</div>
+
+			<div class="col s4">
+				<div id="ChatMsj" class="card-panel grey lighten-3 cardChat" style="margin-bottom: 0px;">
+
+				</div>
+				<div class="card-panel grey lighten-3 cardInput" style="margin-left: 20px;">
+					<a class="col s5 botonEnviarMensaje waves-effect waves-light red btn-large">
+						<i class="material-icons right">send</i>Enviar</a>
+					<a class="col s6 botonCrearEncuesta waves-effect modal-trigger waves-light teal darken-1 btn-large" href="#modal1">
+						<i class="material-icons right">format_indent_increase</i>Encuesta</a>
+
+					<!-- Modal Structure -->
+					<div id="modal2" class="modal modalEncuestaCliente">
+						<form class="formsendREncuesta">
+							<div class="modal-content">
+								<h4>Nueva encuesta</h4>
+								<p class="preguntaModalNuevo">¿Ella te ama?</p>
+
+								<p>
+									<input class="with-gap" name="group1" type="radio" id="0" />
+									<label for="0" class="opcion1ModalNuevo">OpcionA</label>
+								</p>
+								<p>
+									<input class="with-gap" name="group1" type="radio" id="1" />
+									<label for="1" class="opcion2ModalNuevo">OpcionB</label>
+								</p>
+								<p>
+									<input class="with-gap" name="group1" type="radio" id="2" />
+									<label for="2" class="opcion3ModalNuevo">OpcionC</label>
+								</p>
+								<p>
+									<input class="with-gap" name="group1" type="radio" id="3" />
+									<label for="3" class="opcion4ModalNuevo">OpcionD</label>
+								</p>
+
+
+							</div>
+							<div class="modal-footer">
+								<button href="#!" type="submit" class="modal-action waves-effect waves-green btn-flat">Enviar</buttona>
+							</div>
+						</form>
+					</div>
+
+					<!-- Modal Structure -->
+					<div id="modal1" class="modal modalEncuesta">
+						<div class="modal-content">
+							<form class="formEncuesta">
+								<center>
+									<h4>Crear encuesta</h4>
+								</center>
+								<div class="col s1">
+								</div>
+
+								<div class="input-field col s10">
+									<input type="text" name="preguntaInput" required class="validate">
+									<label>Pregunta</label>
+								</div>
+								<div class="input-field col s6">
+									<input name="opcion1Input" type="text" required class="validate">
+									<label>Opcion A</label>
+								</div>
+								<div class="input-field col s6">
+									<input name="opcion2Input" type="text" required class="validate">
+									<label>Opcion B</label>
+								</div>
+								<div class="input-field col s6">
+									<input name="opcion3Input" type="text" required class="validate">
+									<label>Opcion C</label>
+								</div>
+								<div class="input-field col s6">
+									<input name="opcion4Input" type="text" required class="validate">
+									<label>Opcion D</label>
+								</div>
+
+						</div>
+						<div class="modal-footer">
+							<center>
+								<button type="submit" href="#!" class="modal-action waves-effect waves-green btn-large sendEncuesta">Enviar</button>
+							</center>
+						</div>
+						</form>
+					</div>
+				</div>
+
+			</div>
+
+			<div class="col s1"></div>
+		</div>
+	</div>
+
+	<!-- Modal Structure -->
+	<div id="modal4" class="modal">
+		<div class="modal-content">
+			<center>
+				<canvas id="oilChart" width="40" height="40"></canvas>
+			</center>
+		</div>
+	</div>
+
+	<div class="fixed-action-btn botonRespuestaEncuestas">
+		<a href="#modal4" class="btn-floating btn-large red modal-trigger">
+			<i class="large material-icons">timeline</i>
+		</a>
+	</div>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"></script>
+	<script src="/socket.io/socket.io.js"></script>
+	<script src="init.js"></script>
+	<script src="logic.js"></script>
+</body>
+
+</html>
