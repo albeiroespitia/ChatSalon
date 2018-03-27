@@ -147,6 +147,18 @@ table.striped>tbody>tr>td{
 .cardChat img{
     margin-left: 10px;
 }
+
+.image-upload > input
+{
+    display: none;
+}
+
+.image-upload img
+{
+    width: 65px;
+    cursor: pointer;
+}
+
 /* //
 
 // ANIMACION ... ESCRIBIENDO */
@@ -176,6 +188,8 @@ div#wave {
             animation-delay: -0.9s;
         }
 
+
+        
 @keyframes wave {
     0%, 60%, 100% {
         transform: initial;
@@ -187,3 +201,4 @@ div#wave {
 }
 
 /* FIN ANIMACION .. ESCRIBIENDO */
+

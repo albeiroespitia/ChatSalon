@@ -7,12 +7,36 @@ var http = require('http').Server(app);
 var io = require('socket.io',{})(http);
 const util = require('util')
 var fullData = require('./data')
+var multer = require('multer');
 var encuestasInfo = require('./encuestasR')
 var contadorPersonas = 0;
 var server = require('ws').Server;
 var s = new server({port:3001})
 var encuestaData = '';
 var respuesta = [0,0,0,0];
+var actualImage;
+var arrayImage = [];
+
+var storage = multer.diskStorage({
+    destination: function(req,file,callback){
+        callback(null,'./public/uploads');
+    },
+    filename: function(req,file,callback){
+        actualImage = Date.now()+file.originalname;
+        arrayImage.push(actualImage)
+        callback(null,actualImage)
+    }
+})
+
+var upload = multer({storage:storage}).single('filetoupload')
+
+app.post('/imageUpload',function(req,res){
+    upload(req,res,function(err){
+        res.end()
+    })
+})
+
+
 
 s.on('connection',function(ws){
     console.log("conectado en ws")
@@ -40,8 +64,11 @@ app.get('/chat',(req,res)=>{
 })
 
 
+
 io.on('connection', function(socket){
     console.log('a user connected');
+
+
 
     socket.on('loginProfesor', function(data){
         data.id = socket.id;
@@ -91,6 +118,13 @@ io.on('connection', function(socket){
     socket.on('newMessage',function(data,value){
         //console.log("llego un mensaje")
         io.sockets.emit('newMessage',data,value);
+    })
+
+    socket.on('newMessageImage',function(data){
+        console.log("llegovale")
+
+        //console.log("llego un mensaje")
+        io.sockets.emit('newMessageImage',data,arrayImage[arrayImage.length-1]);
     })
 
     socket.on('sendEncuesta',function(data){
