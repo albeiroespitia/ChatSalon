@@ -15,6 +15,7 @@ var encuestaData = '';
 var respuesta = [0,0,0,0];
 
 s.on('connection',function(ws){
+    console.log("conectado en ws")
     ws.on('message',function(data,value){
 
     })

@@ -1,4 +1,4 @@
-$(document).ready(function() {
+
     $('select').material_select();
     $('.tooltipped').tooltip({delay: 50});
     $('.modal').modal();
@@ -7,7 +7,31 @@ $(document).ready(function() {
         endingTop: '20%', // Ending top style attribute
           
     });
+	// SOCKET
+	if(sessionStorage.getItem("datos") == null){
+        window.location.replace("/");
+    }
+    
+    var datatoSend = JSON.parse(sessionStorage.getItem("datos"));
+    var socket = io.connect('/');
+	console.log(window.location.hostname)
+	var sock = new WebSocket("ws://"+window.location.hostname+":3001/");
 
+
+
+	// Ingreso
+	if(datatoSend.rol == "Profesor"){
+		socket.emit('loginProfesor',datatoSend);
+	}else if(datatoSend.rol == "Estudiante"){
+		socket.emit('loginEstudiante',datatoSend)
+	}
+	 // --------- Btn encuesta ---------
+	if(datatoSend.rol == "Estudiante"){
+		$('.botonCrearEncuesta').attr({'href':'#modal2'})
+	}
+
+
+	// ENCUESTA CANVAS 
     var oilCanvas = document.getElementById("oilChart");
         Chart.defaults.global.defaultFontSize = 24;
 
@@ -53,4 +77,10 @@ $(document).ready(function() {
 		  data: oilData,
 		  options: chartOptions
 		});
-});
+
+        
+
+
+
+
+
