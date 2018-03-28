@@ -8,7 +8,7 @@ sock.addEventListener('open',function(event){
         for (var f = 1; f <= fila; f++) {
             html += "<tr>"
             for (var c = 1; c <= columna; c++) {
-                html += "<td class='box'> </td>";
+                html += "<td class='box modal-trigger' href='#modalPv2'> </td>";
             }
             html += "</tr>";
         }
