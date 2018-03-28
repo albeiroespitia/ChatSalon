@@ -178,7 +178,6 @@ io.on('connection', function (socket) {
     })
 
     socket.on('newMessagePrivate', function (data, value,fila,columna) {
-        console.log(data.columna-1)
         socket.to(socketsID[fila][columna]).emit('newMessagePrivate',data,value,data.fila-1,data.columna-1);
         socket.emit('newMessagePrivate', data, value,fila,columna);
     })

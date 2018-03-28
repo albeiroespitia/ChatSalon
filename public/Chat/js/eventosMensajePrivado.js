@@ -1,8 +1,8 @@
 
-
 sock.addEventListener('open', function (event) {
 
     socket.on('newMessagePrivate', function (data, value,fila,columna) {
+        console.log("esta llegando")
         var htmlMessage = `<div class="col s12 mensajeUserPv2">
                             <table>
                                 <tr>
@@ -21,10 +21,10 @@ sock.addEventListener('open', function (event) {
                             </table>
                         </div>`;
         htmlPrivado[fila][columna] += htmlMessage;
-        
+        $('.cardChatPv2').html(htmlPrivado[fila][columna])
 
         // Dejar scroll abajo
-        $('#ChatMsj').scrollTop($('#ChatMsj')[0].scrollHeight - $('#ChatMsj')[0].clientHeight);
+        $('#BandejaPv2').scrollTop($('#BandejaPv2')[0].scrollHeight - $('#BandejaPv2')[0].clientHeight);
 
     })
 

@@ -17,6 +17,7 @@
 		['','','','','','',''],
 	];
 	
+	
 	// SOCKET
 	if(sessionStorage.getItem("datos") == null){
         window.location.replace("/");
