@@ -45,7 +45,59 @@ sock.addEventListener('open', function (event) {
         $('#ChatMsj').scrollTop($('#ChatMsj')[0].scrollHeight - $('#ChatMsj')[0].clientHeight);
 
     })
+    socket.on('newMessageVideo', function (data, src) {
+        var htmlMessageI = `<div class="col s12 mensajeUser">
+                    <table>
+                        <tr>
+                            <td style="text-align: right;">
+                                <b>${data.nombre}</b>
+                            </td>
+                            <td rowspan="2" style="width: 2px;">
+                                <img class="circle" width="50" src="img/${data.avatar}.svg">
+                            </td>
+                        </tr>
+                        <tr> 
+                            <td style="text-align: right;">
+                                <span>
+                                <video width="300" height="200" controls>
+                                    <source src="./../uploads/${src}" type="video/mp4">
+                                </video>
+                                </span>
+                            </td>
+                        </tr>
+                    </table>
+                </div>`
+        var htmlMessageProfesorI = `<div class="col s12 mensajeUser">
+                        <table>
+                            <tr>
+                                <td rowspan="2" style="width: 65px;">
+                                    <img class="circle" width="50" src="img/${data.avatar}.svg">
+                                </td>
+                                <td>
+                                    <b>${data.nombre}</b>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span>
+                                        <video width="300" height="200" controls>
+                                            <source src="./../uploads/${src}" type="video/mp4">
+                                        </video>
+                                    </span>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>`
+        if (data.rol == "Profesor") {
+            $('.cardChat').append(htmlMessageProfesorI);
+        } else {
+            $('.cardChat').append(htmlMessageI);
+        }
 
+        // Dejar scroll abajo
+        $('#ChatMsj').scrollTop($('#ChatMsj')[0].scrollHeight - $('#ChatMsj')[0].clientHeight);
+
+    })
 
     socket.on('newMessageImage', function (data, src) {
         var htmlMessageI = `<div class="col s12 mensajeUser">
@@ -125,10 +177,18 @@ sock.addEventListener('open', function (event) {
         var options = {
             success: function (data, textStatus, xhr) {
                 if (data.resp != 'invalidFile') {
-                    socket.emit('newMessageImage', datatoSend)
-                    sock.send('message', datatoSend)
-                    Materialize.toast('Enviado', 4000)
-                }else{
+                    if (data.resp == 'image') {
+                        socket.emit('newMessageImage', datatoSend)
+                        sock.send('message', datatoSend)
+                        Materialize.toast('Imagen enviado', 4000)
+                    }
+                    if (data.resp == 'video') {
+                        socket.emit('newMessageVideo', datatoSend)
+                        sock.send('message', datatoSend)
+                        Materialize.toast('Video enviado', 4000)
+                    }
+                    
+                } else {
                     Materialize.toast('Extension de archivo invalida', 4000)
                 }
             }

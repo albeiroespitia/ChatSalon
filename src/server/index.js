@@ -24,7 +24,7 @@ var storage = multer.diskStorage({
         callback(null, './public/uploads');
     },
     filename: function (req, file, callback) {
-        if (!file.originalname.match(/\.(jpg|jpeg|png|gif)$/)) {
+        if (!file.originalname.match(/\.(jpg|jpeg|png|gif|mp4|wav|mepg|avi|flv)$/)) {
             return callback(new Error('Only image files are allowed!'));
         }
         actualImage = Date.now() + file.originalname;
@@ -42,6 +42,20 @@ app.post('/imageUpload', function (req, res) {
         if(err){
             res.send({resp:'invalidFile'});
             res.end();
+        }
+        if(req.file){
+        var formatImg = /jpg|jpeg|png|gif/;
+        var imagen = formatImg.test(req.file.mimetype);
+        
+        var formatVideo = /mp4|wav|mepg|avi|flv/;
+        var video = formatVideo.test(req.file.mimetype);
+        
+            if(imagen){
+                res.send({resp:'image'});
+            }
+            if(video){
+                res.send({resp:'video'});
+            }
         }
         res.end()
     })
@@ -136,16 +150,21 @@ io.on('connection', function (socket) {
         io.sockets.emit('EstudianteisNotTypingAll', data);
     })
 
+    // ------ >  Mensajes <----
+    // Mensaje texto
     socket.on('newMessage', function (data, value) {
         //console.log("llego un mensaje")
         io.sockets.emit('newMessage', data, value);
     })
-
+    // Mensaje imagen
     socket.on('newMessageImage', function (data) {
-        console.log("llegovale")
-
         //console.log("llego un mensaje")
         io.sockets.emit('newMessageImage', data, arrayImage[arrayImage.length - 1]);
+    })
+    // Mensaje Video
+    socket.on('newMessageVideo', function (data) {
+        //console.log("llego un mensaje")
+        io.sockets.emit('newMessageVideo', data, arrayImage[arrayImage.length - 1]);
     })
 
     socket.on('sendEncuesta', function (data) {
