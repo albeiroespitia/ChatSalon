@@ -150,6 +150,12 @@ table.striped>tbody>tr>td{
     padding-top: 7px !important;
     margin-bottom: 15px;
 }
+.mensajeUserPv2{
+    background: white;
+    border-radius: 8px;
+    padding-top: 0px !important;
+    margin-bottom: 15px;
+}
 .msjNombre{
     position: absolute;
     
