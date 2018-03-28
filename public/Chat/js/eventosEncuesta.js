@@ -1,4 +1,4 @@
-
+var DataEncuestas = [];
 sock.addEventListener('open',function(event){
 
     socket.on('checkButton', function (data) {
@@ -28,25 +28,37 @@ sock.addEventListener('open',function(event){
 
     })
 
+    $(document).on('click','.btnEnc', function(){
+        var n = parseInt($(this).html().split('')[0]) - 1;
+        
+        $('.botonCrearEncuesta').removeClass('disabled');
+        $('.preguntaModalNuevo').html(DataEncuestas[n].pregunta);
+        $('.opcion1ModalNuevo').html(DataEncuestas[n].opcion1);
+        $('.opcion2ModalNuevo').html(DataEncuestas[n].opcion2);
+        $('.opcion3ModalNuevo').html(DataEncuestas[n].opcion3);
+        $('.opcion4ModalNuevo').html(DataEncuestas[n].opcion4);
+        $('#modalSelEncuesta').modal('close');
+        $('#modal2').modal('open');
+        
+    });
+
     socket.on('newEncuesta', function (data) {
+        $('.btnSelEncuesta').html('');
+        $.each(data, function(index, value) {
+            $('.btnSelEncuesta').append(' <a class="btn-floating btn-large waves-effect waves-light red btnEnc">'+(index+1)+'</a>')
+        }); 
+        DataEncuestas = data;
+        
         if (data != '') {
             $('.botonRespuestaEncuestas').css("cssText", "visibility: visible !important;");
         }
         if (datatoSend.rol == "Estudiante") {
             if (data == '') {
                 $('.botonCrearEncuesta').addClass('disabled');
-            } else {
-                $('.botonCrearEncuesta').removeClass('disabled');
-                $('.preguntaModalNuevo').html(data.pregunta);
-                $('.opcion1ModalNuevo').html(data.opcion1);
-                $('.opcion2ModalNuevo').html(data.opcion2);
-                $('.opcion3ModalNuevo').html(data.opcion3);
-                $('.opcion4ModalNuevo').html(data.opcion4);
             }
         }
 
     })
-
 
         // --- EMIT
         $('.formsendREncuesta').submit(function (event) {

@@ -14,7 +14,7 @@ var server = require('ws').Server;
 var s = new server({
     port: 3001
 })
-var encuestaData = '';
+var encuestaData = [];
 var respuesta = [0, 0, 0, 0];
 var actualImage;
 var arrayImage = [];
@@ -178,7 +178,7 @@ io.on('connection', function (socket) {
     })
 
     socket.on('sendEncuesta', function (data) {
-        encuestaData = data;
+        encuestaData.push(data);
         io.sockets.emit('newEncuesta', encuestaData);
     })
 

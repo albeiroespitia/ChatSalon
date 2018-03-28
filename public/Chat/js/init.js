@@ -26,7 +26,7 @@
 	}
 	 // --------- Btn encuesta ---------
 	if(datatoSend.rol == "Estudiante"){
-		$('.botonCrearEncuesta').attr({'href':'#modal2'})
+		$('.botonCrearEncuesta').attr({'href':'#modalSelEncuesta'})
 	}
 
 
