@@ -114,25 +114,25 @@ sock.addEventListener('open', function (event) {
         }
         $('#mensaje').val('');
     })
-   
+
     // Imagenes y videos
     $(":file").change(function () {
-        Materialize.toast('Seleccionado', 4000)
         $('#formSubirImagen').submit();
 
     });
 
     $('#formSubirImagen').submit(function () {
         var options = {
-            error: function(){
-                alert('Error loading XML document');
-            },
-            success: function(){
-                socket.emit('newMessageImage', datatoSend)
-                sock.send('message', datatoSend)
+            success: function (data, textStatus, xhr) {
+                if (data.resp != 'invalidFile') {
+                    socket.emit('newMessageImage', datatoSend)
+                    sock.send('message', datatoSend)
+                    Materialize.toast('Enviado', 4000)
+                }else{
+                    Materialize.toast('Extension de archivo invalida', 4000)
+                }
             }
         };
-
         $(this).ajaxSubmit(options);
         //Very important line, it disable the page refresh.
         return false;
