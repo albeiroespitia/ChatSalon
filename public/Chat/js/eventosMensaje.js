@@ -59,7 +59,7 @@ sock.addEventListener('open', function (event) {
                         <tr> 
                             <td style="text-align: right;">
                                 <span>
-                                <video width="300" height="200" controls>
+                                <video width="270" height="200" controls="" style="margin-left: 10px;width: 260px;">
                                     <source src="./../uploads/${src}" type="video/mp4">
                                 </video>
                                 </span>
@@ -80,7 +80,7 @@ sock.addEventListener('open', function (event) {
                             <tr>
                                 <td>
                                     <span>
-                                        <video width="300" height="200" controls>
+                                    <video width="270" height="200" controls="" style="margin-left: 10px;width: 260px;">
                                             <source src="./../uploads/${src}" type="video/mp4">
                                         </video>
                                     </span>

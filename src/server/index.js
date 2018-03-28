@@ -47,7 +47,7 @@ app.post('/imageUpload', function (req, res) {
         var formatImg = /jpg|jpeg|png|gif/;
         var imagen = formatImg.test(req.file.mimetype);
         
-        var formatVideo = /mp4|wav|mepg|avi|flv/;
+        var formatVideo = /mp4|wav|mepg|avi|flv|3gp/;
         var video = formatVideo.test(req.file.mimetype);
         
             if(imagen){
