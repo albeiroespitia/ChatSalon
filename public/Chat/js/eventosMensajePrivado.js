@@ -1,60 +1,34 @@
-var htmlPrivado = [
-    [-1,-1,-1,-1,-1,-1,-1],
-    [-1,-1,-1,-1,-1,-1,-1],
-    [-1,-1,-1,-1,-1,-1,-1],
-    [-1,-1,-1,-1,-1,-1,-1],
-    [-1,-1,-1,-1,-1,-1,-1],
-    [-1,-1,-1,-1,-1,-1,-1],
-    [-1,-1,-1,-1,-1,-1,-1],
-];
+
 
 sock.addEventListener('open', function (event) {
 
-    socket.on('newMessage', function (data, value) {
-        var htmlMessage = `<div class="col s12 mensajeUser">
-                                <table>
-                                    <tr>
-                                        <td style="text-align: right;">
-                                            <b>${data.nombre}</b>
-                                        </td>
-                                        <td rowspan="2" style="width: 2px;">
-                                            <img class="circle" width="50" src="img/${data.avatar}.svg">
-                                        </td>
-                                    </tr>
-                                    <tr> 
-                                        <td style="text-align: right;">
-                                            <span>${value}</span>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </div>`
-        var htmlMessageProfesor = `<div class="col s12 mensajeUser">
-                                    <table>
-                                        <tr>
-                                            <td rowspan="2" style="width: 65px;">
-                                                <img class="circle" width="50" src="img/${data.avatar}.svg">
-                                            </td>
-                                            <td>
-                                                <b>${data.nombre}</b>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <span>${value} </span>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </div>`
-        if (data.rol == "Profesor") {
-            $('.cardChat').append(htmlMessageProfesor);
-        } else {
-            $('.cardChat').append(htmlMessage);
-        }
+    socket.on('newMessagePrivate', function (data, value,fila,columna) {
+        var htmlMessage = `<div class="col s12 mensajeUserPv2">
+                            <table>
+                                <tr>
+                                    <td rowspan="2" style="width: 65px;">
+                                        <img class="circle" width="50" src="img/man.svg">
+                                    </td>
+                                    <td>
+                                        <b>${data.nombre}</b>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span>${value}</span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>`;
+        htmlPrivado[fila][columna] += htmlMessage;
+        
 
         // Dejar scroll abajo
         $('#ChatMsj').scrollTop($('#ChatMsj')[0].scrollHeight - $('#ChatMsj')[0].clientHeight);
 
     })
+
+    /*
     socket.on('newMessageVideo', function (data, src) {
         var htmlMessageI = `<div class="col s12 mensajeUser">
                     <table>
@@ -154,7 +128,7 @@ sock.addEventListener('open', function (event) {
         // Dejar scroll abajo
         $('#ChatMsj').scrollTop($('#ChatMsj')[0].scrollHeight - $('#ChatMsj')[0].clientHeight);
 
-    })
+    })*/
 
 
     // ----- EMIT ------------------------------------------------
@@ -163,21 +137,18 @@ sock.addEventListener('open', function (event) {
     }
 
     // Codigo de albeiro 
-    $("#mensaje").keypress(function (event) {
+    $("#mensajePv2").keypress(function (event) {
         if (event.which == 13) {
-            $('.botonEnviarMensaje').click();
-        }
+            var myInput = document.getElementById("mensajePv2");
+            if (!isEmpty(myInput.value)) {
+                socket.emit('newMessagePrivate', datatoSend, myInput.value,$('#modalPv2').data('fila'),$('#modalPv2').data('columna'))
+                sock.send('message', datatoSend, myInput.value)
+            }
+            $('#mensajePv2').val('');
+            }
     });
 
-    $('.botonEnviarMensaje').click(function () {
-        var myInput = document.getElementById("mensaje");
-        if (!isEmpty(myInput.value)) {
-            socket.emit('newMessage', datatoSend, myInput.value)
-            sock.send('message', datatoSend, myInput.value)
-        }
-        $('#mensaje').val('');
-    })
-
+    /*
     // Imagenes y videos
     $(":file").change(function () {
         $('#formSubirImagen').submit();
@@ -208,5 +179,5 @@ sock.addEventListener('open', function (event) {
         //Very important line, it disable the page refresh.
         return false;
     });
-
+*/
 });

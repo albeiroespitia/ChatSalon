@@ -3,9 +3,10 @@ sock.addEventListener('open',function(event){
     
 
     window.posicion = function (fila, col){
-        $('#modalPv2').data('fila',fila)
-        $('#modalPv2').data('columna',col)
+        $('#modalPv2').data('fila',fila-1)
+        $('#modalPv2').data('columna',col-1)
         $('#modalPv2').modal('open');
+        $('#cardChatPv2').html(htmlPrivado[fila-1][col-1])
     }
 
 

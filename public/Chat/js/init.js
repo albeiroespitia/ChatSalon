@@ -5,7 +5,18 @@
     $('.modal').modal({
         endingTop: '20%', // Ending top style attribute
           
-    });
+	});
+	
+	var htmlPrivado = [
+		['','','','','','',''],
+		['','','','','','',''],
+		['','','','','','',''],
+		['','','','','','',''],
+		['','','','','','',''],
+		['','','','','','',''],
+		['','','','','','',''],
+	];
+	
 	// SOCKET
 	if(sessionStorage.getItem("datos") == null){
         window.location.replace("/");
