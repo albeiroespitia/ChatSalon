@@ -169,9 +169,8 @@ sock.addEventListener('open', function (event) {
     })
 
     // Imagenes y videos
-    $(":file").change(function () {
+    $("#file-input").change(function () {
         $('#formSubirImagen').submit();
-
     });
 
     $('#formSubirImagen').submit(function () {
