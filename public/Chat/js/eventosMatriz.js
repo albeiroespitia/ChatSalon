@@ -1,14 +1,21 @@
 sock.addEventListener('open',function(event){
     console.log("sockopenaa")
-      
+    
+
+    window.posicion = function (fila, col){
+        $('#modalPv2').data('fila',fila)
+        $('#modalPv2').data('columna',col)
+        $('#modalPv2').modal('open');
+    }
+
+
     socket.on('sendMatrixSize', function (fila, columna) {
-        console.log("recibidooooooooo")
         $('.cuerpoTabla').html("");
         var html = "";
         for (var f = 1; f <= fila; f++) {
             html += "<tr>"
             for (var c = 1; c <= columna; c++) {
-                html += "<td class='box modal-trigger' href='#modalPv2'> </td>";
+                html += "<td onClick='posicion("+f+","+c+")' class='box modal-trigger'> </td>";
             }
             html += "</tr>";
         }
@@ -23,6 +30,8 @@ sock.addEventListener('open',function(event){
 
             })
     })
+
+    
 
     socket.on('generalMatrix', function (data) {
         console.log("recibido2")

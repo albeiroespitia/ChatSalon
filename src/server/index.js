@@ -18,6 +18,15 @@ var encuestaData = '';
 var respuesta = [0, 0, 0, 0];
 var actualImage;
 var arrayImage = [];
+var socketsID = [
+    [-1,-1,-1,-1,-1,-1,-1],
+    [-1,-1,-1,-1,-1,-1,-1],
+    [-1,-1,-1,-1,-1,-1,-1],
+    [-1,-1,-1,-1,-1,-1,-1],
+    [-1,-1,-1,-1,-1,-1,-1],
+    [-1,-1,-1,-1,-1,-1,-1],
+    [-1,-1,-1,-1,-1,-1,-1],
+];
 
 var storage = multer.diskStorage({
     destination: function (req, file, callback) {
@@ -124,7 +133,8 @@ io.on('connection', function (socket) {
     socket.on('loginEstudiante', function (data) {
         data.id = socket.id;
         fullData.estudiante[contadorPersonas] = data;
-        //console.log(util.inspect(fullData, false, null))
+        socketsID[data.fila-1][data.columna-1] = socket.id;
+        //console.log(util.inspect(socketsID, false, null))
         socket.emit('sendMatrixSize', fullData.profesor.fila, fullData.profesor.columna);
         io.sockets.emit('generalMatrix', fullData);
         io.sockets.emit('checkLabel', fullData);
@@ -201,14 +211,24 @@ io.on('connection', function (socket) {
                 },
                 "estudiante": []
             }
-
+            socketsID = [
+                [-1,-1,-1,-1,-1,-1,-1],
+                [-1,-1,-1,-1,-1,-1,-1],
+                [-1,-1,-1,-1,-1,-1,-1],
+                [-1,-1,-1,-1,-1,-1,-1],
+                [-1,-1,-1,-1,-1,-1,-1],
+                [-1,-1,-1,-1,-1,-1,-1],
+                [-1,-1,-1,-1,-1,-1,-1],
+            ];
         } else {
 
             for (var key in fullData.estudiante) {
                 if (fullData.estudiante[key].id == socket.id) {
                     io.sockets.emit('isDisconnected', fullData.estudiante[key]);
+                    socketsID[fullData.estudiante[key].fila-1][fullData.estudiante[key].columna-1] = -1;
                     delete fullData.estudiante[key];
                     contadorPersonas--;
+                    //console.log(util.inspect(socketsID, false, null))
                 }
             }
             fullData.estudiante = fullData.estudiante.filter(function (x) {
