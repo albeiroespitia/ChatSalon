@@ -44,20 +44,29 @@ var storage = multer.diskStorage({
 
 var upload = multer({
     storage: storage
-}).single('filetoupload')
+}).fields([
+    { name: 'filetoupload', maxCount: 1 },
+    { name: 'filetouploadpv2', maxCount: 1 }
+  ])
 
 app.post('/imageUpload', function (req, res) {
     upload(req, res, function (err) {
         if(err){
+            console.log(err);
             res.send({resp:'invalidFile'});
             res.end();
         }
-        if(req.file){
+        if(req.files.filetoupload){
+            var archivo = req.files.filetoupload[0]
+        }else if(req.files.filetouploadpv2){
+            var archivo = req.files.filetouploadpv2[0]
+        }
+        if(archivo){
         var formatImg = /jpg|jpeg|png|gif/;
-        var imagen = formatImg.test(req.file.mimetype);
+        var imagen = formatImg.test(archivo.mimetype);
         
         var formatVideo = /mp4|wav|mepg|avi|flv|3gp/;
-        var video = formatVideo.test(req.file.mimetype);
+        var video = formatVideo.test(archivo.mimetype);
         
             if(imagen){
                 res.send({resp:'image'});
@@ -175,6 +184,23 @@ io.on('connection', function (socket) {
     socket.on('newMessageVideo', function (data) {
         //console.log("llego un mensaje")
         io.sockets.emit('newMessageVideo', data, arrayImage[arrayImage.length - 1]);
+    })
+
+    socket.on('newMessagePrivate', function (data, value,fila,columna) {
+        socket.to(socketsID[fila][columna]).emit('newMessagePrivate',data,value,data.fila-1,data.columna-1);
+        socket.emit('newMessagePrivate', data, value,fila,columna);
+    })
+
+    socket.on('newMessageImagePrivate', function (data,fila,columna) {
+        //console.log("llego un mensaje")
+        socket.to(socketsID[fila][columna]).emit('newMessageImagePrivate',data,arrayImage[arrayImage.length - 1],data.fila-1,data.columna-1);
+        socket.emit('newMessageImagePrivate', data, arrayImage[arrayImage.length - 1],fila,columna);
+    })
+
+    socket.on('newMessageVideoPrivate', function (data,fila,columna) {
+        //console.log("llego un mensaje")
+        socket.to(socketsID[fila][columna]).emit('newMessageVideoPrivate',data,arrayImage[arrayImage.length - 1],data.fila-1,data.columna-1);
+        socket.emit('newMessageVideoPrivate', data, arrayImage[arrayImage.length - 1],fila,columna);
     })
 
     socket.on('sendEncuesta', function (data) {

@@ -1,61 +1,35 @@
-var htmlPrivado = [
-    [-1,-1,-1,-1,-1,-1,-1],
-    [-1,-1,-1,-1,-1,-1,-1],
-    [-1,-1,-1,-1,-1,-1,-1],
-    [-1,-1,-1,-1,-1,-1,-1],
-    [-1,-1,-1,-1,-1,-1,-1],
-    [-1,-1,-1,-1,-1,-1,-1],
-    [-1,-1,-1,-1,-1,-1,-1],
-];
 
 sock.addEventListener('open', function (event) {
 
-    socket.on('newMessage', function (data, value) {
-        var htmlMessage = `<div class="col s12 mensajeUser">
-                                <table>
-                                    <tr>
-                                        <td style="text-align: right;">
-                                            <b>${data.nombre}</b>
-                                        </td>
-                                        <td rowspan="2" style="width: 2px;">
-                                            <img class="circle" width="50" src="img/${data.avatar}.svg">
-                                        </td>
-                                    </tr>
-                                    <tr> 
-                                        <td style="text-align: right;">
-                                            <span>${value}</span>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </div>`
-        var htmlMessageProfesor = `<div class="col s12 mensajeUser">
-                                    <table>
-                                        <tr>
-                                            <td rowspan="2" style="width: 65px;">
-                                                <img class="circle" width="50" src="img/${data.avatar}.svg">
-                                            </td>
-                                            <td>
-                                                <b>${data.nombre}</b>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <span>${value} </span>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </div>`
-        if (data.rol == "Profesor") {
-            $('.cardChat').append(htmlMessageProfesor);
-        } else {
-            $('.cardChat').append(htmlMessage);
-        }
+    socket.on('newMessagePrivate', function (data, value,fila,columna) {
+        console.log("esta llegando")
+        var htmlMessage = `<div class="col s12 mensajeUserPv2">
+                            <table>
+                                <tr>
+                                    <td rowspan="2" style="width: 65px;">
+                                        <img class="circle" width="50" src="img/${data.avatar}.svg">
+                                    </td>
+                                    <td>
+                                        <b>${data.nombre}</b>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span>${value}</span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>`;
+        htmlPrivado[fila][columna] += htmlMessage;
+        $('.cardChatPv2').html(htmlPrivado[fila][columna])
 
         // Dejar scroll abajo
-        $('#ChatMsj').scrollTop($('#ChatMsj')[0].scrollHeight - $('#ChatMsj')[0].clientHeight);
+        $('#BandejaPv2').scrollTop($('#BandejaPv2')[0].scrollHeight - $('#BandejaPv2')[0].clientHeight);
 
     })
-    socket.on('newMessageVideo', function (data, src) {
+
+    
+    socket.on('newMessageVideoPrivate', function (data, src,fila,columna) {
         var htmlMessageI = `<div class="col s12 mensajeUser">
                     <table>
                         <tr>
@@ -77,39 +51,16 @@ sock.addEventListener('open', function (event) {
                         </tr>
                     </table>
                 </div>`
-        var htmlMessageProfesorI = `<div class="col s12 mensajeUser">
-                        <table>
-                            <tr>
-                                <td rowspan="2" style="width: 65px;">
-                                    <img class="circle" width="50" src="img/${data.avatar}.svg">
-                                </td>
-                                <td>
-                                    <b>${data.nombre}</b>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <span>
-                                    <video width="270" height="200" controls="" style="margin-left: 10px;width: 260px;">
-                                            <source src="./../uploads/${src}" type="video/mp4">
-                                        </video>
-                                    </span>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>`
-        if (data.rol == "Profesor") {
-            $('.cardChat').append(htmlMessageProfesorI);
-        } else {
-            $('.cardChat').append(htmlMessageI);
-        }
+
+        htmlPrivado[fila][columna] += htmlMessageI;
+        $('.cardChatPv2').html(htmlPrivado[fila][columna])
 
         // Dejar scroll abajo
-        $('#ChatMsj').scrollTop($('#ChatMsj')[0].scrollHeight - $('#ChatMsj')[0].clientHeight);
+        $('#BandejaPv2').scrollTop($('#BandejaPv2')[0].scrollHeight - $('#BandejaPv2')[0].clientHeight);
 
     })
 
-    socket.on('newMessageImage', function (data, src) {
+    socket.on('newMessageImagePrivate', function (data, src,fila,columna) {
         var htmlMessageI = `<div class="col s12 mensajeUser">
                                 <table>
                                     <tr>
@@ -122,37 +73,16 @@ sock.addEventListener('open', function (event) {
                                     </tr>
                                     <tr> 
                                         <td style="text-align: right;">
-                                            <span><img class="materialboxed" width="100%" src="./../uploads/${src}"/></span>
+                                            <span><img class="materialboxed" width="75%" src="./../uploads/${src}"/></span>
                                         </td>
                                     </tr>
                                 </table>
                             </div>`
-        var htmlMessageProfesorI = `<div class="col s12 mensajeUser">
-                                    <table>
-                                        <tr>
-                                            <td rowspan="2" style="width: 65px;">
-                                                <img class="circle" width="50" src="img/${data.avatar}.svg">
-                                            </td>
-                                            <td>
-                                                <b>${data.nombre}</b>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <span><img class="materialboxed" width="100%" src="./../uploads/${src}"/></span>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </div>`
-        if (data.rol == "Profesor") {
-            $('.cardChat').append(htmlMessageProfesorI);
-        } else {
-            $('.cardChat').append(htmlMessageI);
-        }
-        
+        htmlPrivado[fila][columna] += htmlMessageI;
+        $('.cardChatPv2').html(htmlPrivado[fila][columna])
         $('.materialboxed').materialbox();
         // Dejar scroll abajo
-        $('#ChatMsj').scrollTop($('#ChatMsj')[0].scrollHeight - $('#ChatMsj')[0].clientHeight);
+        $('#BandejaPv2').scrollTop($('#BandejaPv2')[0].scrollHeight - $('#BandejaPv2')[0].clientHeight);
 
     })
 
@@ -163,38 +93,35 @@ sock.addEventListener('open', function (event) {
     }
 
     // Codigo de albeiro 
-    $("#mensaje").keypress(function (event) {
+    $("#mensajePv2").keypress(function (event) {
         if (event.which == 13) {
-            $('.botonEnviarMensaje').click();
-        }
+            var myInput = document.getElementById("mensajePv2");
+            if (!isEmpty(myInput.value)) {
+                socket.emit('newMessagePrivate', datatoSend, myInput.value,$('#modalPv2').data('fila'),$('#modalPv2').data('columna'))
+                sock.send('message', datatoSend, myInput.value)
+            }
+            $('#mensajePv2').val('');
+            }
     });
 
-    $('.botonEnviarMensaje').click(function () {
-        var myInput = document.getElementById("mensaje");
-        if (!isEmpty(myInput.value)) {
-            socket.emit('newMessage', datatoSend, myInput.value)
-            sock.send('message', datatoSend, myInput.value)
-        }
-        $('#mensaje').val('');
-    })
-
+    
     // Imagenes y videos
-    $(":file").change(function () {
-        $('#formSubirImagen').submit();
-
+    $("#file-inputpv2").change(function () {
+        $('#formSubirImagenPv2').submit();
     });
 
-    $('#formSubirImagen').submit(function () {
+    $('#formSubirImagenPv2').submit(function () {
         var options = {
             success: function (data, textStatus, xhr) {
+                console.log(data.resp)
                 if (data.resp != 'invalidFile') {
                     if (data.resp == 'image') {
-                        socket.emit('newMessageImage', datatoSend)
+                        socket.emit('newMessageImagePrivate', datatoSend,$('#modalPv2').data('fila'),$('#modalPv2').data('columna'))
                         sock.send('message', datatoSend)
                         Materialize.toast('Imagen enviado', 4000)
                     }
                     if (data.resp == 'video') {
-                        socket.emit('newMessageVideo', datatoSend)
+                        socket.emit('newMessageVideoPrivate', datatoSend,$('#modalPv2').data('fila'),$('#modalPv2').data('columna'))
                         sock.send('message', datatoSend)
                         Materialize.toast('Video enviado', 4000)
                     }

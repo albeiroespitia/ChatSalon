@@ -3,9 +3,17 @@ sock.addEventListener('open',function(event){
     
 
     window.posicion = function (fila, col){
-        $('#modalPv2').data('fila',fila)
-        $('#modalPv2').data('columna',col)
-        $('#modalPv2').modal('open');
+        console.log(this)
+        if((datatoSend.fila == fila) && (datatoSend.columna == col)){
+            Materialize.toast('No puedes enviarte un mensaje a ti mismo', 4000)
+        }else{
+            $('#modalPv2').data('fila',fila-1)
+            $('#modalPv2').data('columna',col-1)
+            $('#modalPv2').modal('open');
+            $('.cardChatPv2').html(htmlPrivado[fila-1][col-1])
+            $('#BandejaPv2').scrollTop($('#BandejaPv2')[0].scrollHeight - $('#BandejaPv2')[0].clientHeight);
+        }
+        
     }
 
 
@@ -15,7 +23,13 @@ sock.addEventListener('open',function(event){
         for (var f = 1; f <= fila; f++) {
             html += "<tr>"
             for (var c = 1; c <= columna; c++) {
-                html += "<td onClick='posicion("+f+","+c+")' class='box modal-trigger'> </td>";
+                if(datatoSend.rol == "Profesor"){
+                    html += "<td class='box modal-trigger'> </td>";
+                }else if(datatoSend.rol == "Estudiante"){
+                    //html += "<td onClick='posicion("+f+","+c+")' class='box modal-trigger'> </td>";
+                    html += "<td data-filaTest="+f+" data-colTest="+c+" class='box modal-trigger'> </td>";
+                }
+                
             }
             html += "</tr>";
         }
@@ -48,6 +62,9 @@ sock.addEventListener('open',function(event){
                     <img class="circle" width="30" src="img/${data.estudiante[key].avatar}.svg" style="padding-top: 2px;">
                     <div id="wave"></div>`;
             document.getElementById("tablem").rows[data.estudiante[key].fila - 1].cells[data.estudiante[key].columna - 1].innerHTML = boxStudent;
+            var filaTest = document.getElementById("tablem").rows[data.estudiante[key].fila - 1].cells[data.estudiante[key].columna - 1].getAttribute("data-filaTest")
+            var colTest = document.getElementById("tablem").rows[data.estudiante[key].fila - 1].cells[data.estudiante[key].columna - 1].getAttribute("data-colTest")
+            document.getElementById("tablem").rows[data.estudiante[key].fila - 1].cells[data.estudiante[key].columna - 1].setAttribute('onclick',`posicion(${filaTest},${colTest})`);
         }
 
     });
