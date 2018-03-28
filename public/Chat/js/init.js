@@ -1,7 +1,6 @@
-
     $('select').material_select();
     $('.tooltipped').tooltip({delay: 50});
-    $('.modal').modal();
+	$('.modal').modal();
 
     $('.modal').modal({
         endingTop: '20%', // Ending top style attribute

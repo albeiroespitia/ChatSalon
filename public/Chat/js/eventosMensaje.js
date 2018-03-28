@@ -112,7 +112,7 @@ sock.addEventListener('open', function (event) {
                                     </tr>
                                     <tr> 
                                         <td style="text-align: right;">
-                                            <span><img width="100%" src="./../uploads/${src}"/></span>
+                                            <span><img class="materialboxed" width="100%" src="./../uploads/${src}"/></span>
                                         </td>
                                     </tr>
                                 </table>
@@ -129,7 +129,7 @@ sock.addEventListener('open', function (event) {
                                         </tr>
                                         <tr>
                                             <td>
-                                                <span><img width="100%" src="./../uploads/${src}"/></span>
+                                                <span><img class="materialboxed" width="100%" src="./../uploads/${src}"/></span>
                                             </td>
                                         </tr>
                                     </table>
@@ -139,7 +139,8 @@ sock.addEventListener('open', function (event) {
         } else {
             $('.cardChat').append(htmlMessageI);
         }
-
+        
+        $('.materialboxed').materialbox();
         // Dejar scroll abajo
         $('#ChatMsj').scrollTop($('#ChatMsj')[0].scrollHeight - $('#ChatMsj')[0].clientHeight);
 
