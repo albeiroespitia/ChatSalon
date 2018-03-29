@@ -9,12 +9,12 @@ sock.addEventListener('open', function (event) {
                                     <td rowspan="2" style="width: 65px;">
                                         <img class="circle" width="50" src="img/${data.avatar}.svg">
                                     </td>
-                                    <td>
+                                    <td style="padding:0px">
                                         <b>${data.nombre}</b>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>
+                                    <td style="padding:0px">
                                         <span>${value}</span>
                                     </td>
                                 </tr>
@@ -23,6 +23,14 @@ sock.addEventListener('open', function (event) {
         htmlPrivado[fila][columna] += htmlMessage;
         $('.cardChatPv2').html(htmlPrivado[fila][columna])
 
+        if(data.nombre != datatoSend.nombre){
+            if(!modalOpen){
+                refreshInterval = setInterval(function(){
+                    document.getElementById("tablem").rows[fila].cells[columna].classList.toggle('transitionBorder');
+                },1000)
+            }
+            
+        }
         // Dejar scroll abajo
         $('#BandejaPv2').scrollTop($('#BandejaPv2')[0].scrollHeight - $('#BandejaPv2')[0].clientHeight);
 
@@ -55,6 +63,15 @@ sock.addEventListener('open', function (event) {
         htmlPrivado[fila][columna] += htmlMessageI;
         $('.cardChatPv2').html(htmlPrivado[fila][columna])
 
+        if(data.nombre != datatoSend.nombre){
+            if(!modalOpen){
+                refreshInterval = setInterval(function(){
+                    document.getElementById("tablem").rows[fila].cells[columna].classList.toggle('transitionBorder');
+                },1000)
+            }
+            
+        }
+
         // Dejar scroll abajo
         $('#BandejaPv2').scrollTop($('#BandejaPv2')[0].scrollHeight - $('#BandejaPv2')[0].clientHeight);
 
@@ -81,6 +98,16 @@ sock.addEventListener('open', function (event) {
         htmlPrivado[fila][columna] += htmlMessageI;
         $('.cardChatPv2').html(htmlPrivado[fila][columna])
         $('.materialboxed').materialbox();
+
+        if(data.nombre != datatoSend.nombre){
+            if(!modalOpen){
+                refreshInterval = setInterval(function(){
+                    document.getElementById("tablem").rows[fila].cells[columna].classList.toggle('transitionBorder');
+                },1000)
+            }
+            
+        }
+        
         // Dejar scroll abajo
         $('#BandejaPv2').scrollTop($('#BandejaPv2')[0].scrollHeight - $('#BandejaPv2')[0].clientHeight);
 
