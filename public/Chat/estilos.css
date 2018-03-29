@@ -72,6 +72,18 @@ canvas{
     border: 3px solid #009688 !important;
 }
 
+.iconGroup{
+    margin-top: 15px;
+    margin-left: 15px;
+}
+
+#modalGrupoTrabajo{
+    top: 3% !important;
+    text-align: center !important;
+    width: 60% !important;
+    max-height: 95% !important;
+}
+
 .box{
     transition: border 500ms ease-out;
     position: relative;
@@ -82,8 +94,24 @@ canvas{
     width: 12%;
     margin: 5px;
     display:inline-block;
-
 }
+
+.boxGroup{
+    transition: border 500ms ease-out;
+    position: relative;
+    padding: 0px !important;
+    box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.14), 1px 1px 1px 1px rgba(0, 0, 0, 0.12), 1px 1px 1px 1px rgba(0, 0, 0, 0.2);
+    border: solid 2px #fdcb6e;
+    height: 70px;
+    width: 12%;
+    margin: 5px;
+    display:inline-block;
+}
+
+.boxGroupSelected{
+    border: 3px solid #006064
+}
+
 .boxProfesor{
     position: relative;
     box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.14), 1px 1px 1px 1px rgba(0, 0, 0, 0.12), 1px 1px 1px 1px rgba(0, 0, 0, 0.2);

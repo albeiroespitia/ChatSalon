@@ -98,6 +98,7 @@ sock.addEventListener('open', function (event) {
         htmlPrivado[fila][columna] += htmlMessageI;
         $('.cardChatPv2').html(htmlPrivado[fila][columna])
         $('.materialboxed').materialbox();
+        
 
         if(data.nombre != datatoSend.nombre){
             if(!modalOpen){

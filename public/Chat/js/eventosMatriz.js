@@ -68,6 +68,8 @@ sock.addEventListener('open',function(event){
                 document.getElementById("tablem").rows[data.estudiante[key].fila - 1].cells[data.estudiante[key].columna - 1].setAttribute('onclick',`posicion(${filaTest},${colTest})`);
             }
         }
+        updateTableGroup();
+
 
     });
 });
