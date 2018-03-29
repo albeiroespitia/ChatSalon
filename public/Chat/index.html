@@ -287,7 +287,6 @@
 			<h4>Selecciona tu grupo de trabajo</h4>
 			<div class="tableWorkGroup col s12">
 			</div>
-
 		</div>
 	</div>
 
@@ -298,8 +297,21 @@
 		</div>
 	</div>
 
+	<div class="testModal">
+		<div class="modal-content">
+			<h4>Selecciona un color para identificar tu grupo</h4>
+			<div class="selectColor col s12">
+				<div class="picker-wrapper">
+					<div class="color-picker">
+					</div>
+				</div>
+				<button class="sendColorButton btn-large waves-effect waves-light">Enviar</button>
+			</div>
+		</div>
+	</div>
+
 	<div id="nextStep" class="fixed-action-btn botonSiguiente">
-		<a href="#modalGrupoTrabajo2" class="modal-trigger btn-floating btn-large waves-effect waves-light red">
+		<a class="modal-trigger btn-floating btn-large waves-effect waves-light red">
 			<i class="material-icons">arrow_forward</i>
 		</a>
 	</div>
@@ -309,6 +321,8 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"></script>
+	<script src="libs/piklor.min.js"></script>
+	<script src="libs/piklorColors.js"></script>
 	<script src="/socket.io/socket.io.js"></script>
 	<script src="js/init.js"></script>
 	<script src="js/eventosMatriz.js"></script>
@@ -318,6 +332,7 @@
 	<script src="js/eventosMensaje.js"></script>
 	<script src="js/eventosMensajePrivado.js"></script>
 	<script src="js/eventosGrupoTrabajo.js"></script>
+
 </body>
 
 </html>

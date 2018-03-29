@@ -13,6 +13,8 @@ sock.addEventListener('open',function(event){
         var size = document.getElementById("tablem").rows[data.fila - 1].cells[data.columna - 1].childNodes.length;
         var x = document.getElementById("tablem").rows[data.fila - 1].cells[data.columna - 1].childNodes[size - 1];
         x.innerHTML = '';
+        var dataColor = x.dataset.colorTemp;
+        x.style.border = `2px solid ${dataColor}`;
     })
 
     socket.on('EstudianteTypingAll', function (data) {
@@ -21,6 +23,7 @@ sock.addEventListener('open',function(event){
         x.innerHTML = `<span class="dot"></span>
         <span class="dot"></span>
         <span class="dot"></span>`;
+        x.style.border = `none`;
     })
 
     // ------------------  Emit ----------------------------

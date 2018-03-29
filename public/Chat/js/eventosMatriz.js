@@ -45,7 +45,6 @@ sock.addEventListener('open', function (event) {
             })
 
         $(document).on('mouseenter', '.boxGroup', function () {
-            console.log("entro en esta monda")
             var nombre = $(this).children("span").html();
             $(this).children("span").html('<marquee scrollamount="4">' + nombre + '</marquee>');
         })

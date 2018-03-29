@@ -9,6 +9,8 @@ const util = require('util')
 var fullData = require('./data')
 var multer = require('multer');
 var encuestasInfo = require('./encuestasR')
+var fullDataGroups = require('./workGroup')
+
 var contadorPersonas = 0;
 var server = require('ws').Server;
 var s = new server({
@@ -161,6 +163,9 @@ io.on('connection', function (socket) {
         io.sockets.emit('newEncuesta', encuestaData);
         io.sockets.emit('isConnected', fullData.estudiante[contadorPersonas]);
         io.sockets.emit('checkButton', encuestasInfo);
+        if (fullDataGroups.groups.length > 0) {
+            io.sockets.emit('dataAllGroups', fullDataGroups.groups);
+        }
         contadorPersonas++;
     });
 
@@ -229,8 +234,18 @@ io.on('connection', function (socket) {
         })
         var opcion = encuestasInfo.encuestas[encuestasInfo.encuestas.length - 1].option;
         respuesta[idEncuesta][opcion]++;
-        console.log(util.inspect(respuesta, false, null));
+        //console.log(util.inspect(respuesta, false, null));
         io.sockets.emit('newResponseEncuesta', encuestasInfo.encuestas, respuesta);
+    })
+
+    socket.on('sendGroupData', function (data) {
+        data.id = socketsID[data.lead.fila - 1][data.lead.columna - 1];
+        data.students.forEach(function (element) {
+            element.id = socketsID[element.fila][element.columna]
+        })
+        fullDataGroups.groups.push(data);
+        //console.log(util.inspect(fullDataGroups.groups, false, null));
+        io.sockets.emit('dataAllGroups', fullDataGroups.groups);
     })
 
     socket.on('forceDisconnect', function () {
@@ -260,7 +275,34 @@ io.on('connection', function (socket) {
                 [-1, -1, -1, -1, -1, -1, -1],
                 [-1, -1, -1, -1, -1, -1, -1],
             ];
+
+            fullDataGroups = {
+                groups: []
+            }
+
         } else {
+
+            fullDataGroups.groups.forEach(function (element) {
+                console.log(socket.id)
+                if (element.id == socket.id) {
+                    element.lead = ''
+                    console.log("lider")
+                } else {
+                    element.students.forEach(function (student,index) {
+                        console.log(student.fila)
+                        console.log(student.columna)
+                        console.log(util.inspect(socketsID, false, null))
+                        if (socketsID[student.fila][student.columna] == socket.id) {
+                            delete element.students[index];
+                            console.log(util.inspect(element.students[index], false, null))
+                            console.log("no lider")
+                            element.students = element.students.filter(function (x) {
+                                return (x !== (undefined || 'a' || ''));
+                            });
+                        }
+                    })
+                }
+            })
 
             for (var key in fullData.estudiante) {
                 if (fullData.estudiante[key].id == socket.id) {
@@ -268,9 +310,14 @@ io.on('connection', function (socket) {
                     socketsID[fullData.estudiante[key].fila - 1][fullData.estudiante[key].columna - 1] = -1;
                     delete fullData.estudiante[key];
                     contadorPersonas--;
-                    //console.log(util.inspect(socketsID, false, null))
+                    //console.log(util.inspect(fullDataGroups, false, null))
                 }
             }
+
+
+
+            console.log(util.inspect(fullDataGroups, false, null))
+
             fullData.estudiante = fullData.estudiante.filter(function (x) {
                 return (x !== (undefined || 'a' || ''));
             });
@@ -278,6 +325,9 @@ io.on('connection', function (socket) {
 
         //console.log(util.inspect(fullData, false, null))
         io.sockets.emit('generalMatrix', fullData);
+        if (fullDataGroups.groups.length > 0) {
+            io.sockets.emit('dataAllGroups', fullDataGroups.groups);
+        }
         console.log("un usuario se ha desconectado")
         //console.log("Al final"+util.inspect(fullData, false, null))
     });

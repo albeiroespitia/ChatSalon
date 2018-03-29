@@ -7,8 +7,9 @@
     $('.modal').modal({
     	endingTop: '20%', // Ending top style attribute
 
-    });
-
+	});
+	
+	
     var htmlPrivado = [
     	['', '', '', '', '', '', ''],
     	['', '', '', '', '', '', ''],
