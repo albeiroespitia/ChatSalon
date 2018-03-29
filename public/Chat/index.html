@@ -39,7 +39,9 @@
 					</div>
 				</div>
 				<div class="iconGroup">
-					<a href="#modalGrupoTrabajo" data-position="top" data-delay="50" data-tooltip="Crea un grupo de trabajo" class="modal-trigger btn-floating tooltipped btn-large waves-effect waves-light red"><i class="material-icons">group</i></a>
+					<a href="#modalGrupoTrabajo" data-position="top" data-delay="50" data-tooltip="Crea un grupo de trabajo" class="modal-trigger btn-floating tooltipped btn-large waves-effect waves-light red">
+						<i class="material-icons">group</i>
+					</a>
 				</div>
 			</div>
 			<div class="col s6">
@@ -284,9 +286,22 @@
 		<div class="modal-content">
 			<h4>Selecciona tu grupo de trabajo</h4>
 			<div class="tableWorkGroup col s12">
-
 			</div>
+
 		</div>
+	</div>
+
+	<div class="tap-target tapNextStep" data-activates="nextStep">
+		<div class="tap-target-content">
+			<h5>Siguiente paso</h5>
+			<p>Da click al terminar de seleccionar tu grupo de estudio</p>
+		</div>
+	</div>
+
+	<div id="nextStep" class="fixed-action-btn botonSiguiente">
+		<a href="#modalGrupoTrabajo2" class="modal-trigger btn-floating btn-large waves-effect waves-light red">
+			<i class="material-icons">arrow_forward</i>
+		</a>
 	</div>
 
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>

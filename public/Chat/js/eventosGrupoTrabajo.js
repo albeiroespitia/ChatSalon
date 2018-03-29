@@ -16,6 +16,10 @@ sock.addEventListener('open',function(event){
         
     }
 
+    $('#nextStep').click(function(){
+        
+    })
+
 //    updateTableGroup();
 
 });

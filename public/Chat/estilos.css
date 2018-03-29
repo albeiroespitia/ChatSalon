@@ -84,6 +84,31 @@ canvas{
     max-height: 95% !important;
 }
 
+.box:hover{
+    cursor: pointer;
+}
+
+.boxGroup:hover{
+    cursor: pointer;
+}
+
+.botonSiguiente{
+    z-index: 2000;
+    display: none;
+}
+
+.tapNextStep{
+    background-color: #009688 !important;
+}
+
+.tap-target-wrapper{
+    z-index: 2000;
+}
+
+.tap-target-origin{
+    display: none;
+}
+
 .box{
     transition: border 500ms ease-out;
     position: relative;
@@ -94,6 +119,17 @@ canvas{
     width: 12%;
     margin: 5px;
     display:inline-block;
+}
+
+#tableGr span{
+    float: left;
+    padding: 0 .75rem;
+    min-height: 1px;
+    box-sizing: border-box;
+    width: 91.6666666667%;
+    margin-left: auto;
+    left: auto;
+    right: auto;
 }
 
 .boxGroup{
