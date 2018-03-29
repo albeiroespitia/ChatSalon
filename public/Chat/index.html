@@ -145,6 +145,7 @@
 						<form class="formsendREncuesta">
 							<div class="modal-content">
 								<h4>Nueva encuesta</h4>
+								<input id="idEncuesta" type='hidden' />
 								<p class="preguntaModalNuevo">¿Ella te ama?</p>
 
 								<p>
@@ -222,8 +223,11 @@
 	<!-- Modal Structure -->
 	<div id="modal4" class="modal">
 		<div class="modal-content">
-			<center>
-				<canvas id="oilChart" width="40" height="40"></canvas>
+			<h4>Selecciona una encuesta</h4>
+			<div id="contenedorPagination">
+			</div>
+			<center id='contenedorCanvas'>
+				<!-- <canvas id="oilChart" width="40" height="40"></canvas> -->
 			</center>
 		</div>
 	</div>
@@ -238,27 +242,7 @@
 	<div id="modalPv2" class="modal">
 		<div class="modal-content">
 			<div id="BandejaPv2" class="card-panel grey lighten-3 cardChatPv2" style="margin-bottom: 0px;">
-<<<<<<< HEAD
-				<div class="col s12 mensajeUserPv2">
-					<table>
-						<tr>
-							<td rowspan="2" style="width: 65px;">
-								<img class="circle" width="50" src="img/man.svg">
-							</td>
-							<td>
-								<b>Jose</b>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<span>¡Hola soy Jose!</span>
-							</td>
-						</tr>
-					</table>
-				</div>
-=======
-				
->>>>>>> 8c9c53e6bbc5c5da49c9f52f2020dbac1c74caa6
+
 			</div>
 
 			<div class="card-panel grey lighten-3 cardInputPv2 row" style="margin-left: 20px;">

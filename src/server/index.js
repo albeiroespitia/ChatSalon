@@ -15,17 +15,18 @@ var s = new server({
     port: 3001
 })
 var encuestaData = [];
-var respuesta = [0, 0, 0, 0];
+var respuesta = []; // A, B, C, D
+
 var actualImage;
 var arrayImage = [];
 var socketsID = [
-    [-1,-1,-1,-1,-1,-1,-1],
-    [-1,-1,-1,-1,-1,-1,-1],
-    [-1,-1,-1,-1,-1,-1,-1],
-    [-1,-1,-1,-1,-1,-1,-1],
-    [-1,-1,-1,-1,-1,-1,-1],
-    [-1,-1,-1,-1,-1,-1,-1],
-    [-1,-1,-1,-1,-1,-1,-1],
+    [-1, -1, -1, -1, -1, -1, -1],
+    [-1, -1, -1, -1, -1, -1, -1],
+    [-1, -1, -1, -1, -1, -1, -1],
+    [-1, -1, -1, -1, -1, -1, -1],
+    [-1, -1, -1, -1, -1, -1, -1],
+    [-1, -1, -1, -1, -1, -1, -1],
+    [-1, -1, -1, -1, -1, -1, -1],
 ];
 
 var storage = multer.diskStorage({
@@ -44,35 +45,46 @@ var storage = multer.diskStorage({
 
 var upload = multer({
     storage: storage
-}).fields([
-    { name: 'filetoupload', maxCount: 1 },
-    { name: 'filetouploadpv2', maxCount: 1 }
-  ])
+}).fields([{
+        name: 'filetoupload',
+        maxCount: 1
+    },
+    {
+        name: 'filetouploadpv2',
+        maxCount: 1
+    }
+])
 
 app.post('/imageUpload', function (req, res) {
     upload(req, res, function (err) {
-        if(err){
+        if (err) {
             console.log(err);
-            res.send({resp:'invalidFile'});
+            res.send({
+                resp: 'invalidFile'
+            });
             res.end();
         }
-        if(req.files.filetoupload){
+        if (req.files.filetoupload) {
             var archivo = req.files.filetoupload[0]
-        }else if(req.files.filetouploadpv2){
+        } else if (req.files.filetouploadpv2) {
             var archivo = req.files.filetouploadpv2[0]
         }
-        if(archivo){
-        var formatImg = /jpg|jpeg|png|gif/;
-        var imagen = formatImg.test(archivo.mimetype);
-        
-        var formatVideo = /mp4|wav|mepg|avi|flv|3gp/;
-        var video = formatVideo.test(archivo.mimetype);
-        
-            if(imagen){
-                res.send({resp:'image'});
+        if (archivo) {
+            var formatImg = /jpg|jpeg|png|gif/;
+            var imagen = formatImg.test(archivo.mimetype);
+
+            var formatVideo = /mp4|wav|mepg|avi|flv|3gp/;
+            var video = formatVideo.test(archivo.mimetype);
+
+            if (imagen) {
+                res.send({
+                    resp: 'image'
+                });
             }
-            if(video){
-                res.send({resp:'video'});
+            if (video) {
+                res.send({
+                    resp: 'video'
+                });
             }
         }
         res.end()
@@ -118,7 +130,6 @@ io.on('connection', function (socket) {
     console.log('a user connected');
 
 
-
     socket.on('loginProfesor', function (data) {
         data.id = socket.id;
         fullData.profesor = data;
@@ -142,7 +153,7 @@ io.on('connection', function (socket) {
     socket.on('loginEstudiante', function (data) {
         data.id = socket.id;
         fullData.estudiante[contadorPersonas] = data;
-        socketsID[data.fila-1][data.columna-1] = socket.id;
+        socketsID[data.fila - 1][data.columna - 1] = socket.id;
         //console.log(util.inspect(socketsID, false, null))
         socket.emit('sendMatrixSize', fullData.profesor.fila, fullData.profesor.columna);
         io.sockets.emit('generalMatrix', fullData);
@@ -172,50 +183,53 @@ io.on('connection', function (socket) {
     // ------ >  Mensajes <----
     // Mensaje texto
     socket.on('newMessage', function (data, value) {
-        //console.log("llego un mensaje")
+
         io.sockets.emit('newMessage', data, value);
     })
     // Mensaje imagen
     socket.on('newMessageImage', function (data) {
-        //console.log("llego un mensaje")
+
         io.sockets.emit('newMessageImage', data, arrayImage[arrayImage.length - 1]);
     })
     // Mensaje Video
     socket.on('newMessageVideo', function (data) {
-        //console.log("llego un mensaje")
+
         io.sockets.emit('newMessageVideo', data, arrayImage[arrayImage.length - 1]);
     })
 
-    socket.on('newMessagePrivate', function (data, value,fila,columna) {
-        socket.to(socketsID[fila][columna]).emit('newMessagePrivate',data,value,data.fila-1,data.columna-1);
-        socket.emit('newMessagePrivate', data, value,fila,columna);
+    socket.on('newMessagePrivate', function (data, value, fila, columna) {
+        socket.to(socketsID[fila][columna]).emit('newMessagePrivate', data, value, data.fila - 1, data.columna - 1);
+        socket.emit('newMessagePrivate', data, value, fila, columna);
     })
 
-    socket.on('newMessageImagePrivate', function (data,fila,columna) {
+    socket.on('newMessageImagePrivate', function (data, fila, columna) {
         //console.log("llego un mensaje")
-        socket.to(socketsID[fila][columna]).emit('newMessageImagePrivate',data,arrayImage[arrayImage.length - 1],data.fila-1,data.columna-1);
-        socket.emit('newMessageImagePrivate', data, arrayImage[arrayImage.length - 1],fila,columna);
+        socket.to(socketsID[fila][columna]).emit('newMessageImagePrivate', data, arrayImage[arrayImage.length - 1], data.fila - 1, data.columna - 1);
+        socket.emit('newMessageImagePrivate', data, arrayImage[arrayImage.length - 1], fila, columna);
     })
 
-    socket.on('newMessageVideoPrivate', function (data,fila,columna) {
+    socket.on('newMessageVideoPrivate', function (data, fila, columna) {
         //console.log("llego un mensaje")
-        socket.to(socketsID[fila][columna]).emit('newMessageVideoPrivate',data,arrayImage[arrayImage.length - 1],data.fila-1,data.columna-1);
-        socket.emit('newMessageVideoPrivate', data, arrayImage[arrayImage.length - 1],fila,columna);
+        socket.to(socketsID[fila][columna]).emit('newMessageVideoPrivate', data, arrayImage[arrayImage.length - 1], data.fila - 1, data.columna - 1);
+        socket.emit('newMessageVideoPrivate', data, arrayImage[arrayImage.length - 1], fila, columna);
     })
 
     socket.on('sendEncuesta', function (data) {
         encuestaData.push(data);
+        respuesta.push([0, 0, 0, 0]);
         io.sockets.emit('newEncuesta', encuestaData);
     })
 
-    socket.on('sendEncuestaResponse', function (response, person, option) {
+    socket.on('sendEncuestaResponse', function (idEncuesta, response, person, option) {
         encuestasInfo.encuestas.push({
+            id: idEncuesta,
             person: person,
             response: response,
             option: option
         })
-
-        respuesta[encuestasInfo.encuestas[encuestasInfo.encuestas.length - 1].option]++;
+        var opcion = encuestasInfo.encuestas[encuestasInfo.encuestas.length - 1].option;
+        respuesta[idEncuesta][opcion]++;
+        console.log(util.inspect(respuesta, false, null));
         io.sockets.emit('newResponseEncuesta', encuestasInfo.encuestas, respuesta);
     })
 
@@ -238,20 +252,20 @@ io.on('connection', function (socket) {
                 "estudiante": []
             }
             socketsID = [
-                [-1,-1,-1,-1,-1,-1,-1],
-                [-1,-1,-1,-1,-1,-1,-1],
-                [-1,-1,-1,-1,-1,-1,-1],
-                [-1,-1,-1,-1,-1,-1,-1],
-                [-1,-1,-1,-1,-1,-1,-1],
-                [-1,-1,-1,-1,-1,-1,-1],
-                [-1,-1,-1,-1,-1,-1,-1],
+                [-1, -1, -1, -1, -1, -1, -1],
+                [-1, -1, -1, -1, -1, -1, -1],
+                [-1, -1, -1, -1, -1, -1, -1],
+                [-1, -1, -1, -1, -1, -1, -1],
+                [-1, -1, -1, -1, -1, -1, -1],
+                [-1, -1, -1, -1, -1, -1, -1],
+                [-1, -1, -1, -1, -1, -1, -1],
             ];
         } else {
 
             for (var key in fullData.estudiante) {
                 if (fullData.estudiante[key].id == socket.id) {
                     io.sockets.emit('isDisconnected', fullData.estudiante[key]);
-                    socketsID[fullData.estudiante[key].fila-1][fullData.estudiante[key].columna-1] = -1;
+                    socketsID[fullData.estudiante[key].fila - 1][fullData.estudiante[key].columna - 1] = -1;
                     delete fullData.estudiante[key];
                     contadorPersonas--;
                     //console.log(util.inspect(socketsID, false, null))
