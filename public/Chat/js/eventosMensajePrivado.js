@@ -63,6 +63,15 @@ sock.addEventListener('open', function (event) {
         htmlPrivado[fila][columna] += htmlMessageI;
         $('.cardChatPv2').html(htmlPrivado[fila][columna])
 
+        if(data.nombre != datatoSend.nombre){
+            if(!modalOpen){
+                refreshInterval = setInterval(function(){
+                    document.getElementById("tablem").rows[fila].cells[columna].classList.toggle('transitionBorder');
+                },1000)
+            }
+            
+        }
+
         // Dejar scroll abajo
         $('#BandejaPv2').scrollTop($('#BandejaPv2')[0].scrollHeight - $('#BandejaPv2')[0].clientHeight);
 
@@ -89,6 +98,16 @@ sock.addEventListener('open', function (event) {
         htmlPrivado[fila][columna] += htmlMessageI;
         $('.cardChatPv2').html(htmlPrivado[fila][columna])
         $('.materialboxed').materialbox();
+
+        if(data.nombre != datatoSend.nombre){
+            if(!modalOpen){
+                refreshInterval = setInterval(function(){
+                    document.getElementById("tablem").rows[fila].cells[columna].classList.toggle('transitionBorder');
+                },1000)
+            }
+            
+        }
+        
         // Dejar scroll abajo
         $('#BandejaPv2').scrollTop($('#BandejaPv2')[0].scrollHeight - $('#BandejaPv2')[0].clientHeight);
 
