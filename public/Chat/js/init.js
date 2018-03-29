@@ -16,7 +16,12 @@
 		['','','','','','',''],
 		['','','','','','',''],
 	];
-	
+	var refreshInterval;
+	var modalOpen = false;
+
+	$('#modalPv2').modal({
+		complete: function() { modalOpen = false; }
+	})
 	
 	// SOCKET
 	if(sessionStorage.getItem("datos") == null){

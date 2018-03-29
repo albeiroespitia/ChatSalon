@@ -68,7 +68,12 @@ canvas{
     padding-right: 12px !important;
 }
 
+.transitionBorder{
+    border: 3px solid #009688 !important;
+}
+
 .box{
+    transition: border 500ms ease-out;
     position: relative;
     padding: 0px !important;
     box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.14), 1px 1px 1px 1px rgba(0, 0, 0, 0.12), 1px 1px 1px 1px rgba(0, 0, 0, 0.2);
