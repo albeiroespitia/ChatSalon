@@ -7,6 +7,66 @@ function mostrarCanvasHtml(n) { // N es la posicion del canvas a mostrar
 }
 
 sock.addEventListener('open', function (event) {
+    // <------- EMIT ---->
+
+    // Crear encuesta con el rol de profesor
+    $('.formEncuesta').submit(function (event) {
+        event.preventDefault();
+
+        var pregunta = $('input[name="preguntaInput"]').val()
+        var opcion1 = $('input[name="opcion1Input"]').val()
+        var opcion2 = $('input[name="opcion2Input"]').val()
+        var opcion3 = $('input[name="opcion3Input"]').val()
+        var opcion4 = $('input[name="opcion4Input"]').val()
+
+        var dataEncuesta = {
+            pregunta: pregunta,
+            opcion1: opcion1,
+            opcion2: opcion2,
+            opcion3: opcion3,
+            opcion4: opcion4
+        }
+
+        $('#modal1').modal('close');
+
+        $('input[name="preguntaInput"]').val('')
+        $('input[name="opcion1Input"]').val('')
+        $('input[name="opcion2Input"]').val('')
+        $('input[name="opcion3Input"]').val('')
+        $('input[name="opcion4Input"]').val('')
+
+        socket.emit('sendEncuesta', dataEncuesta);
+        sock.send('message', datatoSend)
+        // Crear pagination 
+        var numCanvas = $('#contenedorCanvas canvas').length;
+        $('#contenedorPagination').append(' <a onclick="mostrarCanvasHtml(' + (numCanvas + 1) + ');" class="btn-floating btn waves-effect waves-light red btnEnc">' + (numCanvas + 1) + '</a>')
+        // Crear canvas
+        var htmlCanvas = '<canvas id="grafica' + numCanvas + '" width="703" height="703" style="display: none; width: 703px; height: 703px;" class="chartjs-render-monitor"></canvas>';
+        $('#contenedorCanvas').append(htmlCanvas);
+        inicializarCanvas(numCanvas);
+    })
+
+    // Escuchar que hay una nueva encuesta
+    socket.on('newEncuesta', function (data) {
+        $('.btnSelEncuesta').html('');
+        $.each(data, function (index, value) {
+            $('.btnSelEncuesta').append(' <a class="btn-floating btn-large waves-effect waves-light red btnEnc">' + (index + 1) + '</a>')
+        });
+        DataEncuestas = data;
+
+        if (data != '') {
+            $('.botonRespuestaEncuestas').css("cssText", "visibility: visible !important;");
+        }
+        if (datatoSend.rol == "Estudiante") {
+            if (data == '') {
+                $('.botonCrearEncuesta').addClass('disabled');
+            } else {
+                $('.botonCrearEncuesta').removeClass('disabled');
+            }
+        }
+
+    })
+
     // 
     socket.on('checkButton', function (data) {
         console.log(data);
@@ -104,25 +164,7 @@ sock.addEventListener('open', function (event) {
 
     });
 
-    socket.on('newEncuesta', function (data) {
-        $('.btnSelEncuesta').html('');
-        $.each(data, function (index, value) {
-            $('.btnSelEncuesta').append(' <a class="btn-floating btn-large waves-effect waves-light red btnEnc">' + (index + 1) + '</a>')
-        });
-        DataEncuestas = data;
 
-        if (data != '') {
-            $('.botonRespuestaEncuestas').css("cssText", "visibility: visible !important;");
-        }
-        if (datatoSend.rol == "Estudiante") {
-            if (data == '') {
-                $('.botonCrearEncuesta').addClass('disabled');
-            } else {
-                $('.botonCrearEncuesta').removeClass('disabled');
-            }
-        }
-
-    })
 
     // --- EMIT
     $('.formsendREncuesta').submit(function (event) {
@@ -137,49 +179,6 @@ sock.addEventListener('open', function (event) {
         $('#modal2').modal('close');
 
     })
-
-
-
-    $('.formEncuesta').submit(function (event) {
-        event.preventDefault();
-
-        var pregunta = $('input[name="preguntaInput"]').val()
-        var opcion1 = $('input[name="opcion1Input"]').val()
-        var opcion2 = $('input[name="opcion2Input"]').val()
-        var opcion3 = $('input[name="opcion3Input"]').val()
-        var opcion4 = $('input[name="opcion4Input"]').val()
-
-        var dataEncuesta = {
-            pregunta: pregunta,
-            opcion1: opcion1,
-            opcion2: opcion2,
-            opcion3: opcion3,
-            opcion4: opcion4
-        }
-
-        $('#modal1').modal('close');
-
-        $('input[name="preguntaInput"]').val('')
-        $('input[name="opcion1Input"]').val('')
-        $('input[name="opcion2Input"]').val('')
-        $('input[name="opcion3Input"]').val('')
-        $('input[name="opcion4Input"]').val('')
-
-        socket.emit('sendEncuesta', dataEncuesta);
-        sock.send('message', datatoSend)
-        // Crear pagination 
-        var numCanvas = $('#contenedorCanvas canvas').length;
-        $('#contenedorPagination').append(' <a onclick="mostrarCanvasHtml(' + (numCanvas + 1) + ');" class="btn-floating btn waves-effect waves-light red btnEnc">' + (numCanvas + 1) + '</a>')
-        // Crear canvas
-        var htmlCanvas = '<canvas id="grafica' + numCanvas + '" width="703" height="703" style="display: none; width: 703px; height: 703px;" class="chartjs-render-monitor"></canvas>';
-
-        $('#contenedorCanvas').append(htmlCanvas);
-        inicializarCanvas(numCanvas);
-
-    })
-
-
-
 
 
 });

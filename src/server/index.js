@@ -253,10 +253,11 @@ io.on('connection', function (socket) {
         socket.emit('newMessageGrupal', data, value, color);
     })
 
+    // Recibe encuesta creada
     socket.on('sendEncuesta', function (data) {
         encuestaData.push(data);
-        respuesta.push([0, 0, 0, 0]);
-        io.sockets.emit('newEncuesta', encuestaData);
+        respuesta.push([0, 0, 0, 0]); // Inicializar vector de respuestas de una encuesta nueva
+        io.sockets.emit('newEncuesta', encuestaData); // Avisar a todos que hay una nueva encuesta
     })
 
     socket.on('sendEncuestaResponse', function (idEncuesta, response, person, option) {
