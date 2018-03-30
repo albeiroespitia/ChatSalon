@@ -37,7 +37,7 @@ sock.addEventListener('open', function (event) {
             
         }*/
         // Dejar scroll abajo
-        $('#BandejaPg2').scrollTop($('#BandejaPg2')[0].scrollHeight - $('#BandejaPg2')[0].clientHeight);
+        $('#BandejaPg2').scrollTop($('#BandejaPg2')[0].scrollHeight - $('#BandejaPgW 2')[0].clientHeight);
 
     })
 

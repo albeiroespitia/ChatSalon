@@ -3,17 +3,19 @@ sock.addEventListener('open', function (event) {
         if (event.ctrlKey || event.metaKey) {
             posicionDouble(event, fila, col, color)
         } else {
-            if ((datatoSend.fila == fila) && (datatoSend.columna == col)) {
-                Materialize.toast('No puedes enviarte un mensaje a ti mismo', 4000)
-            } else {
-                modalOpen = true;
-                clearInterval(refreshInterval);
-                document.getElementById("tablem").rows[fila - 1].cells[col - 1].classList.remove('transitionBorder');
-                $('#modalPv2').data('fila', fila - 1)
-                $('#modalPv2').data('columna', col - 1)
-                $('#modalPv2').modal('open');
-                $('.cardChatPv2').html(htmlPrivado[fila - 1][col - 1])
-                $('#BandejaPv2').scrollTop($('#BandejaPv2')[0].scrollHeight - $('#BandejaPv2')[0].clientHeight);
+            if (datatoSend.rol == "Estudiante") {
+                if ((datatoSend.fila == fila) && (datatoSend.columna == col)) {
+                    Materialize.toast('No puedes enviarte un mensaje a ti mismo', 4000)
+                } else {
+                    modalOpen = true;
+                    clearInterval(refreshInterval);
+                    document.getElementById("tablem").rows[fila - 1].cells[col - 1].classList.remove('transitionBorder');
+                    $('#modalPv2').data('fila', fila - 1)
+                    $('#modalPv2').data('columna', col - 1)
+                    $('#modalPv2').modal('open');
+                    $('.cardChatPv2').html(htmlPrivado[fila - 1][col - 1])
+                    $('#BandejaPv2').scrollTop($('#BandejaPv2')[0].scrollHeight - $('#BandejaPv2')[0].clientHeight);
+                }
             }
         }
 
@@ -27,12 +29,12 @@ sock.addEventListener('open', function (event) {
         for (var f = 1; f <= fila; f++) {
             html += "<tr>"
             for (var c = 1; c <= columna; c++) {
-                if (datatoSend.rol == "Profesor") {
+                /*if (datatoSend.rol == "Profesor") {
                     html += "<td class='box modal-trigger'> </td>";
-                } else if (datatoSend.rol == "Estudiante") {
+                } else if (datatoSend.rol == "Estudiante") {*/
                     //html += "<td onClick='posicion("+f+","+c+")' class='box modal-trigger'> </td>";
                     html += "<td data-filaTest=" + f + " data-colTest=" + c + " class='box modal-trigger'> </td>";
-                }
+                //}
 
             }
             html += "</tr>";
@@ -77,9 +79,11 @@ sock.addEventListener('open', function (event) {
             document.getElementById("tablem").rows[data.estudiante[key].fila - 1].cells[data.estudiante[key].columna - 1].innerHTML = boxStudent;
             var filaTest = document.getElementById("tablem").rows[data.estudiante[key].fila - 1].cells[data.estudiante[key].columna - 1].getAttribute("data-filaTest")
             var colTest = document.getElementById("tablem").rows[data.estudiante[key].fila - 1].cells[data.estudiante[key].columna - 1].getAttribute("data-colTest")
-            if (datatoSend.rol != 'Profesor') {
+            console.log(filaTest)
+            console.log(colTest)
+            //if (datatoSend.rol != 'Profesor') {
                 document.getElementById("tablem").rows[data.estudiante[key].fila - 1].cells[data.estudiante[key].columna - 1].setAttribute('onclick', `posicion(event,${filaTest},${colTest},'1')`);
-            }
+            //}
         }
         updateTableGroup();
     });

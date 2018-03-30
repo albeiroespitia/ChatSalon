@@ -26,7 +26,13 @@ canvas{
     height: 70px;
     box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.14), 2px 2px 2px 2px rgba(0, 0, 0, 0.12), 2px 2px 2px 5px rgba(0, 0, 0, 0.2);
     padding: 2px;
+}
 
+
+.cardInputPg2{
+    height: 70px;
+    box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.14), 2px 2px 2px 2px rgba(0, 0, 0, 0.12), 2px 2px 2px 5px rgba(0, 0, 0, 0.2);
+    padding: 2px;
 }
 
 .botonRespuestaEncuestas{
@@ -49,8 +55,8 @@ canvas{
     
 }
 #modalPv2,#modalPg2{
-    max-height: 100% !important;
-    top: 8% !important;
+    max-height: 90% !important;
+    top: 5% !important;
 }
 .modalEncuesta{
     height: 400px !important;
