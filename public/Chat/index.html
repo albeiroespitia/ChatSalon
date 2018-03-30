@@ -246,6 +246,7 @@
 	<!-- Modal mensaje privado -->
 	<div id="modalPv2" class="modal">
 		<div class="modal-content">
+			<h4 class="center">Mensaje Privado</h4>
 			<div id="BandejaPv2" class="card-panel grey lighten-3 cardChatPv2" style="margin-bottom: 0px;">
 
 			</div>
@@ -265,6 +266,38 @@
 						</label>
 
 						<input accept="image/*,video/*" name="filetouploadpv2" id="file-inputpv2" type="file" />
+					</div>
+				</form>
+
+			</div>
+
+			<p></p>
+		</div>
+	</div>
+
+	<!-- Modal mensaje privado -->
+	<div id="modalPg2" class="modal">
+		<div class="modal-content">
+			<h4 class="center">Mensaje Grupal</h4>
+			<div id="BandejaPg2" class="card-panel grey lighten-3 cardChatPg2" style="margin-bottom: 0px;">
+
+			</div>
+
+			<div class="card-panel grey lighten-3 cardInputPg2 row" style="margin-left: 20px;">
+
+				<div class="input-field col s10">
+					<i class="material-icons prefix">message</i>
+					<input id="mensajePg2" type="text" style="float:left"></input>
+					<label for="textarea1">Escribe algo...</label>
+				</div>
+
+				<form id="formSubirImagenPg2" enctype="multipart/form-data" action="/imageUpload" method="post">
+					<div class="image-upload col s2">
+						<label for="file-inputpg2">
+							<img src="https://image.flaticon.com/icons/svg/25/25315.svg" />
+						</label>
+
+						<input accept="image/*,video/*" name="filetouploadpg2" id="file-inputpg2" type="file" />
 					</div>
 				</form>
 
@@ -332,6 +365,8 @@
 	<script src="js/eventosMensaje.js"></script>
 	<script src="js/eventosMensajePrivado.js"></script>
 	<script src="js/eventosGrupoTrabajo.js"></script>
+	<script src="js/eventosMensajeGrupal.js"></script>
+
 
 </body>
 

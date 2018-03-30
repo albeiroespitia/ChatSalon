@@ -7,10 +7,19 @@
     $('.modal').modal({
     	endingTop: '20%', // Ending top style attribute
 
-	});
-	
-	
+    });
+
+
     var htmlPrivado = [
+    	['', '', '', '', '', '', ''],
+    	['', '', '', '', '', '', ''],
+    	['', '', '', '', '', '', ''],
+    	['', '', '', '', '', '', ''],
+    	['', '', '', '', '', '', ''],
+    	['', '', '', '', '', '', ''],
+    	['', '', '', '', '', '', ''],
+    ];
+    var htmlGroupPrivado = [
     	['', '', '', '', '', '', ''],
     	['', '', '', '', '', '', ''],
     	['', '', '', '', '', '', ''],
@@ -69,6 +78,7 @@
     		var colTestG = $(this).attr("data-colTest")
     		$(this).removeAttr("onclick")
     		$(this).attr('onclick', `posicionGroup(${filaTestG},${colTestG})`);
+    		$(this).removeAttr('ondblclick');
     	});
     }
 

@@ -1,18 +1,22 @@
 sock.addEventListener('open', function (event) {
-    window.posicion = function (fila, col) {
-        console.log(this)
-        if ((datatoSend.fila == fila) && (datatoSend.columna == col)) {
-            Materialize.toast('No puedes enviarte un mensaje a ti mismo', 4000)
+    window.posicion = function (event, fila, col, color) {
+        if (event.ctrlKey || event.metaKey) {
+            posicionDouble(event, fila, col, color)
         } else {
-            modalOpen = true;
-            clearInterval(refreshInterval);
-            document.getElementById("tablem").rows[fila - 1].cells[col - 1].classList.remove('transitionBorder');
-            $('#modalPv2').data('fila', fila - 1)
-            $('#modalPv2').data('columna', col - 1)
-            $('#modalPv2').modal('open');
-            $('.cardChatPv2').html(htmlPrivado[fila - 1][col - 1])
-            $('#BandejaPv2').scrollTop($('#BandejaPv2')[0].scrollHeight - $('#BandejaPv2')[0].clientHeight);
+            if ((datatoSend.fila == fila) && (datatoSend.columna == col)) {
+                Materialize.toast('No puedes enviarte un mensaje a ti mismo', 4000)
+            } else {
+                modalOpen = true;
+                clearInterval(refreshInterval);
+                document.getElementById("tablem").rows[fila - 1].cells[col - 1].classList.remove('transitionBorder');
+                $('#modalPv2').data('fila', fila - 1)
+                $('#modalPv2').data('columna', col - 1)
+                $('#modalPv2').modal('open');
+                $('.cardChatPv2').html(htmlPrivado[fila - 1][col - 1])
+                $('#BandejaPv2').scrollTop($('#BandejaPv2')[0].scrollHeight - $('#BandejaPv2')[0].clientHeight);
+            }
         }
+
 
     }
 
@@ -74,11 +78,9 @@ sock.addEventListener('open', function (event) {
             var filaTest = document.getElementById("tablem").rows[data.estudiante[key].fila - 1].cells[data.estudiante[key].columna - 1].getAttribute("data-filaTest")
             var colTest = document.getElementById("tablem").rows[data.estudiante[key].fila - 1].cells[data.estudiante[key].columna - 1].getAttribute("data-colTest")
             if (datatoSend.rol != 'Profesor') {
-                document.getElementById("tablem").rows[data.estudiante[key].fila - 1].cells[data.estudiante[key].columna - 1].setAttribute('onclick', `posicion(${filaTest},${colTest})`);
+                document.getElementById("tablem").rows[data.estudiante[key].fila - 1].cells[data.estudiante[key].columna - 1].setAttribute('onclick', `posicion(event,${filaTest},${colTest},'1')`);
             }
         }
         updateTableGroup();
-
-
     });
 });

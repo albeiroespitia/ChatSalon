@@ -219,6 +219,40 @@ io.on('connection', function (socket) {
         socket.emit('newMessageVideoPrivate', data, arrayImage[arrayImage.length - 1], fila, columna);
     })
 
+    socket.on('newMessageGrupal', function (data, value, color) {
+        var messagePosition= {
+            p : []
+        }
+
+        fullDataGroups.groups.forEach(function (element) {
+            if (element.color == color) {
+                messagePosition.p.push({fila:element.lead.fila-1,columna:element.lead.columna-1});
+                element.students.forEach(function (student,index) {
+                    messagePosition.p.push({fila:student.fila,columna:student.columna});
+                })
+            }
+        })
+
+        fullDataGroups.groups.forEach(function (element) {
+            if (element.color == color) {
+                if (socket.id == element.id) {
+                    socket.emit('newMessageGrupalRe', data, value, color, messagePosition.p);
+                } else {
+                    socket.to(element.id).emit('newMessageGrupalRe', data, value, color, messagePosition.p);
+                }
+                element.students.forEach(function (student) {
+                    if (socket.id == socketsID[student.fila][student.columna]) {
+                        socket.emit('newMessageGrupalRe', data, value, color, messagePosition.p);
+                    } else {
+                        socket.to(socketsID[student.fila][student.columna]).emit('newMessageGrupalRe', data, value, color, messagePosition.p);
+                    }
+                })
+            }
+        })
+        //socket.to(socketsID[fila][columna]).emit('newMessageGrupal', data, value,color);
+        socket.emit('newMessageGrupal', data, value, color);
+    })
+
     socket.on('sendEncuesta', function (data) {
         encuestaData.push(data);
         respuesta.push([0, 0, 0, 0]);
@@ -288,7 +322,7 @@ io.on('connection', function (socket) {
                     element.lead = ''
                     console.log("lider")
                 } else {
-                    element.students.forEach(function (student,index) {
+                    element.students.forEach(function (student, index) {
                         console.log(student.fila)
                         console.log(student.columna)
                         console.log(util.inspect(socketsID, false, null))
