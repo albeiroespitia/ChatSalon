@@ -233,6 +233,8 @@ io.on('connection', function (socket) {
             }
         })
 
+        socket.to(fullData.profesor.id).emit('newMessageGrupalRe', data, value, color,messagePosition.p);
+
         fullDataGroups.groups.forEach(function (element) {
             if (element.color == color) {
                 if (socket.id == element.id) {
@@ -250,7 +252,10 @@ io.on('connection', function (socket) {
             }
         })
         //socket.to(socketsID[fila][columna]).emit('newMessageGrupal', data, value,color);
-        socket.emit('newMessageGrupal', data, value, color);
+        if(socket.id == fullData.profesor.id){
+            socket.emit('newMessageGrupalRe', data, value, color,messagePosition.p);
+        }
+
     })
 
     // Recibe encuesta creada
@@ -289,7 +294,7 @@ io.on('connection', function (socket) {
     });
 
     socket.on('disconnect', function () {
-        console.log("Al comienzo" + util.inspect(fullData, false, null))
+        //console.log("Al comienzo" + util.inspect(fullData, false, null))
         if (fullData.profesor.id == socket.id) {
 
             io.sockets.emit('disconnectAllSockets');
@@ -318,19 +323,19 @@ io.on('connection', function (socket) {
         } else {
 
             fullDataGroups.groups.forEach(function (element) {
-                console.log(socket.id)
+                //console.log(socket.id)
                 if (element.id == socket.id) {
                     element.lead = ''
-                    console.log("lider")
+                    //console.log("lider")
                 } else {
                     element.students.forEach(function (student, index) {
-                        console.log(student.fila)
-                        console.log(student.columna)
-                        console.log(util.inspect(socketsID, false, null))
+                        //console.log(student.fila)
+                        //console.log(student.columna)
+                        //console.log(util.inspect(socketsID, false, null))
                         if (socketsID[student.fila][student.columna] == socket.id) {
                             delete element.students[index];
-                            console.log(util.inspect(element.students[index], false, null))
-                            console.log("no lider")
+                            //console.log(util.inspect(element.students[index], false, null))
+                            //console.log("no lider")
                             element.students = element.students.filter(function (x) {
                                 return (x !== (undefined || 'a' || ''));
                             });
@@ -351,7 +356,7 @@ io.on('connection', function (socket) {
 
 
 
-            console.log(util.inspect(fullDataGroups, false, null))
+            //console.log(util.inspect(fullDataGroups, false, null))
 
             fullData.estudiante = fullData.estudiante.filter(function (x) {
                 return (x !== (undefined || 'a' || ''));

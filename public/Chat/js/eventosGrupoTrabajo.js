@@ -15,21 +15,29 @@ sock.addEventListener('open', function (event) {
     }
 
     window.posicionDouble = function (event, fila, col, color) {
-        console.log("el color es" +color)
+        console.log("el color es" + color)
         //modalOpen = true;
         //clearInterval(refreshInterval);
         //document.getElementById("tablem").rows[fila - 1].cells[col - 1].classList.remove('transitionBorder');
         if (color == '1') {
             Materialize.toast('Esta persona no tiene un grupo', 4000)
         } else {
-            if (sessionStorage.getItem('myColor') == color) {
+            if (datatoSend.rol == "Profesor") {
                 $('#modalPg2').data('colorModal', color)
                 $('#modalPg2').modal('open');
                 $('.cardChatPg2').html(htmlGroupPrivado[fila - 1][col - 1])
                 $('#BandejaPg2').scrollTop($('#BandejaPg2')[0].scrollHeight - $('#BandejaPg2')[0].clientHeight);
             } else {
-                Materialize.toast('Esta persona no pertenece a tu grupo', 4000)
+                if (sessionStorage.getItem('myColor') == color) {
+                    $('#modalPg2').data('colorModal', color)
+                    $('#modalPg2').modal('open');
+                    $('.cardChatPg2').html(htmlGroupPrivado[fila - 1][col - 1])
+                    $('#BandejaPg2').scrollTop($('#BandejaPg2')[0].scrollHeight - $('#BandejaPg2')[0].clientHeight);
+                } else {
+                    Materialize.toast('Esta persona no pertenece a tu grupo', 4000)
+                }
             }
+
         }
 
 
@@ -153,6 +161,20 @@ sock.addEventListener('open', function (event) {
         }
         updateTableGroup();
 
+        $('#tablem').find('td').each(function () {
+            console.log("entro")
+            var attrC = $(this).attr("data-color-temp")
+            console.log(attrC)
+            if (typeof attrC !== typeof undefined && attrC !== false) {
+                var colorDelete = colorsPick.indexOf(attrC)
+                colorsPick.splice(colorDelete, 1);
+                console.log("entro")
+            }
+        });
+        console.log(pk)
+        window.pk = new Piklor(".color-picker", colorsPick, {
+            open: ".sendColorButton"
+        }), wrapperEl = pk.getElm(".picker-wrapper");
 
     })
 
