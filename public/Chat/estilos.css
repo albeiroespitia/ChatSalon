@@ -1,6 +1,12 @@
 nav{
     background-color: transparent;
 }
+.nav-wrapper{
+    background-color: #f5f6fa !important;
+}
+body{
+    background-color: #FF794D !important;
+}
 
 .logo{
     font-weight: 300;
