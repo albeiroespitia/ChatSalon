@@ -9,6 +9,12 @@
 
     });
 
+    if (performance.navigation.type == 1) {
+		window.location.replace("/");
+    } else {
+    	console.info("This page is not reloaded");
+    }
+
 
     var htmlPrivado = [
     	['', '', '', '', '', '', ''],
