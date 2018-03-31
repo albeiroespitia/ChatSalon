@@ -117,6 +117,15 @@ app.post('/check', (req, res) => {
         })
     }
 })
+app.post('/encuestasPendiente', function (req, res) {
+    console.log("Peticion postt")
+    console.log(req.body)
+    console.log(util.inspect(req.body, false, null))
+    res.send({
+        sw: 'true'
+    });
+    res.end();
+})
 
 app.get('/', (req, res) => {
     res.sendFile(path.resolve(__dirname + '/../../public/Login/index.html'))
@@ -160,7 +169,7 @@ io.on('connection', function (socket) {
         socket.emit('sendMatrixSize', fullData.profesor.fila, fullData.profesor.columna);
         io.sockets.emit('generalMatrix', fullData);
         io.sockets.emit('checkLabel', fullData);
-        io.sockets.emit('newEncuesta', encuestaData);
+        io.sockets.emit('newEncuesta', encuestaData, respuesta);
         io.sockets.emit('isConnected', fullData.estudiante[contadorPersonas]);
         io.sockets.emit('checkButton', encuestasInfo);
         if (fullDataGroups.groups.length > 0) {
@@ -220,20 +229,26 @@ io.on('connection', function (socket) {
     })
 
     socket.on('newMessageGrupal', function (data, value, color) {
-        var messagePosition= {
-            p : []
+        var messagePosition = {
+            p: []
         }
 
         fullDataGroups.groups.forEach(function (element) {
             if (element.color == color) {
-                messagePosition.p.push({fila:element.lead.fila-1,columna:element.lead.columna-1});
-                element.students.forEach(function (student,index) {
-                    messagePosition.p.push({fila:student.fila,columna:student.columna});
+                messagePosition.p.push({
+                    fila: element.lead.fila - 1,
+                    columna: element.lead.columna - 1
+                });
+                element.students.forEach(function (student, index) {
+                    messagePosition.p.push({
+                        fila: student.fila,
+                        columna: student.columna
+                    });
                 })
             }
         })
 
-        socket.to(fullData.profesor.id).emit('newMessageGrupalRe', data, value, color,messagePosition.p);
+        socket.to(fullData.profesor.id).emit('newMessageGrupalRe', data, value, color, messagePosition.p);
 
         fullDataGroups.groups.forEach(function (element) {
             if (element.color == color) {
@@ -252,8 +267,8 @@ io.on('connection', function (socket) {
             }
         })
         //socket.to(socketsID[fila][columna]).emit('newMessageGrupal', data, value,color);
-        if(socket.id == fullData.profesor.id){
-            socket.emit('newMessageGrupalRe', data, value, color,messagePosition.p);
+        if (socket.id == fullData.profesor.id) {
+            socket.emit('newMessageGrupalRe', data, value, color, messagePosition.p);
         }
 
     })
@@ -262,7 +277,21 @@ io.on('connection', function (socket) {
     socket.on('sendEncuesta', function (data) {
         encuestaData.push(data);
         respuesta.push([0, 0, 0, 0]); // Inicializar vector de respuestas de una encuesta nueva
-        io.sockets.emit('newEncuesta', encuestaData); // Avisar a todos que hay una nueva encuesta
+        io.sockets.emit('newEncuesta', encuestaData, respuesta); // Avisar a todos que hay una nueva encuesta
+    })
+
+    socket.on('encuestasPendiente', function (alumno) {
+        console.log('Mostrar encuestas');
+        var totalNEncuestas = encuestaData.length;
+        var Respondidas = 0;
+        encuestasInfo.encuestas.forEach(function (encuesta) {
+            if (encuesta.person == alumno) {
+                Respondidas++;
+            }
+        })
+        var pendientes = totalNEncuestas - Respondidas;
+        socket.emit('encuestasPendiente', pendientes);
+        //console.log(util.inspect(encuestasInfo.encuestas, false, null));
     })
 
     socket.on('sendEncuestaResponse', function (idEncuesta, response, person, option) {
@@ -277,6 +306,11 @@ io.on('connection', function (socket) {
         //console.log(util.inspect(respuesta, false, null));
         io.sockets.emit('newResponseEncuesta', encuestasInfo.encuestas, respuesta);
     })
+
+    socket.on('IniciarCanvasExistentes', function () {
+        socket.emit('IniciarCanvasExistentes', encuestaData.length, respuesta);
+    })
+
 
     socket.on('sendGroupData', function (data) {
         data.id = socketsID[data.lead.fila - 1][data.lead.columna - 1];
