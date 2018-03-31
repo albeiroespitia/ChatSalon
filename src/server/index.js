@@ -54,6 +54,10 @@ var upload = multer({
     {
         name: 'filetouploadpv2',
         maxCount: 1
+    },,
+    {
+        name: 'filetouploadpg2',
+        maxCount: 1
     }
 ])
 
@@ -70,6 +74,8 @@ app.post('/imageUpload', function (req, res) {
             var archivo = req.files.filetoupload[0]
         } else if (req.files.filetouploadpv2) {
             var archivo = req.files.filetouploadpv2[0]
+        }else if (req.files.filetouploadpg2) {
+            var archivo = req.files.filetouploadpg2[0]
         }
         if (archivo) {
             var formatImg = /jpg|jpeg|png|gif/;
@@ -220,20 +226,26 @@ io.on('connection', function (socket) {
     })
 
     socket.on('newMessageGrupal', function (data, value, color) {
-        var messagePosition= {
-            p : []
+        var messagePosition = {
+            p: []
         }
 
         fullDataGroups.groups.forEach(function (element) {
             if (element.color == color) {
-                messagePosition.p.push({fila:element.lead.fila-1,columna:element.lead.columna-1});
-                element.students.forEach(function (student,index) {
-                    messagePosition.p.push({fila:student.fila,columna:student.columna});
+                messagePosition.p.push({
+                    fila: element.lead.fila - 1,
+                    columna: element.lead.columna - 1
+                });
+                element.students.forEach(function (student, index) {
+                    messagePosition.p.push({
+                        fila: student.fila,
+                        columna: student.columna
+                    });
                 })
             }
         })
 
-        socket.to(fullData.profesor.id).emit('newMessageGrupalRe', data, value, color,messagePosition.p);
+        socket.to(fullData.profesor.id).emit('newMessageGrupalRe', data, value, color, messagePosition.p);
 
         fullDataGroups.groups.forEach(function (element) {
             if (element.color == color) {
@@ -252,8 +264,106 @@ io.on('connection', function (socket) {
             }
         })
         //socket.to(socketsID[fila][columna]).emit('newMessageGrupal', data, value,color);
-        if(socket.id == fullData.profesor.id){
-            socket.emit('newMessageGrupalRe', data, value, color,messagePosition.p);
+        if (socket.id == fullData.profesor.id) {
+            socket.emit('newMessageGrupalRe', data, value, color, messagePosition.p);
+        }
+
+    })
+
+    socket.on('newMessageImageGrupal', function (data, color) {
+        console.log(color)
+        var messagePosition2 = {
+            p: []
+        }
+
+        fullDataGroups.groups.forEach(function (element) {
+            if (element.color == color) {
+                messagePosition2.p.push({
+                    fila: element.lead.fila - 1,
+                    columna: element.lead.columna - 1
+                });
+                element.students.forEach(function (student, index) {
+                    messagePosition2.p.push({
+                        fila: student.fila,
+                        columna: student.columna
+                    });
+                })
+            }
+        })
+
+        socket.to(fullData.profesor.id).emit('newMessageImageGrupalRe', data, arrayImage[arrayImage.length - 1], color, messagePosition2.p);
+        console.log(util.inspect(fullDataGroups, false, null))
+        fullDataGroups.groups.forEach(function (element) {
+            if (element.color == color) {
+                console.log("entro Y")
+                if (socket.id == element.id) {
+                    socket.emit('newMessageImageGrupalRe', data, arrayImage[arrayImage.length - 1], color, messagePosition2.p);
+                } else {
+                    socket.to(element.id).emit('newMessageImageGrupalRe', data, arrayImage[arrayImage.length - 1], color, messagePosition2.p);
+                }
+                element.students.forEach(function (student) {
+                    if (socket.id == socketsID[student.fila][student.columna]) {
+                        console.log("entro z")
+                        socket.emit('newMessageImageGrupalRe', data, arrayImage[arrayImage.length - 1], color, messagePosition.p);
+                    } else {
+                        console.log("entro x")
+                        socket.to(socketsID[student.fila][student.columna]).emit('newMessageImageGrupalRe', data, arrayImage[arrayImage.length - 1], color, messagePosition2.p);
+                    }
+                })
+            }
+        })
+        //socket.to(socketsID[fila][columna]).emit('newMessageGrupal', data, value,color);
+        if (socket.id == fullData.profesor.id) {
+            socket.emit('newMessageImageGrupalRe', data, arrayImage[arrayImage.length - 1], color, messagePosition2.p);
+        }
+
+    })
+
+    socket.on('newMessageVideoGrupal', function (data, color) {
+        console.log(color)
+        var messagePosition2 = {
+            p: []
+        }
+
+        fullDataGroups.groups.forEach(function (element) {
+            if (element.color == color) {
+                messagePosition2.p.push({
+                    fila: element.lead.fila - 1,
+                    columna: element.lead.columna - 1
+                });
+                element.students.forEach(function (student, index) {
+                    messagePosition2.p.push({
+                        fila: student.fila,
+                        columna: student.columna
+                    });
+                })
+            }
+        })
+
+        socket.to(fullData.profesor.id).emit('newMessageVideoGrupalRe', data, arrayImage[arrayImage.length - 1], color, messagePosition2.p);
+        console.log(util.inspect(fullDataGroups, false, null))
+        fullDataGroups.groups.forEach(function (element) {
+            if (element.color == color) {
+                console.log("entro Y")
+                if (socket.id == element.id) {
+                    socket.emit('newMessageVideoGrupalRe', data, arrayImage[arrayImage.length - 1], color, messagePosition2.p);
+                } else {
+                    socket.to(element.id).emit('newMessageVideoGrupalRe', data, arrayImage[arrayImage.length - 1], color, messagePosition2.p);
+                }
+                element.students.forEach(function (student) {
+                    if (socket.id == socketsID[student.fila][student.columna]) {
+                        console.log("entro z")
+                        socket.emit('newMessageVideoGrupalRe', data, arrayImage[arrayImage.length - 1], color, messagePosition.p);
+                    } else {
+                        console.log("entro x")
+                        socket.to(socketsID[student.fila][student.columna]).emit('newMessageVideoGrupalRe', data, arrayImage[arrayImage.length - 1], color, messagePosition2.p);
+                    }
+                })
+            }
+        })
+        //socket.to(socketsID[fila][columna]).emit('newMessageGrupal', data, value,color);
+        if (socket.id == fullData.profesor.id) {
+            socket.emit('newMessageVideoGrupalRe', data, arrayImage[arrayImage.length - 1], color, messagePosition2.p);
         }
 
     })
