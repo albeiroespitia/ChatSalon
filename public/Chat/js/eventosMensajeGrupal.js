@@ -1,7 +1,6 @@
-
 sock.addEventListener('open', function (event) {
 
-    socket.on('newMessageGrupalRe', function (data, value,color,positions) {
+    socket.on('newMessageGrupalRe', function (data, value, color, positions) {
         console.log("esta llegando")
         console.log(positions)
         var htmlMessage = `<div class="col s12 mensajeUserPg2">
@@ -21,12 +20,12 @@ sock.addEventListener('open', function (event) {
                                 </tr>
                             </table>
                         </div>`;
-        positions.forEach(function(element){
+        positions.forEach(function (element) {
             htmlGroupPrivado[element.fila][element.columna] += htmlMessage;
         })
         //htmlGroupPrivado[data.fila-1][data.columna-1] += htmlMessage;
         $('.cardChatPg2').html(htmlGroupPrivado[positions[0].fila][positions[0].columna])
-        
+
 
         /*if(data.nombre != datatoSend.nombre){
             if(!modalOpen){
@@ -37,12 +36,15 @@ sock.addEventListener('open', function (event) {
             
         }*/
         // Dejar scroll abajo
-        $('#BandejaPg2').scrollTop($('#BandejaPg2')[0].scrollHeight - $('#BandejaPgW 2')[0].clientHeight);
-
+        //$('#BandejaPg2').scrollTop($('#BandejaPg2')[0].scrollHeight - $('#BandejaPgW 2')[0].clientHeight);
+        var element = document.getElementById("BandejaPg2");
+        element.scrollTop = element.scrollHeight;
     })
 
-    
-    /*socket.on('newMessageVideoPrivate', function (data, src,fila,columna) {
+
+    socket.on('newMessageVideoGrupalRe', function (data, src, color, positions) {
+        console.log(positions)
+        console.log("entro aqui vale")
         var htmlMessageI = `<div class="col s12 mensajeUser">
                     <table>
                         <tr>
@@ -65,24 +67,28 @@ sock.addEventListener('open', function (event) {
                     </table>
                 </div>`
 
-        htmlPrivado[fila][columna] += htmlMessageI;
-        $('.cardChatPv2').html(htmlPrivado[fila][columna])
+        positions.forEach(function (element) {
+            htmlGroupPrivado[element.fila][element.columna] += htmlMessageI;
+        })
+        $('.cardChatPg2').html(htmlGroupPrivado[positions[0].fila][positions[0].columna])
 
-        if(data.nombre != datatoSend.nombre){
+        /*if(data.nombre != datatoSend.nombre){
             if(!modalOpen){
                 refreshInterval = setInterval(function(){
                     document.getElementById("tablem").rows[fila].cells[columna].classList.toggle('transitionBorder');
                 },1000)
             }
             
-        }
+        }*/
 
         // Dejar scroll abajo
-        $('#BandejaPv2').scrollTop($('#BandejaPv2')[0].scrollHeight - $('#BandejaPv2')[0].clientHeight);
-
+        //$('#BandejaPg2').scrollTop($('#BandejaPg2')[0].scrollHeight - $('#BandejaPg2')[0].clientHeight);
+        var element = document.getElementById("BandejaPg2");
+        element.scrollTop = element.scrollHeight;
     })
 
-    socket.on('newMessageImagePrivate', function (data, src,fila,columna) {
+
+    socket.on('newMessageImageGrupalRe', function (data, src, color, positions) {
         var htmlMessageI = `<div class="col s12 mensajeUser">
                                 <table>
                                     <tr>
@@ -100,24 +106,27 @@ sock.addEventListener('open', function (event) {
                                     </tr>
                                 </table>
                             </div>`
-        htmlPrivado[fila][columna] += htmlMessageI;
-        $('.cardChatPv2').html(htmlPrivado[fila][columna])
+        positions.forEach(function (element) {
+            htmlGroupPrivado[element.fila][element.columna] += htmlMessageI;
+        })
+        $('.cardChatPg2').html(htmlGroupPrivado[positions[0].fila][positions[0].columna])
         $('.materialboxed').materialbox();
-        
 
-        if(data.nombre != datatoSend.nombre){
+
+        /*if(data.nombre != datatoSend.nombre){
             if(!modalOpen){
                 refreshInterval = setInterval(function(){
                     document.getElementById("tablem").rows[fila].cells[columna].classList.toggle('transitionBorder');
                 },1000)
             }
             
-        }
-        
-        // Dejar scroll abajo
-        $('#BandejaPv2').scrollTop($('#BandejaPv2')[0].scrollHeight - $('#BandejaPv2')[0].clientHeight);
+        }*/
 
-    })*/
+        // Dejar scroll abajo
+        //$('#BandejaPg2').scrollTop($('#BandejaPg2')[0].scrollHeight - $('#BandejaPg2')[0].clientHeight);
+        var element = document.getElementById("BandejaPg2");
+        element.scrollTop = element.scrollHeight;
+    })
 
 
     // ----- EMIT ------------------------------------------------
@@ -130,15 +139,15 @@ sock.addEventListener('open', function (event) {
         if (event.which == 13) {
             var myInput = document.getElementById("mensajePg2");
             if (!isEmpty(myInput.value)) {
-                socket.emit('newMessageGrupal', datatoSend, myInput.value,$('#modalPg2').data('colorModal'))
+                socket.emit('newMessageGrupal', datatoSend, myInput.value, $('#modalPg2').data('colorModal'))
                 sock.send('message', datatoSend, myInput.value)
             }
             $('#mensajePg2').val('');
-            }
+        }
     });
 
-    
-    /*// Imagenes y videos
+
+    // Imagenes y videos
     $("#file-inputpg2").change(function () {
         $('#formSubirImagenPg2').submit();
     });
@@ -149,16 +158,16 @@ sock.addEventListener('open', function (event) {
                 console.log(data.resp)
                 if (data.resp != 'invalidFile') {
                     if (data.resp == 'image') {
-                        socket.emit('newMessageImagePrivate', datatoSend,$('#modalPv2').data('fila'),$('#modalPv2').data('columna'))
+                        socket.emit('newMessageImageGrupal', datatoSend, $('#modalPg2').data('colorModal'))
                         sock.send('message', datatoSend)
                         Materialize.toast('Imagen enviado', 4000)
                     }
                     if (data.resp == 'video') {
-                        socket.emit('newMessageVideoPrivate', datatoSend,$('#modalPv2').data('fila'),$('#modalPv2').data('columna'))
+                        socket.emit('newMessageVideoGrupal', datatoSend, $('#modalPg2').data('colorModal'))
                         sock.send('message', datatoSend)
                         Materialize.toast('Video enviado', 4000)
                     }
-                    
+
                 } else {
                     Materialize.toast('Extension de archivo invalida', 4000)
                 }
@@ -167,6 +176,6 @@ sock.addEventListener('open', function (event) {
         $(this).ajaxSubmit(options);
         //Very important line, it disable the page refresh.
         return false;
-    });*/
+    });
 
 });
