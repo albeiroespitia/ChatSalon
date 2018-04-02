@@ -109,6 +109,8 @@ sock.addEventListener('open', function (event) {
             socket.emit('sendGroupData', workGroupData)
             sock.send('message', datatoSend)
             updateTableGroup();
+            Materialize.toast('Para mandar un mensaje grupal, dar Ctrl+Click sobre la persona', 10000)
+            Materialize.toast('Para mandar un mensaje privado, dar Click sobre la persona', 10000)
         }
     })
 
