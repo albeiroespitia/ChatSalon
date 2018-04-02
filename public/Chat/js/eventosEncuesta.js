@@ -9,10 +9,10 @@ function inicializarCanvas(n) {
 
     window.oilData = {
         labels: [
-            "A.",
-            "B.",
-            "C.",
-            "D.",
+            "A. "+DataEncuestas[n].opcion1,
+            "B. "+DataEncuestas[n].opcion2,
+            "C. "+DataEncuestas[n].opcion3,
+            "D. "+DataEncuestas[n].opcion4,
         ],
         datasets: [{
             data: [0, 0, 0, 0],
@@ -39,14 +39,24 @@ function inicializarCanvas(n) {
         responsive: true,
         maintainAspectRatio: true,
         showScale: true,
-        animateScale: true
+        animateScale: true,
+    
 
     };
 
     graficaDonas[n] = new Chart(oilCanvas, {
         type: 'doughnut',
         data: oilData,
-        options: chartOptions
+        options: {chartOptions,
+            legend: {
+                display: true,
+                align: 'right',
+                layout: 'vertical',
+                verticalAlign: 'top',
+                x: 40,
+                y: 0
+            }
+        }
     });
 
 }
@@ -62,17 +72,23 @@ function ActualizarCanvas(opciones, n) {
 }
 
 function agregarCanvasHTML(i) {
-
-    $('#contenedorPagination').append(' <a onclick="mostrarCanvasHtml(' + (i + 1) + ');" class="btn-floating btn waves-effect waves-light red btnEnc">' + (i + 1) + '</a>')
+    var htmlPag = '<li class="waves-effect"><a  class="btn-PagCanvas" onclick="mostrarCanvasHtml(' + (i + 1) + ');">' + (i + 1) + '</a></li>'
+    $('#contenedorPagination').append(htmlPag)
     // Crear canvas
     var htmlCanvas = '<canvas id="grafica' + i + '" width="703" height="703" style="display: none; width: 703px; height: 703px;" class="chartjs-render-monitor"></canvas>';
     $('#contenedorCanvas').append(htmlCanvas);
 }
 
+// Manejar las paginaciones de canvas
+$(document).on('click', '.btn-PagCanvas', function () {
+    $('#contenedorPagination > li.active').removeClass('active');
+    $(this).parent().addClass('active')
+});
 
 function mostrarCanvasHtml(n) { // N es la posicion del canvas a mostrar
     $('#contenedorCanvas canvas').css("display", "none"); // Ocultar todos los canvas
     $(`#grafica${n-1}`).css("display", "block");
+    $('#preguntaCanvas').html(DataEncuestas[n-1].pregunta)
 }
 
 sock.addEventListener('open', function (event) {
@@ -94,7 +110,7 @@ sock.addEventListener('open', function (event) {
             opcion3: opcion3,
             opcion4: opcion4
         }
-
+        $('.formEncuesta')[0].reset()
         $('#modal1').modal('close');
 
         $('input[name="preguntaInput"]').val('')
@@ -118,20 +134,32 @@ sock.addEventListener('open', function (event) {
         $('.btnSelEncuesta').html('');
         $('#contenedorPagination').html('');
         $('#contenedorCanvas').html('');
-        $.each(data, function (index, value) {
-            $('.btnSelEncuesta').append(' <a class="btn-floating btn-large waves-effect waves-light red btnEnc">' + (index + 1) + '</a>')
+        DataEncuestas = data;
+        var n = EncuestaRespondidas.length;
+
+        $.each(data, function (index, value) { // btnEnc
+            var htmlPg = '';
+            if (index == n) {
+                htmlPg = '<li class="waves-effect active"><a class="btnEnc">' + (index + 1) + '</a></li>'
+            } else {
+                htmlPg = '<li class="waves-effect"><a class="btnEnc">' + (index + 1) + '</a></li>'
+            }
+            $('.btnSelEncuesta').append(htmlPg)
             agregarCanvasHTML(index);
             inicializarCanvas(index);
         });
-        DataEncuestas = data;
 
         if (data != '') {
             $('.botonRespuestaEncuestas').css("cssText", "visibility: visible !important;");
         }
+
         if (datatoSend.rol == "Estudiante") {
+            console.log('DATAAAAAAA')
+            console.log(data);
             if (data == '') {
                 $('.botonCrearEncuesta').addClass('disabled');
             } else {
+                MostrarEncuestaEnModal(n);
                 $('.botonCrearEncuesta').removeClass('disabled');
             }
         }
@@ -144,7 +172,8 @@ sock.addEventListener('open', function (event) {
 
     // 
     socket.on('checkButton', function (data) {
-
+        console.log("Check")
+        console.log(datatoSend)
         if (data.encuestas[0] != undefined) {
             data.encuestas.forEach(function (value, index) {
 
@@ -167,22 +196,15 @@ sock.addEventListener('open', function (event) {
     })
 
     $(document).on('click', '.btnEnc', function () {
-        if (datatoSend.rol == 'Estudiante') {
-            var n = parseInt($(this).html().split('')[0]) - 1;
-            $('.botonCrearEncuesta').removeClass('disabled');
-            $('#idEncuesta').val(n);
-            $('.preguntaModalNuevo').html(DataEncuestas[n].pregunta);
-            $('.opcion1ModalNuevo').html(DataEncuestas[n].opcion1);
-            $('.opcion2ModalNuevo').html(DataEncuestas[n].opcion2);
-            $('.opcion3ModalNuevo').html(DataEncuestas[n].opcion3);
-            $('.opcion4ModalNuevo').html(DataEncuestas[n].opcion4);
-            $('#modalSelEncuesta').modal('close');
-            $('#modal2').modal('open');
-        }
+        // 
+        Materialize.toast('Envia la encuesta actual para seguir a la siguiente', 4000)
     });
+
     // --- EMIT
     $('.formsendREncuesta').submit(function (event) {
         event.preventDefault();
+
+        // Enviamos la encuesta al servidor
         var idEncuesta = $("#idEncuesta").val();
         var selectedOption = $("input[name=group1]:checked").next().text();
         var selectedOptionid = $("input[name=group1]:checked").attr('id');
@@ -191,14 +213,36 @@ sock.addEventListener('open', function (event) {
         EncuestaRespondidas.push({
             id: idEncuesta
         });
+        $('.formsendREncuesta')[0].reset(); // Limpiar form
+        // Nos situamos en la siguiente encuesta
+        var a = $('.btnSelEncuesta > li.active');
+
+        if (!a.is(':last-child')) {
+            a.next().addClass('active');
+            a.removeClass('active')
+            a.addClass('disabled')
+            var n = parseInt(a.next().children().html());
+            MostrarEncuestaEnModal(n - 1);
+        }
 
         if ('no' == hayEncuestaPendientes()) {
+            $('#modal2').modal('close');
             $('.botonCrearEncuesta').addClass('disabled'); // Si no existen mas encuestas
         }
-        $('#modal2').modal('close');
     })
 })
 
+function MostrarEncuestaEnModal(n) {
+    if (datatoSend.rol == 'Estudiante') {
+        $('.botonCrearEncuesta').removeClass('disabled');
+        $('#idEncuesta').val(n);
+        $('.preguntaModalNuevo').html(DataEncuestas[n].pregunta);
+        $('.opcion1ModalNuevo').html(DataEncuestas[n].opcion1);
+        $('.opcion2ModalNuevo').html(DataEncuestas[n].opcion2);
+        $('.opcion3ModalNuevo').html(DataEncuestas[n].opcion3);
+        $('.opcion4ModalNuevo').html(DataEncuestas[n].opcion4);
+    }
+}
 
 function hayEncuestaPendientes() {
     var sw = 'no';

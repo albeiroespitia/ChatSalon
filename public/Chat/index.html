@@ -143,29 +143,34 @@
 					<a class="col s5 botonEnviarMensaje waves-effect waves-light red btn-large">
 						<i class="material-icons right">send</i>Enviar</a>
 					<a class="col s6 botonCrearEncuesta waves-effect modal-trigger waves-light teal darken-1 btn-large" href="#modal1">
-						<i class="material-icons right">format_indent_increase</i>Encuesta</a>
+						<i class="material-icons right">format_indent_increase</i>Nueva Encuesta</a>
 
 					<!-- Modal Structure -->
 					<div id="modal2" class="modal modalEncuestaCliente">
 						<form class="formsendREncuesta">
 							<div class="modal-content">
-								<h4>Nueva encuesta</h4>
+								
+								<ul class="pagination btnSelEncuesta"></ul>
 								<input id="idEncuesta" type='hidden' />
-								<p class="preguntaModalNuevo">¿Ella te ama?</p>
-
+								<i class="material-icons prefix">question</i>
+								<h4 class="preguntaModalNuevo">¿Ella te ama?</h4>
 								<p>
+									<b>A.</b>
 									<input class="with-gap" name="group1" type="radio" id="0" />
 									<label for="0" class="opcion1ModalNuevo">OpcionA</label>
 								</p>
 								<p>
+									<b>B.</b>
 									<input class="with-gap" name="group1" type="radio" id="1" />
 									<label for="1" class="opcion2ModalNuevo">OpcionB</label>
 								</p>
 								<p>
+									<b>C.</b>
 									<input class="with-gap" name="group1" type="radio" id="2" />
 									<label for="2" class="opcion3ModalNuevo">OpcionC</label>
 								</p>
 								<p>
+									<b>D.</b>
 									<input class="with-gap" name="group1" type="radio" id="3" />
 									<label for="3" class="opcion4ModalNuevo">OpcionD</label>
 								</p>
@@ -173,7 +178,8 @@
 
 							</div>
 							<div class="modal-footer">
-								<button href="#!" type="submit" class="modal-action waves-effect waves-green btn-flat">Enviar</buttona>
+								<button href="#!" type="submit" class="modal-action waves-effect waves-green btn">
+									<i class="material-icons right">navigate_next</i>Enviar</buttona>
 							</div>
 						</form>
 					</div>
@@ -183,28 +189,33 @@
 						<div class="modal-content">
 							<form class="formEncuesta">
 								<center>
-									<h4>Crear encuesta</h4>
+									<h4>Añadir nueva encuesta</h4>
 								</center>
 								<div class="col s1">
 								</div>
 
 								<div class="input-field col s10">
+									<i class="material-icons prefix">help</i>
 									<input type="text" name="preguntaInput" required class="validate">
 									<label>Pregunta</label>
 								</div>
 								<div class="input-field col s6">
+									<i class="material-icons prefix">label</i>
 									<input name="opcion1Input" type="text" required class="validate">
 									<label>Opcion A</label>
 								</div>
 								<div class="input-field col s6">
+									<i class="material-icons prefix">label</i>
 									<input name="opcion2Input" type="text" required class="validate">
 									<label>Opcion B</label>
 								</div>
 								<div class="input-field col s6">
+									<i class="material-icons prefix">label</i>
 									<input name="opcion3Input" type="text" required class="validate">
 									<label>Opcion C</label>
 								</div>
 								<div class="input-field col s6">
+									<i class="material-icons prefix">label</i>
 									<input name="opcion4Input" type="text" required class="validate">
 									<label>Opcion D</label>
 								</div>
@@ -212,7 +223,7 @@
 						</div>
 						<div class="modal-footer">
 							<center>
-								<button type="submit" href="#!" class="modal-action waves-effect waves-green btn-large sendEncuesta">Enviar</button>
+								<button type="submit" href="#!" class="modal-action waves-effect waves-green btn-large sendEncuesta">Crear</button>
 							</center>
 						</div>
 						</form>
@@ -228,12 +239,11 @@
 	<!-- Modal Structure -->
 	<div id="modal4" class="modal">
 		<div class="modal-content">
-			<h4>Selecciona una encuesta</h4>
-			<div id="contenedorPagination">
-			</div>
-			<center id='contenedorCanvas'>
+			<ul class="pagination" id="contenedorPagination"></ul>
+			<h4 id="preguntaCanvas">Selecciona una encuesta</h4>
+			<div id='contenedorCanvas'>
 				<!-- <canvas id="oilChart" width="40" height="40"></canvas> -->
-			</center>
+			</div>
 		</div>
 	</div>
 

@@ -7,9 +7,17 @@ nav{
 body{
     background-color: #FF794D !important;
 }
-
+ul {
+    text-align: center;
+}
 .logo{
     font-weight: 300;
+}
+.pagination li.active {
+    background-color: #e67e22;
+}
+#preguntaCanvas{
+    text-align: center;
 }
 
 canvas{

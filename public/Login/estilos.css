@@ -1,7 +1,12 @@
 nav{
     background-color: transparent;
 }
-
+body{
+    background-color: #FF794D !important;
+}
+.nav-wrapper{
+    background-color: #eee !important;
+}
 .logo{
     font-weight: 300;
 }
