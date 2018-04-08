@@ -67,14 +67,14 @@ sock.addEventListener('open', function (event) {
         $('.box').html("");
         var boxStudent;
         var boxProfesor = `<span class="col s11">${data.profesor.nombre}</span>
-                            <img class="circle" width="30" src="img/${data.profesor.avatar}.svg" style="padding-top: 2px;">
+                            <img class="circle" width="30" src="Chat/img/${data.profesor.avatar}.svg" style="padding-top: 2px;">
                             <div id="wave"></div>`
 
         $('.boxProfesor').html(boxProfesor);
 
         for (var key in data.estudiante) {
             boxStudent = `<span class="col s11">${data.estudiante[key].nombre}</span>
-                    <img class="circle" width="30" src="img/${data.estudiante[key].avatar}.svg" style="padding-top: 2px;">
+                    <img class="circle" width="30" src="Chat/img/${data.estudiante[key].avatar}.svg" style="padding-top: 2px;">
                     <div id="wave"></div>`;
             document.getElementById("tablem").rows[data.estudiante[key].fila - 1].cells[data.estudiante[key].columna - 1].innerHTML = boxStudent;
             var filaTest = document.getElementById("tablem").rows[data.estudiante[key].fila - 1].cells[data.estudiante[key].columna - 1].getAttribute("data-filaTest")

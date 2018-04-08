@@ -7,7 +7,7 @@ sock.addEventListener('open', function (event) {
                             <table>
                                 <tr>
                                     <td rowspan="2" style="width: 65px;">
-                                        <img class="circle" width="50" src="img/${data.avatar}.svg">
+                                        <img class="circle" width="50" src="Chat/img/${data.avatar}.svg">
                                     </td>
                                     <td style="padding:0px">
                                         <b>${data.nombre}</b>
@@ -52,14 +52,14 @@ sock.addEventListener('open', function (event) {
                                 <b>${data.nombre}</b>
                             </td>
                             <td rowspan="2" style="width: 2px;">
-                                <img class="circle" width="50" src="img/${data.avatar}.svg">
+                                <img class="circle" width="50" src="Chat/img/${data.avatar}.svg">
                             </td>
                         </tr>
                         <tr> 
                             <td style="text-align: right;">
                                 <span>
                                 <video width="270" height="200" controls="" style="margin-left: 10px;width: 260px;">    
-                                    <source src="./../uploads/${src}" type="video/mp4">
+                                    <source src="Chat/../uploads/${src}" type="video/mp4">
                                 </video>
                                 </span>
                             </td>
@@ -96,12 +96,12 @@ sock.addEventListener('open', function (event) {
                                             <b>${data.nombre}</b>
                                         </td>
                                         <td rowspan="2" style="width: 2px;">
-                                            <img class="circle" width="50" src="img/${data.avatar}.svg">
+                                            <img class="circle" width="50" src="Chat/img/${data.avatar}.svg">
                                         </td>
                                     </tr>
                                     <tr> 
                                         <td style="text-align: right;">
-                                            <span><img class="materialboxed" width="75%" src="./../uploads/${src}"/></span>
+                                            <span><img class="materialboxed" width="75%" src="Chat/../uploads/${src}"/></span>
                                         </td>
                                     </tr>
                                 </table>
