@@ -5,6 +5,7 @@ const port = process.env.PORT || 3000;
 const app = express();
 var http = require('http').Server(app);
 var io = require('socket.io', {})(http);
+var fs = require('fs');
 const util = require('util')
 var fullData = require('./data')
 var multer = require('multer');
@@ -58,6 +59,10 @@ var upload = multer({
     {
         name: 'filetouploadpg2',
         maxCount: 1
+    },,
+    {
+        name: 'filetouploadpf2',
+        maxCount: 1
     }
 ])
 
@@ -76,6 +81,8 @@ app.post('/imageUpload', function (req, res) {
             var archivo = req.files.filetouploadpv2[0]
         }else if (req.files.filetouploadpg2) {
             var archivo = req.files.filetouploadpg2[0]
+        }else if (req.files.filetouploadpf2) {
+            var archivo = req.files.filetouploadpf2[0]
         }
         if (archivo) {
             var formatImg = /jpg|jpeg|png|gif/;
@@ -232,6 +239,29 @@ io.on('connection', function (socket) {
         //console.log("llego un mensaje")
         socket.to(socketsID[fila][columna]).emit('newMessageVideoPrivate', data, arrayImage[arrayImage.length - 1], data.fila - 1, data.columna - 1);
         socket.emit('newMessageVideoPrivate', data, arrayImage[arrayImage.length - 1], fila, columna);
+    })
+
+    socket.on('newImageProfile', function (data, fila, columna) {
+        //io.sockets.emit('newImageProfile', data, arrayImage[arrayImage.length - 1], data.fila - 1, data.columna - 1);
+        console.log(util.inspect(fullData, false, null))
+        if(data.rol == "Profesor"){
+            fullData.profesor.avatar = arrayImage[arrayImage.length - 1];
+        }else{
+            for (var key in fullData.estudiante) {
+                if (fullData.estudiante[key].id == socket.id) {
+                    fullData.estudiante[key].avatar = arrayImage[arrayImage.length - 1];
+                }
+            }
+        }
+        
+        fs.rename(path.resolve(__dirname + '/../../public/uploads/'+arrayImage[arrayImage.length - 1]), path.resolve(__dirname + '/../../public/Chat/img/'+ arrayImage[arrayImage.length - 1]),function (err){
+            if(err){
+                console.log(err)
+            }
+        });
+
+        io.sockets.emit('generalMatrix', fullData);
+        //socket.emit('newImageProfile', data, arrayImage[arrayImage.length - 1], fila, columna);
     })
 
     socket.on('newMessageGrupal', function (data, value, color) {

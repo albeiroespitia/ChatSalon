@@ -7,7 +7,7 @@ sock.addEventListener('open', function (event) {
                             <table>
                                 <tr>
                                     <td rowspan="2" style="width: 65px;">
-                                        <img class="circle" width="50" src="Chat/img/${data.avatar}.svg">
+                                        <img class="circle" width="50" src="Chat/img/${data.avatar}">
                                     </td>
                                     <td style="padding:0px">
                                         <b>${data.nombre}</b>
@@ -52,7 +52,7 @@ sock.addEventListener('open', function (event) {
                                 <b>${data.nombre}</b>
                             </td>
                             <td rowspan="2" style="width: 2px;">
-                                <img class="circle" width="50" src="Chat/img/${data.avatar}.svg">
+                                <img class="circle" width="50" src="Chat/img/${data.avatar}">
                             </td>
                         </tr>
                         <tr> 
@@ -96,7 +96,7 @@ sock.addEventListener('open', function (event) {
                                             <b>${data.nombre}</b>
                                         </td>
                                         <td rowspan="2" style="width: 2px;">
-                                            <img class="circle" width="50" src="Chat/img/${data.avatar}.svg">
+                                            <img class="circle" width="50" src="Chat/img/${data.avatar}">
                                         </td>
                                     </tr>
                                     <tr> 

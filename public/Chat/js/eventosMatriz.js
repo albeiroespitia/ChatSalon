@@ -66,16 +66,44 @@ sock.addEventListener('open', function (event) {
         console.log("recibido2")
         $('.box').html("");
         var boxStudent;
-        var boxProfesor = `<span class="col s11">${data.profesor.nombre}</span>
-                            <img class="circle" width="30" src="Chat/img/${data.profesor.avatar}.svg" style="padding-top: 2px;">
-                            <div id="wave"></div>`
-
+        var boxProfesor
+        if(datatoSend.rol == "Profesor"){
+            boxProfesor = `<form id="formSubirImagenPf2" enctype="multipart/form-data" action="/imageUpload" method="post">
+            <div class="image-uploadF col s12">
+                <span class="col s11">${data.profesor.nombre}</span>
+                <label for="file-inputpf2">
+                    <img class="circle" width="30" src="Chat/img/${data.profesor.avatar}" style="padding-top: 2px;">
+                </label>
+                <input accept="image/*" name="filetouploadpf2" id="file-inputpf2" type="file" />
+                    <div id="wave"></div>
+            </div>
+            </form>`;
+        }else{
+            boxProfesor = `<span class="col s11">${data.profesor.nombre}</span>
+            <img class="circle" width="30" src="Chat/img/${data.profesor.avatar}" style="padding-top: 2px;">
+            <div id="wave"></div>`
+        }
         $('.boxProfesor').html(boxProfesor);
 
         for (var key in data.estudiante) {
-            boxStudent = `<span class="col s11">${data.estudiante[key].nombre}</span>
-                    <img class="circle" width="30" src="Chat/img/${data.estudiante[key].avatar}.svg" style="padding-top: 2px;">
-                    <div id="wave"></div>`;
+            if((data.estudiante[key].fila == datatoSend.fila) && (data.estudiante[key].columna == datatoSend.columna)){
+                boxStudent = `<form id="formSubirImagenPf2" enctype="multipart/form-data" action="/imageUpload" method="post">
+                <div class="image-uploadF col s12">
+                    <span class="col s11">${data.estudiante[key].nombre}</span>
+                    <label for="file-inputpf2">
+                        <img class="circle" width="30" src="Chat/img/${data.estudiante[key].avatar}" style="padding-top: 2px;">
+                    </label>
+                    <input accept="image/*" name="filetouploadpf2" id="file-inputpf2" type="file" />
+                        <div id="wave"></div>
+                </div>
+                </form>`;
+                
+            }else{
+                boxStudent = `<span class="col s11">${data.estudiante[key].nombre}</span>
+                <img class="circle" width="30" src="Chat/img/${data.estudiante[key].avatar}" style="padding-top: 2px;">
+                <div id="wave"></div>`;
+            }
+            
             document.getElementById("tablem").rows[data.estudiante[key].fila - 1].cells[data.estudiante[key].columna - 1].innerHTML = boxStudent;
             var filaTest = document.getElementById("tablem").rows[data.estudiante[key].fila - 1].cells[data.estudiante[key].columna - 1].getAttribute("data-filaTest")
             var colTest = document.getElementById("tablem").rows[data.estudiante[key].fila - 1].cells[data.estudiante[key].columna - 1].getAttribute("data-colTest")
@@ -87,4 +115,7 @@ sock.addEventListener('open', function (event) {
         }
         updateTableGroup();
     });
+
+    
+
 });

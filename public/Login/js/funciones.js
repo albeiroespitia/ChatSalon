@@ -41,7 +41,7 @@ function datosFormularioLogin() {
             nombre: $(".nombreForm").val(),
             fila: $(".fila option:selected").text(),
             columna: $(".columna option:selected").text(),
-            avatar: $(".avatar option:selected").val()
+            avatar: $(".avatar option:selected").val() + '.svg'
         }
         sessionStorage.setItem("datos", JSON.stringify(data));
         socket.disconnect();

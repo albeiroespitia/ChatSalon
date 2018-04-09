@@ -281,6 +281,19 @@ table.striped>tbody>tr>td{
     cursor: pointer;
 }
 
+.image-uploadF > input
+{
+    display: none;
+}
+
+.image-uploadF img
+{
+    width: 30px;
+    cursor: pointer;
+}
+
+
+
 /* //
 
 // ANIMACION ... ESCRIBIENDO */

@@ -99,7 +99,10 @@
     	$('.botonCrearEncuesta').attr({
     		'href': '#modal2'
     	})
-    }
+	}
+	
+	Materialize.toast('Para editar la imagen de su perfil dar click en su imagen', 8000)
+
 
     /*	
 	// ENCUESTA CANVAS 
