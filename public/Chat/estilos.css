@@ -292,7 +292,9 @@ table.striped>tbody>tr>td{
     cursor: pointer;
 }
 
-
+.txtAlign{
+    text-align: left !important;
+}
 
 /* //
 
