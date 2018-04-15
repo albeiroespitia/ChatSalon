@@ -11,6 +11,11 @@ var fullData = require('./data')
 var multer = require('multer');
 var encuestasInfo = require('./encuestasR')
 var fullDataGroups = require('./workGroup')
+var screenshot = require('desktop-screenshot');
+var copyFile = require('quickly-copy-file');
+const fs2 = require('fs-extra')
+
+
 
 var contadorPersonas = 0;
 var server = require('ws').Server;
@@ -168,6 +173,9 @@ io.on('connection', function (socket) {
             'col': fullData.profesor.columna
         };
         io.sockets.emit('profesorLogeado', objeto)
+
+        
+
     });
 
     socket.on('sillasOcupadas', function () {
@@ -189,6 +197,29 @@ io.on('connection', function (socket) {
             io.sockets.emit('dataAllGroups', fullDataGroups.groups);
         }
         contadorPersonas++;
+        console.log("entro xd")
+        screenshot("screenshot.png", function(error, complete) {
+            console.log(complete)
+            if(error){
+                console.log("Screenshot failed", error);
+            }else{
+                console.log("Screenshot succeeded");
+                fs2.copy(path.resolve(__dirname + '/../../screenshot.png'), path.resolve(__dirname + '/../../public/Chat/img/screenshot.png'),function (err){
+                    if(err){
+                        console.log(err)
+                    }
+                    io.sockets.emit('newScreenshot');
+                });
+                /*fs.copyFileSync(path.resolve(__dirname + '/../../screenshot.png'), path.resolve(__dirname + '/../../public/Chat/img/screenshot.png'),function (err){
+                    if(err){
+                        console.log(err)
+                    }
+                    io.sockets.emit('newScreenshot');
+                });*/
+            }
+                
+        });
+        
     });
 
     socket.on('ProfesorTyping', function (data) {

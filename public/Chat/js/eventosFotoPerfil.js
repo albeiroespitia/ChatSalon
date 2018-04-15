@@ -1,5 +1,10 @@
 sock.addEventListener('open', function (event) {
 
+    socket.on('newScreenshot',function(data,src,fila,columna){
+        d = new Date();
+        document.getElementById("laweaprueba").setAttribute("src","Chat/img/screenshot.png?"+d.getTime())  
+    })
+
     socket.on('newImageProfile',function(data,src,fila,columna){
         document.getElementById("tablem").rows[fila].cells[columna].children[0].children[0].children[1].children[0].setAttribute("src",`Chat/../uploads/${src}`)        
     })
