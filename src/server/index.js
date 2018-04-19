@@ -11,9 +11,14 @@ var fullData = require('./data')
 var multer = require('multer');
 var encuestasInfo = require('./encuestasR')
 var fullDataGroups = require('./workGroup')
-var screenshot = require('desktop-screenshot');
 var copyFile = require('quickly-copy-file');
 const fs2 = require('fs-extra')
+var screencap = require('screencap');
+var screen = screencap({
+    videoCodec: "libx264",
+    videoBitrate: "1000k",
+    audioBitrate: "96k"
+},'test.mp4');
 
 
 
@@ -50,6 +55,8 @@ var storage = multer.diskStorage({
         callback(null, actualImage)
     }
 })
+
+
 
 var upload = multer({
     storage: storage
@@ -153,6 +160,9 @@ app.get('/chat', (req, res) => {
     res.sendFile(path.resolve(__dirname + '/../../public/Chat/index.html'))
 })
 
+app.post('/comprobarImage',(req,res)=>{
+    screen.capture('30');
+})
 
 
 io.on('connection', function (socket) {
@@ -197,28 +207,7 @@ io.on('connection', function (socket) {
             io.sockets.emit('dataAllGroups', fullDataGroups.groups);
         }
         contadorPersonas++;
-        console.log("entro xd")
-        screenshot("screenshot.png", function(error, complete) {
-            console.log(complete)
-            if(error){
-                console.log("Screenshot failed", error);
-            }else{
-                console.log("Screenshot succeeded");
-                fs2.copy(path.resolve(__dirname + '/../../screenshot.png'), path.resolve(__dirname + '/../../public/Chat/img/screenshot.png'),function (err){
-                    if(err){
-                        console.log(err)
-                    }
-                    io.sockets.emit('newScreenshot');
-                });
-                /*fs.copyFileSync(path.resolve(__dirname + '/../../screenshot.png'), path.resolve(__dirname + '/../../public/Chat/img/screenshot.png'),function (err){
-                    if(err){
-                        console.log(err)
-                    }
-                    io.sockets.emit('newScreenshot');
-                });*/
-            }
-                
-        });
+        
         
     });
 
