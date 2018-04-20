@@ -1,4 +1,3 @@
-sock.addEventListener('open', function (event) {
 
     socket.on('newMessage', function (data, value) {
         var htmlMessage = `<div class="col s12 mensajeUser">
@@ -163,7 +162,6 @@ sock.addEventListener('open', function (event) {
         var myInput = document.getElementById("mensaje");
         if (!isEmpty(myInput.value)) {
             socket.emit('newMessage', datatoSend, myInput.value)
-            sock.send('message', datatoSend, myInput.value)
         }
         $('#mensaje').val('');
     })
@@ -179,12 +177,10 @@ sock.addEventListener('open', function (event) {
                 if (data.resp != 'invalidFile') {
                     if (data.resp == 'image') {
                         socket.emit('newMessageImage', datatoSend)
-                        sock.send('message', datatoSend)
                         Materialize.toast('Imagen enviado', 4000)
                     }
                     if (data.resp == 'video') {
                         socket.emit('newMessageVideo', datatoSend)
-                        sock.send('message', datatoSend)
                         Materialize.toast('Video enviado', 4000)
                     }
                     
@@ -198,4 +194,3 @@ sock.addEventListener('open', function (event) {
         return false;
     });
 
-});

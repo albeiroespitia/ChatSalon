@@ -69,7 +69,7 @@
     var datatoSend = JSON.parse(sessionStorage.getItem("datos"));
     var socket = io.connect('/');
     console.log(window.location.hostname)
-    var sock = new WebSocket("ws://" + window.location.hostname + ":3001/");
+    //var sock = new WebSocket("ws://" + window.location.hostname + ":3001/");
 
 
     function updateTableGroup() {

@@ -1,5 +1,4 @@
 
-sock.addEventListener('open', function (event) {
 
     socket.on('newMessagePrivate', function (data, value,fila,columna) {
         console.log("esta llegando")
@@ -126,7 +125,6 @@ sock.addEventListener('open', function (event) {
             var myInput = document.getElementById("mensajePv2");
             if (!isEmpty(myInput.value)) {
                 socket.emit('newMessagePrivate', datatoSend, myInput.value,$('#modalPv2').data('fila'),$('#modalPv2').data('columna'))
-                sock.send('message', datatoSend, myInput.value)
             }
             $('#mensajePv2').val('');
             }
@@ -145,12 +143,10 @@ sock.addEventListener('open', function (event) {
                 if (data.resp != 'invalidFile') {
                     if (data.resp == 'image') {
                         socket.emit('newMessageImagePrivate', datatoSend,$('#modalPv2').data('fila'),$('#modalPv2').data('columna'))
-                        sock.send('message', datatoSend)
                         Materialize.toast('Imagen enviado', 4000)
                     }
                     if (data.resp == 'video') {
                         socket.emit('newMessageVideoPrivate', datatoSend,$('#modalPv2').data('fila'),$('#modalPv2').data('columna'))
-                        sock.send('message', datatoSend)
                         Materialize.toast('Video enviado', 4000)
                     }
                     
@@ -164,4 +160,3 @@ sock.addEventListener('open', function (event) {
         return false;
     });
 
-});

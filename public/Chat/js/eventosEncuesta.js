@@ -91,7 +91,6 @@ function mostrarCanvasHtml(n) { // N es la posicion del canvas a mostrar
     $('#preguntaCanvas').html(DataEncuestas[n-1].pregunta)
 }
 
-sock.addEventListener('open', function (event) {
     // <------- EMIT ---->
 
     // Crear encuesta con el rol de profesor
@@ -120,7 +119,6 @@ sock.addEventListener('open', function (event) {
         $('input[name="opcion4Input"]').val('')
 
         socket.emit('sendEncuesta', dataEncuesta);
-        sock.send('message', datatoSend)
         // Crear pagination 
         var numCanvas = $('#contenedorCanvas canvas').length;
         agregarCanvasHTML(numCanvas);
@@ -209,7 +207,6 @@ sock.addEventListener('open', function (event) {
         var selectedOption = $("input[name=group1]:checked").next().text();
         var selectedOptionid = $("input[name=group1]:checked").attr('id');
         socket.emit('sendEncuestaResponse', idEncuesta, selectedOption, datatoSend.nombre, selectedOptionid);
-        sock.send('message', datatoSend)
         EncuestaRespondidas.push({
             id: idEncuesta
         });
@@ -230,7 +227,7 @@ sock.addEventListener('open', function (event) {
             $('.botonCrearEncuesta').addClass('disabled'); // Si no existen mas encuestas
         }
     })
-})
+
 
 function MostrarEncuestaEnModal(n) {
     if (datatoSend.rol == 'Estudiante') {

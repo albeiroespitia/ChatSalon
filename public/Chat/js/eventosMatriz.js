@@ -1,4 +1,3 @@
-sock.addEventListener('open', function (event) {
     window.posicion = function (event, fila, col, color) {
         if (event.ctrlKey || event.metaKey) {
             posicionDouble(event, fila, col, color)
@@ -118,4 +117,3 @@ sock.addEventListener('open', function (event) {
 
     
 
-});

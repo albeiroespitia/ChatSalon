@@ -11,15 +11,6 @@ var fullData = require('./data')
 var multer = require('multer');
 var encuestasInfo = require('./encuestasR')
 var fullDataGroups = require('./workGroup')
-var copyFile = require('quickly-copy-file');
-const fs2 = require('fs-extra')
-var screencap = require('screencap');
-var screen = screencap({
-    videoCodec: "libx264",
-    videoBitrate: "1000k",
-    audioBitrate: "96k"
-},'test.mp4');
-
 
 
 var contadorPersonas = 0;
@@ -158,10 +149,6 @@ app.get('/', (req, res) => {
 
 app.get('/chat', (req, res) => {
     res.sendFile(path.resolve(__dirname + '/../../public/Chat/index.html'))
-})
-
-app.post('/comprobarImage',(req,res)=>{
-    screen.capture('30');
 })
 
 

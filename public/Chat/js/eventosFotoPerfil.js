@@ -1,9 +1,3 @@
-sock.addEventListener('open', function (event) {
-
-    socket.on('newScreenshot',function(data,src,fila,columna){
-        d = new Date();
-        document.getElementById("laweaprueba").setAttribute("src","Chat/img/screenshot.png?"+d.getTime())  
-    })
 
     socket.on('newImageProfile',function(data,src,fila,columna){
         document.getElementById("tablem").rows[fila].cells[columna].children[0].children[0].children[1].children[0].setAttribute("src",`Chat/../uploads/${src}`)        
@@ -22,7 +16,6 @@ sock.addEventListener('open', function (event) {
                 if (data.resp != 'invalidFile') {
                     if (data.resp == 'image') {
                         socket.emit('newImageProfile', datatoSend,filaTestT,colTestT)
-                        sock.send('message', datatoSend)
                         Materialize.toast('Imagen de perfil cambiada', 4000)
                     }
                 } else {
@@ -35,4 +28,3 @@ sock.addEventListener('open', function (event) {
         return false;
     });
 
-});

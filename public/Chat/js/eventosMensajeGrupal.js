@@ -1,4 +1,3 @@
-sock.addEventListener('open', function (event) {
 
     socket.on('newMessageGrupalRe', function (data, value, color, positions) {
         console.log("esta llegando")
@@ -140,7 +139,6 @@ sock.addEventListener('open', function (event) {
             var myInput = document.getElementById("mensajePg2");
             if (!isEmpty(myInput.value)) {
                 socket.emit('newMessageGrupal', datatoSend, myInput.value, $('#modalPg2').data('colorModal'))
-                sock.send('message', datatoSend, myInput.value)
             }
             $('#mensajePg2').val('');
         }
@@ -159,12 +157,10 @@ sock.addEventListener('open', function (event) {
                 if (data.resp != 'invalidFile') {
                     if (data.resp == 'image') {
                         socket.emit('newMessageImageGrupal', datatoSend, $('#modalPg2').data('colorModal'))
-                        sock.send('message', datatoSend)
                         Materialize.toast('Imagen enviado', 4000)
                     }
                     if (data.resp == 'video') {
                         socket.emit('newMessageVideoGrupal', datatoSend, $('#modalPg2').data('colorModal'))
-                        sock.send('message', datatoSend)
                         Materialize.toast('Video enviado', 4000)
                     }
 
@@ -178,4 +174,3 @@ sock.addEventListener('open', function (event) {
         return false;
     });
 
-});

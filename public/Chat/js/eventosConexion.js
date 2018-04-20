@@ -1,4 +1,3 @@
-sock.addEventListener('open',function(event){
 
         socket.on('disconnectAllSockets', function () {
             socket.emit('forceDisconnect');
@@ -20,7 +19,3 @@ sock.addEventListener('open',function(event){
             ${data.nombre}, se ha desconectado
         </div>`)
         })
-
-
-
-    });

@@ -1,4 +1,3 @@
-sock.addEventListener('open',function(event){
     socket.on('ProfesorisNotTypingAll', function (data) {
         $('.boxProfesor #wave').html('');
     })
@@ -33,14 +32,12 @@ sock.addEventListener('open',function(event){
         if(datatoSend.rol == "Profesor"){
             if($('.boxProfesor #wave').is(':empty')){
                 socket.emit('ProfesorTyping',datatoSend);
-                sock.send('message',datatoSend)                
             }
         }else if(datatoSend.rol == "Estudiante"){
             var size = document.getElementById("tablem").rows[datatoSend.fila-1].cells[datatoSend.columna-1].childNodes.length;
             var x = document.getElementById("tablem").rows[datatoSend.fila-1].cells[datatoSend.columna-1].childNodes[size-1];
             if(!x.hasChildNodes()){
                socket.emit('EstudianteTyping',datatoSend);
-               sock.send('message',datatoSend)
 
             }
         }
@@ -48,15 +45,13 @@ sock.addEventListener('open',function(event){
         timerTyping = setTimeout(function(){
             if(datatoSend.rol == "Profesor"){
                 socket.emit('ProfesorisNotTyping',datatoSend);
-                sock.send('message',datatoSend)
 
             }else if(datatoSend.rol == "Estudiante"){
              socket.emit('EstudianteisNotTyping',datatoSend);
-             sock.send('message',datatoSend)
 
             }
         },2000)
     });
 
-});
+
 
