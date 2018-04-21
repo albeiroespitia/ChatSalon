@@ -1,7 +1,9 @@
     window.posicion = function (event, fila, col, color) {
         if (event.ctrlKey || event.metaKey) {
             posicionDouble(event, fila, col, color)
-        } else {
+        }else if(event.altKey){
+            posicionRemote(event, fila, col)
+        }else{
             if (datatoSend.rol == "Estudiante") {
                 if ((datatoSend.fila == fila) && (datatoSend.columna == col)) {
                     Materialize.toast('No puedes enviarte un mensaje a ti mismo', 4000)

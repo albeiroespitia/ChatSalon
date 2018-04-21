@@ -3,8 +3,8 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const port = process.env.PORT || 3000;
 const app = express();
-var http = require('http').Server(app);
-var io = require('socket.io', {})(http);
+var server2 = app.listen(3000)
+var io = require('socket.io', {})(server2);
 var fs = require('fs');
 const util = require('util')
 var fullData = require('./data')
@@ -124,6 +124,9 @@ s.on('connection', function (ws) {
 })
 
 app.use('/', express.static(path.resolve(__dirname, '../../public')));
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
+
 
 app.post('/check', (req, res) => {
     if (JSON.stringify(fullData.profesor) === '{}' || JSON.stringify(fullData.profesor) == undefined || JSON.stringify(fullData.profesor.id) == 1) {
@@ -138,6 +141,7 @@ app.post('/check', (req, res) => {
         })
     }
 })
+
 app.post('/encuestasPendiente', function (req, res) {
     console.log("Peticion postt")
     console.log(req.body)
@@ -147,6 +151,8 @@ app.post('/encuestasPendiente', function (req, res) {
     });
     res.end();
 })
+
+
 
 app.get('/', (req, res) => {
     res.sendFile(path.resolve(__dirname + '/../../public/Login/index.html'))
@@ -170,10 +176,10 @@ function searchRooms(value){
 io.on('connection', function (socket) {
     console.log('a user connected');
 
-
     socket.on('loginProfesor', function (data) {
         data.id = socket.id;
         fullData.profesor = data;
+        console.log(socket.id)
         //console.log(util.inspect(fullData, false, null))
         socket.emit('sendMatrixSize', fullData.profesor.fila, fullData.profesor.columna);
         io.sockets.emit('generalMatrix', fullData);
@@ -440,6 +446,17 @@ io.on('connection', function (socket) {
 
     })
 
+    socket.on('remoto', function (fila, col) {
+        socket.to(socketsID[fila-1][col-1]).emit('remoteOn');
+    })
+
+    socket.on('receiveIdBroadcast', function (broadcastId) {
+        console.log("en el servidor papi")
+        socket.to(fullData.profesor.id).emit('newRemote2', broadcastId);
+        console.log(fullData.profesor.id)
+    })
+    
+
     // Recibe encuesta creada
     socket.on('sendEncuesta', function (data) {
         encuestaData.push(data);
@@ -576,6 +593,6 @@ io.on('connection', function (socket) {
 });
 
 
-http.listen(port, () => {
+server2.listen(port, () => {
     console.log('Corriendo en el puerto 3000')
 })

@@ -13,7 +13,9 @@
 		window.location.replace("/");
     } else {
     	console.info("This page is not reloaded");
-    }
+	}
+	
+	var broadcastId;
 
 
     var htmlPrivado = [
