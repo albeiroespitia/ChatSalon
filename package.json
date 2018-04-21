@@ -22,7 +22,7 @@
     "ws": "^5.0.0"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "npm run serve",
     "build": "react-scripts build",
     "serve": "nodemon src/server/index.js",
     "test": "react-scripts test --env=jsdom",
