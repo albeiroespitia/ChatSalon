@@ -18,6 +18,7 @@ var server = require('ws').Server;
 var s = new server({
     port: 3001
 })
+var contadorSalones = 0;
 var encuestaData = [];
 var respuesta = []; // A, B, C, D
 
@@ -32,6 +33,10 @@ var socketsID = [
     [-1, -1, -1, -1, -1, -1, -1],
     [-1, -1, -1, -1, -1, -1, -1],
 ];
+
+var roomsObj = {
+    roooms : []
+}
 
 var storage = multer.diskStorage({
     destination: function (req, file, callback) {
@@ -151,6 +156,16 @@ app.get('/chat', (req, res) => {
     res.sendFile(path.resolve(__dirname + '/../../public/Chat/index.html'))
 })
 
+function searchRooms(value){
+    var index;
+    var filteredObj = data.find(function(item, i){
+        if(item.idSalon === value){
+          index = i;
+          return i;
+        }
+      });
+    return index;
+}
 
 io.on('connection', function (socket) {
     console.log('a user connected');
@@ -170,12 +185,23 @@ io.on('connection', function (socket) {
             'col': fullData.profesor.columna
         };
         io.sockets.emit('profesorLogeado', objeto)
+        /*contadorSalones++;
 
-        
+        roomsObj.rooms.push({
+            idSalon : contadorSalones,
+            asientos : socketsID
+        })*/
 
     });
 
-    socket.on('sillasOcupadas', function () {
+    socket.on('sillasOcupadas', function (salon) {
+        /*roomsObj.roooms[salonIndex].asientos.length
+        var salonIndex = searchRooms(salon);
+        for(let i=0;i<7;i++){
+            for(let j=0;j<7;j++){
+                socket.to(roomsObj.roooms[salonIndex].asientos[i][j]).emit('checkLabel', fullData);
+            }
+        }*/
         io.sockets.emit('checkLabel', fullData);
     });
 
