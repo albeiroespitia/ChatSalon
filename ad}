@@ -1,0 +1,261 @@
+[33mcommit 08a2eccc6d726ed6a3103370161e1c786472220a[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m, [m[1;31mheroku/master[m[33m)[m
+Author: Albeiro <albeiroespitiasierra@gmail.com>
+Date:   Sat Apr 21 15:50:38 2018 -0500
+
+    initial
+
+[33mcommit d4bd0f4a19a789ad4da865fffc93305608adb340[m
+Author: Albeiro <albeiroespitiasierra@gmail.com>
+Date:   Sat Apr 21 15:43:47 2018 -0500
+
+    initial
+
+[33mcommit bfe9ded8da43b0d913487946c8bb8c02c4a8fc19[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: Albeiro <albeiroespitiasierra@gmail.com>
+Date:   Sat Apr 21 01:46:47 2018 -0500
+
+    Fix bugs
+
+[33mcommit 0a9bd1b2c0897fc6d132671d39af67c7c9ea645d[m
+Author: Albeiro <albeiroespitiasierra@gmail.com>
+Date:   Thu Apr 19 23:58:28 2018 -0500
+
+    Fix bugs
+
+[33mcommit 74958aafcecccaa2b6b7d4edaf2161e42bc68da9[m
+Author: JGUETO <joseeguerreroot@gmail.com>
+Date:   Thu Apr 19 00:34:28 2018 -0500
+
+    Probando grabador de video
+
+[33mcommit 2247b9bf8f15c8081f9286752e1841c8b54e9f46[m
+Author: Albeiro <albeiroespitiasierra@gmail.com>
+Date:   Sat Apr 14 20:51:27 2018 -0500
+
+    Testing image
+
+[33mcommit 6884452e80a4e2065ddd7948319c0a2fccd8ea7a[m
+Author: Albeiro <albeiroespitiasierra@gmail.com>
+Date:   Mon Apr 9 12:37:37 2018 -0500
+
+    Fixing align
+
+[33mcommit 3c772b372f2a2edf8ba807679173244d5e0e15c1[m
+Author: JGUETO <joseeguerreroot@gmail.com>
+Date:   Mon Apr 9 10:49:32 2018 -0500
+
+    Agregando foooter
+
+[33mcommit f832f3f57355826e483469b6612f717f8cd94e6e[m
+Author: Albeiro <albeiroespitiasierra@gmail.com>
+Date:   Sun Apr 8 21:45:18 2018 -0500
+
+    Agrego funcionalidad de cambio de foto de perfil
+
+[33mcommit 84faef0b546b5c1a314efaf98ac676d4c703a279[m
+Author: Albeiro <albeiroespitiasierra@gmail.com>
+Date:   Sun Apr 8 18:20:13 2018 -0500
+
+    Fixing src
+
+[33mcommit b7476bc8c0ebfd9aa9dd88db5d7b7e7e6b6514c3[m
+Author: Albeiro <albeiroespitiasierra@gmail.com>
+Date:   Mon Apr 2 10:17:33 2018 -0500
+
+    Detalles
+
+[33mcommit c4295a11888a5655672f38ab4404d9246e84a1cc[m
+Author: JGUETO <joseeguerreroot@gmail.com>
+Date:   Mon Apr 2 02:38:23 2018 -0500
+
+    Encuesta multiple con nuevo disñeo y validaciones
+
+[33mcommit e257bb14528e2c4588fe097b7202a654327ecb36[m
+Author: Albeiro <albeiroespitiasierra@gmail.com>
+Date:   Sat Mar 31 01:53:11 2018 -0500
+
+    Fixed bugs
+
+[33mcommit d94077558047e80643cf12c8379964797602efed[m
+Merge: 7dc1986 d973ba5
+Author: JGUETO <joseeguerreroot@gmail.com>
+Date:   Sat Mar 31 01:40:15 2018 -0500
+
+    Validacion deshabilitar boton de encuesta, y mostrar resultados de encuesta a estudiantes. Falta limpitar los input, select y mejorar el diseño, lo terminara pero tengo que madrugar :(
+
+[33mcommit 7dc198625ee86179e348b32835a528c40ae1b8fa[m
+Author: JGUETO <joseeguerreroot@gmail.com>
+Date:   Sat Mar 31 01:33:17 2018 -0500
+
+    Validacion deshabilitar boton de encuesta, y mostrar resultados de encuesta a estudiantes. Falta limpitar los input, select y mejorar el diseño, lo terminara pero tengo que madrugar :(
+
+[33mcommit d973ba54a47e76ac420c99c1a03747a8905b714c[m
+Author: Albeiro <albeiroespitiasierra@gmail.com>
+Date:   Fri Mar 30 20:38:13 2018 -0500
+
+    Agrego envio de imagenes y videos en chat grupal
+
+[33mcommit 5d09585cc2cd2b401058e0624f0adf0b3db45433[m
+Merge: 4d7b364 ba2fcb1
+Author: JGUETO <joseeguerreroot@gmail.com>
+Date:   Fri Mar 30 14:42:57 2018 -0500
+
+    Merge branch 'master' of https://github.com/JGUETO/ChatSalon
+
+[33mcommit 4d7b364d9d62e188c9df7875faab541c920464b4[m
+Author: JGUETO <joseeguerreroot@gmail.com>
+Date:   Fri Mar 30 14:42:42 2018 -0500
+
+    Se organizo los eventos de encuesta
+
+[33mcommit ba2fcb128d99e386ae8b2638c1ff6fa6c88a3043[m
+Author: Albeiro <albeiroespitiasierra@gmail.com>
+Date:   Fri Mar 30 14:33:24 2018 -0500
+
+    Agrego comprobacion de reloadPage
+
+[33mcommit ec15e33deb1ec66b1a37edb1a0fd8fbd64c7067a[m
+Merge: f0c2d35 e15be78
+Author: Albeiro <albeiroespitiasierra@gmail.com>
+Date:   Fri Mar 30 14:24:05 2018 -0500
+
+    Agrego funcionalidad colores dinamicos
+
+[33mcommit f0c2d35a3355ff4051c7939d8cd82dc89820ac10[m
+Author: Albeiro <albeiroespitiasierra@gmail.com>
+Date:   Fri Mar 30 14:23:28 2018 -0500
+
+    Agrego funcionalidad colores dinamicos
+
+[33mcommit e15be782c53f2b12a204dac218afa9537e9dc756[m
+Author: JGUETO <joseeguerreroot@gmail.com>
+Date:   Fri Mar 30 12:40:12 2018 -0500
+
+    Cambio de estilo del chat
+
+[33mcommit 4edf8ef091af679ce5adc0c14dbe72ef07524b2e[m
+Author: Albeiro <albeiroespitiasierra@gmail.com>
+Date:   Fri Mar 30 03:05:47 2018 -0500
+
+    Agregando chat grupal casi terminado :(
+
+[33mcommit 2e3cc85ef0bda67abc30504041123a75362edbf1[m
+Author: Albeiro <albeiroespitiasierra@gmail.com>
+Date:   Thu Mar 29 18:24:40 2018 -0500
+
+    Agregando colores de grupos de trabajo
+
+[33mcommit e7e3bf4caf53f023403d98a9779cd020186401ab[m
+Author: Albeiro <albeiroespitiasierra@gmail.com>
+Date:   Thu Mar 29 13:50:32 2018 -0500
+
+    Añadiendo nextStep Button
+
+[33mcommit af17f6ee8cad27191908d2ef3f2ea268d7654432[m
+Author: Albeiro <albeiroespitiasierra@gmail.com>
+Date:   Thu Mar 29 12:44:45 2018 -0500
+
+    Agregando tabla dinamica a grupos de trabajo
+
+[33mcommit 1d8de718919c68bdc018a974cd1412abd83beed0[m
+Author: Albeiro <albeiroespitiasierra@gmail.com>
+Date:   Thu Mar 29 10:21:46 2018 -0500
+
+    Deleting videos
+
+[33mcommit 4fdba4deab079ba368b07a3c53fd2113b99c34bb[m
+Merge: 5803f17 9b19e1c
+Author: JGUETO <joseeguerreroot@gmail.com>
+Date:   Thu Mar 29 03:22:24 2018 -0500
+
+    Merge branch 'master' of https://github.com/JGUETO/ChatSalon
+
+[33mcommit 5803f17f3607577eb16e178df6879eff9b16b5e3[m
+Author: JGUETO <joseeguerreroot@gmail.com>
+Date:   Thu Mar 29 03:21:56 2018 -0500
+
+    Encuesta multiple terminada, faltan validaciones
+
+[33mcommit 9b19e1cc3bdfbb35b9f36cba9ebe88eaa5584b98[m
+Author: Albeiro <albeiroespitiasierra@gmail.com>
+Date:   Thu Mar 29 02:25:20 2018 -0500
+
+    Agrego notificacion imagen privada
+
+[33mcommit a93b45c5c21562b83dbdcc661d13e0d97ded47e8[m
+Author: Albeiro <albeiroespitiasierra@gmail.com>
+Date:   Thu Mar 29 00:32:35 2018 -0500
+
+    Agrego notificacion de mensaje privado
+
+[33mcommit 831f31ffa173f6db7d9e64feed513fe374a50dfa[m
+Merge: 5873974 8c9c53e
+Author: JGUETO <joseeguerreroot@gmail.com>
+Date:   Wed Mar 28 13:42:21 2018 -0500
+
+    Trabajando encuestas multiplees
+
+[33mcommit 5873974f64fc05b1ff82d275cd1109d6692a06df[m
+Author: JGUETO <joseeguerreroot@gmail.com>
+Date:   Wed Mar 28 13:19:42 2018 -0500
+
+    Trabajandoo  encuesta multiple
+
+[33mcommit 8c9c53e6bbc5c5da49c9f52f2020dbac1c74caa6[m
+Author: Albeiro <albeiroespitiasierra@gmail.com>
+Date:   Wed Mar 28 03:18:03 2018 -0500
+
+    Agrego modal privado dinamico
+
+[33mcommit a32c0d2604ffb9e6c1b304f34f0d6ec761172d60[m
+Author: Albeiro <albeiroespitiasierra@gmail.com>
+Date:   Wed Mar 28 02:34:31 2018 -0500
+
+    Imagenes y videos privados
+
+[33mcommit 41b225052fa3c3a689825a6bec110595c938568e[m
+Author: Albeiro <albeiroespitiasierra@gmail.com>
+Date:   Wed Mar 28 01:27:56 2018 -0500
+
+    funcionalidad mensaje privado
+
+[33mcommit 58e1ce6646e3a49bc992050ad784fcd47fd16a6c[m
+Author: Albeiro <albeiroespitiasierra@gmail.com>
+Date:   Wed Mar 28 01:08:44 2018 -0500
+
+    Beta funcionalidad mensaje privado
+
+[33mcommit 7c52274e107eacad1f70165fa6755a9aebe05824[m
+Merge: d8b1d28 f874ad4
+Author: Albeiro <albeiroespitiasierra@gmail.com>
+Date:   Wed Mar 28 00:30:03 2018 -0500
+
+    Merge branch 'master' of https://github.com/JGUETO/ChatSalon
+
+[33mcommit d8b1d289aa1a6307ae8c82e3363d957eb0755319[m
+Author: Albeiro <albeiroespitiasierra@gmail.com>
+Date:   Wed Mar 28 00:29:58 2018 -0500
+
+    merge
+
+[33mcommit f874ad4704359cf275f26c463e6a3b466331f981[m
+Author: JGUETO <joseeguerreroot@gmail.com>
+Date:   Wed Mar 28 00:29:02 2018 -0500
+
+    Diseño chat pv2
+
+[33mcommit a49216c0bc0c13db9f4a09fae0c0f1615664f8ad[m
+Author: JGUETO <joseeguerreroot@gmail.com>
+Date:   Tue Mar 27 23:58:36 2018 -0500
+
+    Agragando modal pv2
+
+[33mcommit 4074294ee5ac848a9aecb458a1149eace077361a[m
+Author: Albeiro <albeiroespitiasierra@gmail.com>
+Date:   Tue Mar 27 22:21:13 2018 -0500
+
+    Borrando imagenes
+
+[33mcommit 7669e9295cee2b5f3d9fd80cd0fe326e329770eb[m
+Author: JGUETO <joseeguerreroot@gmail.com>
+Date:   Tue Mar 27 22:19:34 2018 -0
