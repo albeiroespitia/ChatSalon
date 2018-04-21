@@ -2,7 +2,9 @@
         if (event.ctrlKey || event.metaKey) {
             posicionDouble(event, fila, col, color)
         }else if(event.altKey){
-            posicionRemote(event, fila, col)
+            if(datatoSend.rol == "Profesor"){
+                posicionRemote(event, fila, col)
+            }
         }else{
             if (datatoSend.rol == "Estudiante") {
                 if ((datatoSend.fila == fila) && (datatoSend.columna == col)) {
