@@ -11,6 +11,19 @@ var fullData = require('./data')
 var multer = require('multer');
 var encuestasInfo = require('./encuestasR')
 var fullDataGroups = require('./workGroup')
+var forceSSL = require('express-force-ssl');
+var http = require('http');
+var https = require('https');
+
+
+var server3 = http.createServer(app);
+
+var options = {
+    key: fs.readFileSync(path.join(__dirname, '../../fake-keys/privatekey.pem')),
+    cert: fs.readFileSync(path.join(__dirname, '../../fake-keys/certificate.pem'))
+};
+
+var secureServer = https.createServer(options, app);
 
 
 var contadorPersonas = 0;
@@ -123,6 +136,7 @@ s.on('connection', function (ws) {
     })
 })
 
+app.use(forceSSL);
 app.use('/', express.static(path.resolve(__dirname, '../../public')));
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
@@ -593,6 +607,10 @@ io.on('connection', function (socket) {
 });
 
 
-server2.listen(port, () => {
+
+
+/*app.listen(port, () => {
     console.log('Corriendo en el puerto 3000')
-})
+})*/
+
+secureServer.listen(443);
