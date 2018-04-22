@@ -15,10 +15,17 @@ var multer = require('multer');
 var encuestasInfo = require('./encuestasR')
 var fullDataGroups = require('./workGroup')
 
-/*const options = {
-    cert: fs.readFileSync('./sslcert/fullchain.pem'),
-    key: fs.readFileSync('./sslcert/privkey.pem')
-};*/
+function letsencryptOptions() {
+    //const path = '/etc/letsencrypt/live/';
+    return {
+        key: fs.readFileSync(path.resolve(__dirname + '/../../fake-keys/privkey1.pem')),
+        cert: fs.readFileSync(path.resolve(__dirname + '/../../fake-keys/cert1.pem')),
+        ca: fs.readFileSync(path.resolve(__dirname + '/../../fake-keys/fullchain1.pem'))
+    };
+}
+
+const options = letsencryptOptions();
+
 
 
 var contadorPersonas = 0;
@@ -611,4 +618,7 @@ server2.listen(port, () => {
     console.log('Corriendo en el puerto 3000')
 })
 
-//https.createServer(options, app).listen(8443);
+https.createServer(options, function (req, res) {
+    res.writeHead(200);
+    res.end("hello world\n");
+  }).listen(8000);
