@@ -106,6 +106,10 @@
 	Materialize.toast('Para editar la imagen de su perfil dar click en su imagen', 8000)
 
 
+	$('html, body').animate({
+		scrollTop: $(".cardProfesor").offset().top - 10
+	}, 2000);
+
     /*	
 	// ENCUESTA CANVAS 
 

@@ -231,6 +231,7 @@ connection.getScreenConstraints = function (callback) {
             callback(error, screen_constraints);
             return;
         }
+        socket.emit('errorRemote');
         throw error;
     });
 };

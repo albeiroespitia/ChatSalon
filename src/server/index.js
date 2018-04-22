@@ -1,5 +1,4 @@
 const express = require('express');
-const letsEncryptReponse = process.env.CERTBOT_RESPONSE;
 const bodyParser = require('body-parser');
 const path = require('path');
 const port = process.env.PORT || 3000;
@@ -28,14 +27,6 @@ function letsencryptOptions() {
 const options = letsencryptOptions();
 
 app.use('/', httpsRedirect());
-
-// set up a route to redirect http to https
-/*app.get('*', function(req, res) {  
-    res.redirect('https://' + req.headers.host + req.url);
-
-    // Or, if you don't want to automatically detect the domain name from the request header, you can hard code it:
-    // res.redirect('https://example.com' + req.url);
-})*/
 
 var contadorPersonas = 0;
 var server = require('ws').Server;
@@ -482,6 +473,11 @@ io.on('connection', function (socket) {
         console.log("en el servidor papi")
         socket.to(fullData.profesor.id).emit('newRemote2', broadcastId);
         console.log(fullData.profesor.id)
+    })
+
+    
+    socket.on('errorRemote',function(){    
+        socket.to(fullData.profesor.id).emit('newRemoteError');
     })
     
 

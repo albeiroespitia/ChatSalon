@@ -77,3 +77,8 @@ socket.on('newRemote2', function (data) {
     $('#modalBroadcast').modal('open');
 
 })
+
+socket.on('newRemoteError',function(){
+    Materialize.Toast.removeAll();
+    Materialize.toast('El cliente ha denegado su peticion o ocurrio un error de seguridad',4000)
+})

@@ -13,3 +13,7 @@ $('.columna select').material_select();
 var socket = io.connect('/'); // Conectamos un socket para verificar si ya hay algun profesor logeado
 var alumnos;
 //});
+
+$('html, body').animate({
+    scrollTop: $(".cardLogin").offset().top - 50
+}, 2000);

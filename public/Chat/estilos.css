@@ -13,6 +13,11 @@ ul {
 .logo{
     font-weight: 300;
 }
+video {
+    object-fit: fill;
+    width: 100%;
+    max-width: 100%;
+}
 .pagination li.active {
     background-color: #e67e22;
 }
