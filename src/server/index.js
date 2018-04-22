@@ -1,9 +1,12 @@
 const express = require('express');
+const letsEncryptReponse = process.env.CERTBOT_RESPONSE;
 const bodyParser = require('body-parser');
 const path = require('path');
 const port = process.env.PORT || 3000;
+const https = require('https')
+const http = require('http')
 const app = express();
-var server2 = app.listen(port)
+var server2 = http.createServer(app)
 var io = require('socket.io', {})(server2);
 var fs = require('fs');
 const util = require('util')
@@ -11,19 +14,11 @@ var fullData = require('./data')
 var multer = require('multer');
 var encuestasInfo = require('./encuestasR')
 var fullDataGroups = require('./workGroup')
-var forceSSL = require('express-force-ssl');
-var http = require('http');
-var https = require('https');
 
-
-var server3 = http.createServer(app);
-
-var options = {
-    key: fs.readFileSync(path.join(__dirname, '../../fake-keys/privatekey.pem')),
-    cert: fs.readFileSync(path.join(__dirname, '../../fake-keys/certificate.pem'))
-};
-
-var secureServer = https.createServer(options, app);
+/*const options = {
+    cert: fs.readFileSync('./sslcert/fullchain.pem'),
+    key: fs.readFileSync('./sslcert/privkey.pem')
+};*/
 
 
 var contadorPersonas = 0;
@@ -87,6 +82,10 @@ var upload = multer({
     }
 ])
 
+app.get('/.well-known/acme-challenge/:content', function(req, res) {
+    res.send("RI3sVgObGtps8_qhT4xsGdv0Ta9hG9EfsS0oHtkXEEs.ms9KHLFlONQBKkBGDvEQ7m3CEDFM0-Gdd7QcSBQUI54");
+  });
+
 app.post('/imageUpload', function (req, res) {
     upload(req, res, function (err) {
         if (err) {
@@ -136,7 +135,6 @@ s.on('connection', function (ws) {
     })
 })
 
-app.use(forceSSL);
 app.use('/', express.static(path.resolve(__dirname, '../../public')));
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
@@ -609,8 +607,8 @@ io.on('connection', function (socket) {
 
 
 
-/*app.listen(port, () => {
+server2.listen(port, () => {
     console.log('Corriendo en el puerto 3000')
-})*/
+})
 
-secureServer.listen(443);
+//https.createServer(options, app).listen(8443);
