@@ -9,6 +9,7 @@ const app = express();
 var server2 = http.createServer(app)
 var io = require('socket.io', {})(server2);
 var fs = require('fs');
+var httpsRedirect = require('express-https-redirect');
 const util = require('util')
 var fullData = require('./data')
 var multer = require('multer');
@@ -26,7 +27,15 @@ function letsencryptOptions() {
 
 const options = letsencryptOptions();
 
+app.use('/', httpsRedirect());
 
+// set up a route to redirect http to https
+/*app.get('*', function(req, res) {  
+    res.redirect('https://' + req.headers.host + req.url);
+
+    // Or, if you don't want to automatically detect the domain name from the request header, you can hard code it:
+    // res.redirect('https://example.com' + req.url);
+})*/
 
 var contadorPersonas = 0;
 var server = require('ws').Server;
