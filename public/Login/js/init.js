@@ -14,6 +14,9 @@ var socket = io.connect('/'); // Conectamos un socket para verificar si ya hay a
 var alumnos;
 //});
 
-$('html, body').animate({
-    scrollTop: $(".cardLogin").offset().top - 50
-}, 2000);
+setTimeout(function(){
+    $('html, body').animate({
+        scrollTop: $(".cardLogin").offset().top - 50
+    }, 2000);
+},1000)
+

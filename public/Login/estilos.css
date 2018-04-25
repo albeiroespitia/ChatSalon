@@ -11,6 +11,10 @@ body{
     font-weight: 300;
 }
 
+#modalPosicion #tablem td:hover{
+    cursor: pointer;
+}
+
 .selectIn{
     text-align: center;
     margin-bottom: 10px;

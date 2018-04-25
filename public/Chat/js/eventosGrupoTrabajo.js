@@ -171,7 +171,8 @@
         sessionStorage.setItem('myColor', myColor);
 
         var tagTd = document.getElementById("tablem").rows[datatoSend.fila - 1].cells[datatoSend.columna - 1].childNodes;
-        var style = window.getComputedStyle(tagTd[2], null).getPropertyValue("border");
+        var imgTag = tagTd[0].childNodes[1].childNodes[3].childNodes[1]
+        var style = window.getComputedStyle(imgTag, null).getPropertyValue("border");
         if (style.split(' ')[0] == `2px`) {
             $(' .iconGroup').css({
                 display: 'none'
