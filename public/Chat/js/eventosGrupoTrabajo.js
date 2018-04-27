@@ -122,16 +122,13 @@
             var actualColor = element.color;
             if (element.lead != '') {
                 document.getElementById("tablem").rows[element.lead.fila - 1].cells[element.lead.columna - 1].dataset.colorTemp = actualColor;
-                var nodeDOML = document.getElementById("tablem").rows[element.lead.fila - 1].cells[element.lead.columna - 1].childNodes
-                console.log(element.lead.fila)
-                console.log(datatoSend.fila)
-                console.log(element.lead.columna)
-                console.log(datatoSend.columna)
+                var nodeDOML = document.getElementById("tablem").rows[element.lead.fila - 1].cells[element.lead.columna - 1].children
+                console.log(nodeDOML)
                 if((element.lead.fila != datatoSend.fila) || (element.lead.columna != datatoSend.columna)){
                     console.log("entrosss")
                     nodeDOML[2].style.border = `2px solid ${actualColor}`;
-                    nodeDOML[4].style.border = `2px solid ${actualColor}`;
-                    nodeDOML[4].dataset.colorTemp = actualColor;
+                    nodeDOML[3].style.border = `2px solid ${actualColor}`;
+                    nodeDOML[3].dataset.colorTemp = actualColor;
                 }else{
                     console.log("entro tambien dx")
                     nodeDOML[0].children[0].children[1].children[0].style.border = `2px solid ${actualColor}`;
@@ -139,31 +136,32 @@
                     nodeDOML[0].children[0].children[3].dataset.colorTemp = actualColor;
                 }
                 var colorTest = document.getElementById("tablem").rows[element.lead.fila - 1].cells[element.lead.columna - 1].getAttribute("data-color-temp")
-                var beforeFunction = document.getElementById("tablem").rows[element.lead.fila - 1].cells[element.lead.columna - 1].getAttribute('onclick')
+                var beforeFunction = document.getElementById("tablem").rows[element.lead.fila - 1].cells[element.lead.columna - 1].children[1].children[1].children[0].getAttribute('onclick')
                 var totalBefore = beforeFunction.split(',');
                 totalBefore[totalBefore.length - 1] = '';
                 totalBefore[totalBefore.length - 1] = `'${colorTest}')`
-                document.getElementById("tablem").rows[element.lead.fila - 1].cells[element.lead.columna - 1].setAttribute('onclick', `${totalBefore.join(',')}`)
+                document.getElementById("tablem").rows[element.lead.fila - 1].cells[element.lead.columna - 1].children[1].children[1].children[0].setAttribute('onclick', `${totalBefore.join(',')}`)
             }
             element.students.forEach(function (student) {
                 if (student != '') {
                     document.getElementById("tablem").rows[student.fila].cells[student.columna].dataset.colorTemp = actualColor;
-                    var nodeDOM = document.getElementById("tablem").rows[student.fila].cells[student.columna].childNodes
+                    var nodeDOM = document.getElementById("tablem").rows[student.fila].cells[student.columna].children
+                    console.log(nodeDOM)
                     if((student.fila+1 != datatoSend.fila) || (student.columna+1 != datatoSend.columna)){
                         nodeDOM[2].style.border = `2px solid ${actualColor}`;
-                        nodeDOM[4].style.border = `2px solid ${actualColor}`;
-                        nodeDOM[4].dataset.colorTemp = actualColor;
+                        nodeDOM[3].style.border = `2px solid ${actualColor}`;
+                        nodeDOM[3].dataset.colorTemp = actualColor;
                     }else{
                         nodeDOM[0].children[0].children[1].children[0].style.border = `2px solid ${actualColor}`;
                         nodeDOM[0].children[0].children[3].style.border = `2px solid ${actualColor}`;
                         nodeDOM[0].children[0].children[3].dataset.colorTemp = actualColor;
                     }
                     var colorTest = document.getElementById("tablem").rows[student.fila].cells[student.columna].getAttribute("data-color-temp")
-                    var beforeFunction = document.getElementById("tablem").rows[student.fila].cells[student.columna].getAttribute('onclick')
+                    var beforeFunction = document.getElementById("tablem").rows[student.fila].cells[student.columna].children[1].children[1].children[0].getAttribute('onclick')
                     var totalBefore = beforeFunction.split(',');
                     totalBefore[totalBefore.length - 1] = '';
                     totalBefore[totalBefore.length - 1] = `'${colorTest}')`
-                    document.getElementById("tablem").rows[student.fila].cells[student.columna].setAttribute('onclick', `${totalBefore.join(',')}`)
+                    document.getElementById("tablem").rows[student.fila].cells[student.columna].children[1].children[1].children[0].setAttribute('onclick', `${totalBefore.join(',')}`)
                 }
             })
         })

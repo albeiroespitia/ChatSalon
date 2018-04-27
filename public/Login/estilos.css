@@ -55,8 +55,7 @@ input[type=text]:focus + label {
 #tablem{
     text-align: center;
 }
-.modalPosiciones{
- }
+
 .box{
     position: relative;
     padding: 0px !important;
