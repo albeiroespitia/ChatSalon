@@ -101,17 +101,17 @@
                 </div>
                 </form>
                 <ul>
-                    <li><a class="btn-floating red privateMessage"><i class="material-icons">insert_chart</i></a></li>
-                    <li><a class="btn-floating yellow darken-1"><i class="material-icons">format_quote</i></a></li>
-                    <li><a class="btn-floating green"><i class="material-icons">publish</i></a></li>
+                    <li class="privateMessageicon"><a class="btn-floating red "><i class="material-icons">message</i></a></li>
+                    <li class="groupMessageicon"><a class="btn-floating yellow darken-1 "><i class="material-icons">group_work</i></a></li>
+                    <li class="remoteControlicon"><a class="btn-floating green"><i class="material-icons">desktop_windows</i></a></li>
                 </ul>`;
                 
             }else{
                 boxStudent = `<span class="col s11">${data.estudiante[key].nombre}</span>
                 <ul>
-                    <li><a class="btn-floating red privateMessage"><i class="material-icons">insert_chart</i></a></li>
-                    <li><a class="btn-floating yellow darken-1"><i class="material-icons">format_quote</i></a></li>
-                    <li><a class="btn-floating green"><i class="material-icons">publish</i></a></li>
+                    <li class="privateMessageicon"><a class="btn-floating red"><i class="material-icons">message</i></a></li>
+                    <li class="groupMessageicon"><a class="btn-floating yellow darken-1"><i class="material-icons">group_work</i></a></li>
+                    <li class="remoteControlicon"><a class="btn-floating green"><i class="material-icons">desktop_windows</i></a></li>
                 </ul>
                 <img class="circle" width="30" src="Chat/img/${data.estudiante[key].avatar}" style="padding-top: 2px;">
                 <div id="wave"></div>`;
@@ -129,6 +129,11 @@
                 document.getElementById("tablem").rows[data.estudiante[key].fila - 1].cells[data.estudiante[key].columna - 1].children[1].children[1].children[0].setAttribute('onclick', `posicionDouble(event,${filaTest},${colTest},'1')`);
                 document.getElementById("tablem").rows[data.estudiante[key].fila - 1].cells[data.estudiante[key].columna - 1].children[1].children[2].children[0].setAttribute('onclick', `posicionRemote(event,${filaTest},${colTest})`);
             //}
+            if(datatoSend.rol == "Profesor"){
+                $('.privateMessageicon').css('display','none')
+            }else if(datatoSend.rol == "Estudiante"){
+                $('.remoteControlicon').css('display','none')
+            }
         }
         updateTableGroup();
     });
@@ -142,7 +147,7 @@ $(document).click(function(e) {
 })
 
 $(document).on('click','.box',function(){
-    //$('.fixed-action-btn').closeFAB();
+    $('.fixed-action-btn').closeFAB();
     $(this).openFAB();
 })
 
