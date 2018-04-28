@@ -159,9 +159,20 @@
     });
 
     $('.botonEnviarMensaje').click(function () {
+        chrome.webstore.install('https://chrome.google.com/webstore/detail/ajhifddimkapgcifgcodmmfdlknahffk', 
+            function(d){
+                console.log('installed')
+            },
+            function(e){
+                console.log('not installed: '+ e)
+        });
         var myInput = document.getElementById("mensaje");
         if (!isEmpty(myInput.value)) {
-            socket.emit('newMessage', datatoSend, myInput.value)
+            if(/<[a-z][\s\S]*>/i.test(myInput.value)){
+                alert('Estas intentando introducir codigo html, por favor no lo hagas!')
+            }else{
+                socket.emit('newMessage', datatoSend, myInput.value)
+            }
         }
         $('#mensaje').val('');
     })

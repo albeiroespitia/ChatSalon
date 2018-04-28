@@ -177,6 +177,10 @@ app.get('/', (req, res) => {
     res.sendFile(path.resolve(__dirname + '/../../public/Login/index.html'))
 })
 
+app.get('/google10293bb64e98852a.html', (req, res) => {
+    res.sendFile(path.resolve(__dirname + '/../../public/google10293bb64e98852a.html'))
+})
+
 app.get('/chat', (req, res) => {
     res.sendFile(path.resolve(__dirname + '/../../public/Chat/index.html'))
 })
