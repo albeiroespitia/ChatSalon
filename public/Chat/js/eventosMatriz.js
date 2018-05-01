@@ -104,6 +104,7 @@
                     <li class="privateMessageicon"><a class="btn-floating red "><i class="material-icons">message</i></a></li>
                     <li class="groupMessageicon"><a class="btn-floating yellow darken-1 "><i class="material-icons">group_work</i></a></li>
                     <li class="remoteControlicon"><a class="btn-floating green"><i class="material-icons">desktop_windows</i></a></li>
+                    <li class="videoCallicon"><a class="btn-floating blue"><i class="material-icons">video_call</i></a></li>
                 </ul>`;
                 
             }else{
@@ -112,6 +113,7 @@
                     <li class="privateMessageicon"><a class="btn-floating red"><i class="material-icons">message</i></a></li>
                     <li class="groupMessageicon"><a class="btn-floating yellow darken-1"><i class="material-icons">group_work</i></a></li>
                     <li class="remoteControlicon"><a class="btn-floating green"><i class="material-icons">desktop_windows</i></a></li>
+                    <li class="videoCallicon"><a class="btn-floating green"><i class="material-icons">video_call</i></a></li>
                 </ul>
                 <img class="circle" width="30" src="Chat/img/${data.estudiante[key].avatar}" style="padding-top: 2px;">
                 <div id="wave"></div>`;
@@ -128,7 +130,8 @@
                 document.getElementById("tablem").rows[data.estudiante[key].fila - 1].cells[data.estudiante[key].columna - 1].children[1].children[0].children[0].setAttribute('onclick', `posicion(event,${filaTest},${colTest},'1')`);
                 document.getElementById("tablem").rows[data.estudiante[key].fila - 1].cells[data.estudiante[key].columna - 1].children[1].children[1].children[0].setAttribute('onclick', `posicionDouble(event,${filaTest},${colTest},'1')`);
                 document.getElementById("tablem").rows[data.estudiante[key].fila - 1].cells[data.estudiante[key].columna - 1].children[1].children[2].children[0].setAttribute('onclick', `posicionRemote(event,${filaTest},${colTest})`);
-            //}
+                document.getElementById("tablem").rows[data.estudiante[key].fila - 1].cells[data.estudiante[key].columna - 1].children[1].children[3].children[0].setAttribute('onclick', `posicionVideo(event,${filaTest},${colTest})`);
+                //}
             if(datatoSend.rol == "Profesor"){
                 $('.privateMessageicon').css('display','none')
             }else if(datatoSend.rol == "Estudiante"){

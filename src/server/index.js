@@ -483,6 +483,14 @@ io.on('connection', function (socket) {
     socket.on('errorRemote',function(message){    
         socket.to(fullData.profesor.id).emit('newRemoteError',message);
     })
+
+    socket.on('videoCall',function(fila,col){    
+        socket.emit('videoOn',fila,col);
+    })
+
+    socket.on('videoOnFlag',function(fila,col){    
+        socket.to(socketsID[fila-1][col-1]).emit('videoOnClient');
+    })
     
 
     // Recibe encuesta creada

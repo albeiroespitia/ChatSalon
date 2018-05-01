@@ -13,6 +13,17 @@ ul {
 .logo{
     font-weight: 300;
 }
+
+#modalBroadcastVideo{
+    top: 5% !important;
+    width: 60% !important;
+    max-height: 90% !important;
+}
+
+iframe{
+    width: 100% !important;
+}
+
 video {
     object-fit: fill;
     width: 100%;
