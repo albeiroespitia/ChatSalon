@@ -480,8 +480,8 @@ io.on('connection', function (socket) {
     })
 
     
-    socket.on('errorRemote',function(){    
-        socket.to(fullData.profesor.id).emit('newRemoteError');
+    socket.on('errorRemote',function(message){    
+        socket.to(fullData.profesor.id).emit('newRemoteError',message);
     })
     
 

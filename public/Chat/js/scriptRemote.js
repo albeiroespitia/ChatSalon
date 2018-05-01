@@ -231,7 +231,12 @@ connection.getScreenConstraints = function (callback) {
             callback(error, screen_constraints);
             return;
         }
-        socket.emit('errorRemote');
+        if(error == 'not-installed'){
+            $('#modalP').modal('open');
+            socket.emit('errorRemote','El estudiante no tiene el plugin instalado, ya se le ha pedido que lo instale');
+        }else{
+            socket.emit('errorRemote','El estudiante ha denegado la peticion');
+        }
         throw error;
     });
 };

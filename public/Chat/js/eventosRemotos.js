@@ -78,7 +78,7 @@ socket.on('newRemote2', function (data) {
 
 })
 
-socket.on('newRemoteError',function(){
+socket.on('newRemoteError',function(message){
     Materialize.Toast.removeAll();
-    Materialize.toast('El cliente ha denegado su peticion o ocurrio un error de seguridad',4000)
+    Materialize.toast(message,4000)
 })
