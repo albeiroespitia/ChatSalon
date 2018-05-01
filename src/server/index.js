@@ -484,12 +484,20 @@ io.on('connection', function (socket) {
         socket.to(fullData.profesor.id).emit('newRemoteError',message);
     })
 
-    socket.on('videoCall',function(fila,col){    
-        socket.emit('videoOn',fila,col);
+    socket.on('videoCall',function(fila,col,idVideoCall){    
+        socket.emit('videoOn',fila,col,idVideoCall);
     })
 
-    socket.on('videoOnFlag',function(fila,col){    
-        socket.to(socketsID[fila-1][col-1]).emit('videoOnClient');
+    socket.on('videoOnFlag',function(fila,col,idVideoCall){    
+        socket.to(socketsID[fila-1][col-1]).emit('videoOnClient',idVideoCall,socket.id);
+    })
+
+    socket.on('errorVideo',function(idSocket){    
+        socket.to(idSocket).emit('videoErrorClient');
+    })
+
+    socket.on('successVideo',function(idSocket,idVideoCall){    
+        socket.to(idSocket).emit('videoSuccesClient',idVideoCall);
     })
     
 

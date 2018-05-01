@@ -24,6 +24,10 @@ iframe{
     width: 100% !important;
 }
 
+iframe #document html {
+    overflow: hidden;
+}
+
 video {
     object-fit: fill;
     width: 100%;

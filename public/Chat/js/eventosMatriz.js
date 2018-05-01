@@ -113,7 +113,7 @@
                     <li class="privateMessageicon"><a class="btn-floating red"><i class="material-icons">message</i></a></li>
                     <li class="groupMessageicon"><a class="btn-floating yellow darken-1"><i class="material-icons">group_work</i></a></li>
                     <li class="remoteControlicon"><a class="btn-floating green"><i class="material-icons">desktop_windows</i></a></li>
-                    <li class="videoCallicon"><a class="btn-floating green"><i class="material-icons">video_call</i></a></li>
+                    <li class="videoCallicon"><a class="btn-floating blue"><i class="material-icons">video_call</i></a></li>
                 </ul>
                 <img class="circle" width="30" src="Chat/img/${data.estudiante[key].avatar}" style="padding-top: 2px;">
                 <div id="wave"></div>`;
@@ -134,6 +134,7 @@
                 //}
             if(datatoSend.rol == "Profesor"){
                 $('.privateMessageicon').css('display','none')
+                $('.videoCallicon').css('display','none')
             }else if(datatoSend.rol == "Estudiante"){
                 $('.remoteControlicon').css('display','none')
             }
