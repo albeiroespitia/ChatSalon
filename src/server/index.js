@@ -555,6 +555,10 @@ io.on('connection', function (socket) {
         socket.disconnect();
     });
 
+    socket.on('newNotaVoz',function(url){
+        io.sockets.emit('newMessageAudio',url);
+    });
+
     socket.on('disconnect', function () {
         //console.log("Al comienzo" + util.inspect(fullData, false, null))
         if (fullData.profesor.id == socket.id) {

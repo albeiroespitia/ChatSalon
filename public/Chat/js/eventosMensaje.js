@@ -145,6 +145,56 @@
 
     })
 
+    socket.on('newMessageAudio', function (src) {
+        var htmlMessageI = `<div class="col s12 mensajeUser">
+                                <table>
+                                    <tr>
+                                        <td style="text-align: right;">
+                                            <b>2</b>
+                                        </td>
+                                        <td rowspan="2" style="width: 2px;">
+                                            <img class="circle" width="50" src="2">
+                                        </td>
+                                    </tr>
+                                    <tr> 
+                                        <td style="text-align: right;">
+                                        <span><audio src="${src}" controls autoplay>
+                                        <p>Tu navegador no soporta audios</p>
+                                        </audio></span>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>`
+        var htmlMessageProfesorI = `<div class="col s12 mensajeUser">
+                                    <table>
+                                        <tr>
+                                            <td rowspan="2" style="width: 65px;">
+                                                <img class="circle" width="50" src="Chat/img/2">
+                                            </td>
+                                            <td>
+                                                <b>2</b>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                            <span><audio src="${src}" controls autoplay>
+                                            <p>Tu navegador no soporta audios</p>
+                                            </audio></span>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>`
+        //if (data.rol == "Profesor") {
+            $('.cardChat').append(htmlMessageProfesorI);
+        //} else {
+        //    $('.cardChat').append(htmlMessageI);
+        //}
+        
+        $('.materialboxed').materialbox();
+        // Dejar scroll abajo
+        $('#ChatMsj').scrollTop($('#ChatMsj')[0].scrollHeight - $('#ChatMsj')[0].clientHeight);
+
+    })
 
     // ----- EMIT ------------------------------------------------
     function isEmpty(str) {

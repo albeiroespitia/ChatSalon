@@ -13,7 +13,9 @@ ul {
 .logo{
     font-weight: 300;
 }
-
+audio{
+    width: 95%;
+}
 #modalBroadcastVideo{
     top: 5% !important;
     width: 60% !important;
