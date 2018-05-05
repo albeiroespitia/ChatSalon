@@ -14,7 +14,6 @@ var fullData = require('./data')
 var multer = require('multer');
 var encuestasInfo = require('./encuestasR')
 var fullDataGroups = require('./workGroup')
-var FileReader = require('filereader')
 
 
 function letsencryptOptions() {
@@ -93,17 +92,6 @@ var upload = multer({
 
 app.get('/.well-known/acme-challenge/:content', function(req, res) {
     res.send("RI3sVgObGtps8_qhT4xsGdv0Ta9hG9EfsS0oHtkXEEs.ms9KHLFlONQBKkBGDvEQ7m3CEDFM0-Gdd7QcSBQUI54");
-  });
-
-app.post('/frame', function (req, resp) {
-    req.on('readable', function(){
-        var fileReader = new FileReader();
-        fileReader.onload = function () {
-            fs.writeFileSync('test.mp3', Buffer(new Uint8Array(this.result)));
-        };
-        fileReader.readAsArrayBuffer(req.read().data);
-    //fileReader.readAsArrayBuffer(req.read());
-    });
   });
 
 app.post('/imageUpload', function (req, res) {
