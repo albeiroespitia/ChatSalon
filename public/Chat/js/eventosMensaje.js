@@ -145,15 +145,15 @@
 
     })
 
-    socket.on('newMessageAudio', function (src) {
+    socket.on('newMessageAudio', function (src,data) {
         var htmlMessageI = `<div class="col s12 mensajeUser">
                                 <table>
                                     <tr>
                                         <td style="text-align: right;">
-                                            <b>2</b>
+                                            <b>${data.nombre}</b>
                                         </td>
                                         <td rowspan="2" style="width: 2px;">
-                                            <img class="circle" width="50" src="2">
+                                            <img class="circle" width="50" src="Chat/img/${data.avatar}">
                                         </td>
                                     </tr>
                                     <tr> 
@@ -169,10 +169,10 @@
                                     <table>
                                         <tr>
                                             <td rowspan="2" style="width: 65px;">
-                                                <img class="circle" width="50" src="Chat/img/2">
+                                                <img class="circle" width="50" src="Chat/img/${data.avatar}"">
                                             </td>
                                             <td>
-                                                <b>2</b>
+                                                <b>${data.nombre}</b>
                                             </td>
                                         </tr>
                                         <tr>
