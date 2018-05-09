@@ -119,22 +119,21 @@
 					</table>
 				</div>
 				<div class="card-panel grey lighten-3 cardInput">
-					<div class="input-field col s10">
-						<i class="material-icons prefix">message</i>
+						<form id="formSubirImagen" class="col s2" enctype="multipart/form-data" action="/imageUpload" method="post">
+							<div class="image-upload">
+								<label for="file-input">
+									<img src="https://image.flaticon.com/icons/svg/118/118760.svg" />
+								</label>
+	
+								<input accept="image/*,video/*" name="filetoupload" id="file-input" type="file" />
+							</div>
+						</form>
+					<div class="input-field col s9">
+						
 						<input id="mensaje" type="text" style="float:left"></input>
 						<label for="textarea1">Escribe algo...</label>
 					</div>
-
-					<form id="formSubirImagen" enctype="multipart/form-data" action="/imageUpload" method="post">
-						<div class="image-upload col s2">
-							<label for="file-input">
-								<img src="https://image.flaticon.com/icons/svg/25/25315.svg" />
-							</label>
-
-							<input accept="image/*,video/*" name="filetoupload" id="file-input" type="file" />
-						</div>
-					</form>
-
+					<a id="grabar" class="btn-floating btn waves-effect waves-light teal tooltipped" data-position="top" data-delay="50" data-tooltip="Mantén presionado" style="margin-top: 10px;"><i class="material-icons">mic</i></a>
 				</div>
 			</div>
 
@@ -231,7 +230,7 @@
 						</div>
 						</form>
 					</div>
-				</div>p
+				</div>
 
 			</div>
 
@@ -443,9 +442,7 @@
 			</div>
 		</div>
 	</footer>
-	<p>Presiona grabar, y grabate por 3seg</p>
-	<audio id="audioo" controls autoplay src="horse.mp3"></audio>
-<button onclick="grabar()">Grabar</button>
+
 
 
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>

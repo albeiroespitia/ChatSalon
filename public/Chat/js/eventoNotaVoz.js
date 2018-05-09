@@ -11,7 +11,9 @@ const recordAudio = () => new Promise(async resolve => {
     const start = () => mediaRecorder.start();
     const stop = () => new Promise(resolve => {
         mediaRecorder.addEventListener("stop", () => {
-            const audioBlob = new Blob(audioChunks, { 'type' : 'audio/ogg; codecs=opus' });
+            const audioBlob = new Blob(audioChunks, {
+                'type': 'audio/ogg; codecs=opus'
+            });
             const audioUrl = URL.createObjectURL(audioBlob);
             const audio = new Audio(audioUrl);
             const play = () => audio.play();
@@ -28,37 +30,38 @@ const recordAudio = () => new Promise(async resolve => {
         stop
     });
 });
-function grabar(){
+
+
 const sleep = time => new Promise(resolve => setTimeout(resolve, time));
-(async () => {
-    const recorder = await recordAudio();
-  
-    recorder.start();
-    await sleep(3000);
-    const audio = await recorder.stop();
-    blobURL = audio.audioUrl;
-    console.log(audio.audioUrl);
-    console.log("ASHASHSH")
-    audio.play();
-    var reproductor = document.getElementById('audioo');
-    reproductor.src = audio.audioUrl;
-    
+
+    var recorder;
+
+    $("#grabar")
+        .mousedown(function () {
+            (async () => {
+            recorder = await recordAudio();
+            $('#grabar').removeClass('teal');
+            $('#grabar').addClass('red');
+            
+            recorder.start();
+            })();
+        })
+        .mouseup(function () {
+            (async () => {
+            $('#grabar').removeClass('red');
+            $('#grabar').addClass('teal');
+            const audio = await recorder.stop();
+            blobURL = audio.audioUrl;
+            var reader = new FileReader();
+            reader.readAsDataURL(audio.audioBlob);
+            reader.onloadend = function () {
+                base64data = reader.result;
+                socket.emit('newNotaVoz', base64data, datatoSend);
+            }
+            })();
+        })
 
 
-    var reader = new FileReader();
-    reader.readAsDataURL(audio.audioBlob); 
-    reader.onloadend = function() {
-        base64data = reader.result; 
-        console.log("Base64: ") 
-        socket.emit('newNotaVoz',base64data,datatoSend);              
-        
-    }
-
-
-
-
-})();
-}
 
 /*
 
