@@ -8,6 +8,7 @@ body{
     background-color: #eee !important;
 }
 .logo{
+    width: 100%;
     font-weight: 300;
 }
 
@@ -77,3 +78,16 @@ input[type=text]:focus + label {
 }
 
 /* /////////////////////////////////// */
+
+
+
+@media only screen and (max-device-width:400px){
+    .brand-logo{
+        font-size: 15px !important;
+    }
+
+    .cardLogin {
+        margin: 0 30px;
+        margin-top: 20px;
+    }
+ }
