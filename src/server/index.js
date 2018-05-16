@@ -27,7 +27,7 @@ function letsencryptOptions() {
 
 const options = letsencryptOptions();
 
-//app.use('/', httpsRedirect());
+app.use('/', httpsRedirect());
 
 var contadorPersonas = 0;
 var server = require('ws').Server;
