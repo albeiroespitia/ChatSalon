@@ -87,9 +87,6 @@ input[type=text]:focus+label {
     font-size: 2vw !important;
 }
 
-.material-icons {
-    font-size: medium;
-}
 
 /* /////////////////////////////////// */
 
@@ -108,5 +105,8 @@ input[type=text]:focus+label {
     }
     .subtitle-sillas {
         font-size: 3vw !important;
+    }
+    .material-icons {
+        font-size: medium;
     }
 }

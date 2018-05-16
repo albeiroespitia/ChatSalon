@@ -155,3 +155,8 @@ $(document).on('click','.box',function(){
     $(this).openFAB();
 })
 
+$(document).on('click','.image-uploadF',function(){
+    $('.fixed-action-btn').closeFAB();
+    $(this).openFAB();
+})
+
