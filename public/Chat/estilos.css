@@ -239,9 +239,25 @@ canvas{
     margin-left: 10px !important; 
 }
 
-.botonCrearEncuesta{
+#modalopcion{
+    height: 40% !important;
+}
+
+.botonCrearquizencuesta{
     margin-top: 5px;
-    margin-left: 10px !important; 
+    margin-left: 10px !important;
+}
+
+.botonCrearEncuesta{
+    margin-top: 15px;
+    margin-left: 10px !important;
+    float: none !important; 
+}
+
+.botonCrearQuiz{
+    float: none !important;
+    margin-top: 10px;
+    margin-left: 10px !important;
 }
 /* Modificando el color de el formulario*/ 
 

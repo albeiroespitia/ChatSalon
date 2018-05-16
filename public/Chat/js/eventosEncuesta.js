@@ -251,3 +251,7 @@ function hayEncuestaPendientes() {
     }
     return sw;
 }
+
+$(document).on('click','.botonCrearEncuesta',function(){
+    $('#modalopcion').modal('close');
+})

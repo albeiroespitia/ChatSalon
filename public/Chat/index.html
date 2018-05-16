@@ -5,7 +5,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="chrome-webstore-item" href="https://chrome.google.com/webstore/detail/ajhifddimkapgcifgcodmmfdlknahffk">	
+	<link rel="chrome-webstore-item" href="https://chrome.google.com/webstore/detail/ajhifddimkapgcifgcodmmfdlknahffk">
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
 	<link rel="stylesheet" href="Chat/estilos.css">
@@ -119,21 +119,24 @@
 					</table>
 				</div>
 				<div class="card-panel grey lighten-3 cardInput">
-						<form id="formSubirImagen" class="col s2" enctype="multipart/form-data" action="/imageUpload" method="post">
-							<div class="image-upload">
-								<label for="file-input">
-									<img src="https://image.flaticon.com/icons/svg/118/118760.svg" />
-								</label>
-	
-								<input accept="image/*,video/*" name="filetoupload" id="file-input" type="file" />
-							</div>
-						</form>
+					<form id="formSubirImagen" class="col s2" enctype="multipart/form-data" action="/imageUpload" method="post">
+						<div class="image-upload">
+							<label for="file-input">
+								<img src="https://image.flaticon.com/icons/svg/118/118760.svg" />
+							</label>
+
+							<input accept="image/*,video/*" name="filetoupload" id="file-input" type="file" />
+						</div>
+					</form>
 					<div class="input-field col s9">
-						
+
 						<input id="mensaje" type="text" style="float:left"></input>
 						<label for="textarea1">Escribe algo...</label>
 					</div>
-					<a id="grabar" class="btn-floating btn waves-effect waves-light teal tooltipped" data-position="top" data-delay="50" data-tooltip="Mantén presionado" style="margin-top: 10px;"><i class="material-icons">mic</i></a>
+					<a id="grabar" class="btn-floating btn waves-effect waves-light teal tooltipped" data-position="top" data-delay="50" data-tooltip="Mantén presionado"
+					    style="margin-top: 10px;">
+						<i class="material-icons">mic</i>
+					</a>
 				</div>
 			</div>
 
@@ -144,7 +147,7 @@
 				<div class="card-panel grey lighten-3 cardInput" style="margin-left: 20px;">
 					<a class="col s5 botonEnviarMensaje waves-effect waves-light red btn-large">
 						<i class="material-icons right">send</i>Enviar</a>
-					<a class="col s6 botonCrearEncuesta waves-effect modal-trigger waves-light teal darken-1 btn-large" href="#modal1">
+					<a class="col s6 botonCrearquizencuesta waves-effect modal-trigger waves-light teal darken-1 btn-large" href="#modalopcion">
 						<i class="material-icons right">format_indent_increase</i>Nueva Encuesta</a>
 
 					<!-- Modal Structure -->
@@ -184,6 +187,19 @@
 									<i class="material-icons right">navigate_next</i>Enviar</buttona>
 							</div>
 						</form>
+					</div>
+
+					<!-- Modal de opciones -->
+					<div id="modalopcion" class="modal modal-fixed-footer">
+						<div class="modal-content">
+							<center>
+							<h4>Selecciona una opcion</h4>
+							<a class="col s6 botonCrearEncuesta waves-effect modal-trigger waves-light teal darken-1 btn-large" href="#modal1">
+								<i class="material-icons right">format_indent_increase</i>Crear Encuesta</a>
+							<a class="col s6 botonCrearQuiz waves-effect modal-trigger waves-light teal darken-1 btn-large" href="#modal1">
+								<i class="material-icons right">format_indent_increase</i>Crear Quizz</a>
+							</center>
+						</div>
 					</div>
 
 					<!-- Modal Structure -->
@@ -319,17 +335,19 @@
 		</div>
 	</div>
 
-	  <!-- MODAL PRELOADER PLUGIN -->
-	  <div id="modalP" class="modal">
+	<!-- MODAL PRELOADER PLUGIN -->
+	<div id="modalP" class="modal">
 		<div class="modal-content">
-		  <h4>Plugin no instalado</h4>
-		  <p>Para usar la opcion de remoto necesitamos que instales el siguiente <a target="_blank" href="https://chrome.google.com/webstore/detail/screen-capturing/ajhifddimkapgcifgcodmmfdlknahffk?hl=es-419" onclick="RedirectUrlPlugin()">plugin </a>, solo son unos segundos</p>		  
-		  	<div class="progress">
+			<h4>Plugin no instalado</h4>
+			<p>Para usar la opcion de remoto necesitamos que instales el siguiente
+				<a target="_blank" href="https://chrome.google.com/webstore/detail/screen-capturing/ajhifddimkapgcifgcodmmfdlknahffk?hl=es-419"
+				    onclick="RedirectUrlPlugin()">plugin </a>, solo son unos segundos</p>
+			<div class="progress">
 				<div class="indeterminate"></div>
 			</div>
 		</div>
-	  </div>
-			
+	</div>
+
 
 	<!--- MODAL SELECCION DE ENCUESTA -->
 	<div id="modalSelEncuesta" class="modal">
@@ -389,15 +407,15 @@
 	</div>
 
 	<div id="md1" class="modal">
-        <div class="modal-content">
-            <h4>Un usuario quiere hacer una videollamada</h4>
-            <p>Desea aceptarla?</p>
-        </div>
-        <div class="modal-footer">
-            <a class="waves-effect waves-red btn-flat" id="md1_NoBtn">Cancel</a>
-            <a class="waves-effect waves-green btn-flat" id="md1_YesBtn">Yes</a>
-       </div>
-    </div>
+		<div class="modal-content">
+			<h4>Un usuario quiere hacer una videollamada</h4>
+			<p>Desea aceptarla?</p>
+		</div>
+		<div class="modal-footer">
+			<a class="waves-effect waves-red btn-flat" id="md1_NoBtn">Cancel</a>
+			<a class="waves-effect waves-green btn-flat" id="md1_YesBtn">Yes</a>
+		</div>
+	</div>
 
 
 	<!-- Footer -->
