@@ -295,8 +295,9 @@ canvas {
 
 #modalpreguntas {
     top: 5% !important;
-    background-color: #7e3ff2;
-    height: 80% !important;
+    overflow-y: hidden !important; 
+    /*background-color: #7e3ff2;*/
+    height: 90% !important;
     max-height: 90% !important;
     width: 90% !important;
     transition: background-color 1000ms linear;
@@ -452,6 +453,7 @@ div#wave {
 }
 
 .cardPregunta {
+    margin-top: 20px;
     width: 100%;
     height: 100px;
     background-color: white;
@@ -507,4 +509,8 @@ div#wave {
 
 .buttonaddPreguntaQuizz:hover{
     cursor: pointer;
+}
+
+.comenzarQuizzSection{
+    height: 70px !important;
 }

@@ -268,10 +268,10 @@ $('.formQuiz').submit(function(e){
 
 var colorsBackgroundPreguntas = ['#7e3ff2','#0000d6','#008b00','#f47100','#283593','#1DE9B6']
 
-setInterval(function(){
+/*setInsetInterval(function(){
     var item = colorsBackgroundPreguntas[Math.floor(Math.random()*colorsBackgroundPreguntas.length)];
     $('#modalpreguntas').css('background-color',item)
-},4000)
+},4000)*/
 
 
 
@@ -397,9 +397,35 @@ $('.formCrearPregunta').submit(function(e){
             respuestaCorrecta: respuestaCorrecta
         }
     }
-
-    console.log(dataPreguntaFull)
     
 
-    socket.emit('sendDataQuiz',tituloQuiz,descriptionQuiz,videoQuiz);
+    socket.emit('sendDataPreguntasQuiz',dataPreguntaFull);
+
+    $('#modalNewPregunta').modal('close')
+    $('#preguntaQuizz').val('')
+    $('#selectTimePregunta').val('')
+    $('#puntosQuizz').val('')
+    $('#respuesta1Input').val('')
+    $('#respuesta2Input').val('')
+    $('#respuesta3Input').val('')
+    $('#respuesta4Input').val('')
+    $('#videoQuizz').val('')
+    $('#empiezaQuizz').val('')
+    $('#terminaQuizz').val('')
+    $('#respuesta1').prop('checked', false);
+    $('#respuesta2').prop('checked', false);
+    $('#respuesta3').prop('checked', false);
+    $('#respuesta4').prop('checked', false);
+
+})
+
+socket.on('nuevaPregunta',function(preguntasArr){
+    var htmlPregunta = '';
+    preguntasArr.forEach(function(element){
+        htmlPregunta += `<div class="cardPregunta">
+                            <p class="tituloPregunta">${element.preguntaQuiz}</p>
+                            <p class="descripcionPregunta">${element.puntosQuizz}</p>
+                        </div>`
+    })
+    $('.preguntasGeneral').html(htmlPregunta);
 })

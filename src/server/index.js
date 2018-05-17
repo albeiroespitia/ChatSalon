@@ -15,6 +15,7 @@ var multer = require('multer');
 var encuestasInfo = require('./encuestasR')
 var fullDataGroups = require('./workGroup')
 var tituloQuizJSON = require('./tituloQuiz')
+var preguntasQuizJSON = require('./preguntasQuiz')
 
 
 function letsencryptOptions() {
@@ -281,11 +282,9 @@ io.on('connection', function (socket) {
         console.log(util.inspect(tituloQuizJSON, false, null));
     })
 
-    socket.on('sendDataPreguntasQuiz',function(tituloQuiz,descriptionQuiz,videoQuiz){
-        tituloQuizJSON.titulo = tituloQuiz;
-        tituloQuizJSON.descripcion = descriptionQuiz;
-        tituloQuizJSON.video = videoQuiz;
-        console.log(util.inspect(tituloQuizJSON, false, null));
+    socket.on('sendDataPreguntasQuiz',function(preguntaQuiz){
+        preguntasQuizJSON.preguntas.push(preguntaQuiz);
+        socket.emit('nuevaPregunta',preguntasQuizJSON.preguntas)
     })
 
     //////////// Quizz ///////////////////
