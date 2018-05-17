@@ -327,3 +327,79 @@ function selCerrar() {
 $('.buttonaddPreguntaQuizz').click(function(){
     $('#modalNewPregunta').modal('open');
 })
+
+var checkboxes = $("input[type='checkbox']"),
+    submitButt = $(".submitPreguntaButton");
+    
+submitButt.attr("disabled", !checkboxes.is(":checked"));
+
+checkboxes.click(function() {
+    submitButt.attr("disabled", !checkboxes.is(":checked"));
+});
+
+$('.formQuiz').submit(function(e){
+    e.preventDefault();
+    var tituloQuiz = $('#tituloQuiz').val()
+    var descriptionQuiz = $('#descriptionQuizz').val()
+    var videoQuiz = $('#videopregunta').val()
+    socket.emit('sendDataQuiz',tituloQuiz,descriptionQuiz,videoQuiz);
+})
+
+$('.formCrearPregunta').submit(function(e){
+    e.preventDefault();
+    var preguntaQuiz = $('#preguntaQuizz').val()
+    var selectTime = $('#selectTimePregunta').val()
+    var puntosQuizz = $('#puntosQuizz').val()
+    var respuesta1Input = $('#respuesta1Input').val()
+    var respuesta2Input = $('#respuesta2Input').val()
+    var respuesta3Input = $('#respuesta3Input').val()
+    var respuesta4Input = $('#respuesta4Input').val()
+    var respuestaCorrecta;
+    var videolink;
+    var startVideo;
+    var endVideo;
+    if($('#respuesta1').is(":checked")){
+        respuestaCorrecta = 'respuesta1';
+    }else if($('#respuesta2').is(":checked")){
+        respuestaCorrecta = 'respuesta2';
+    }else if($('#respuesta3').is(":checked")){
+        respuestaCorrecta = 'respuesta3';
+    }else if($('#respuesta4').is(":checked")){
+        respuestaCorrecta = 'respuesta4';
+    }
+
+    if($('#videoQuizz').val()){
+        var videolink = $('#videoQuizz').val()
+        var startVideo = $('#empiezaQuizz').val()
+        var endVideo = $('#terminaQuizz').val()
+        var dataPreguntaFull = {
+            preguntaQuiz: preguntaQuiz,
+            selectTime: selectTime,
+            puntosQuizz: puntosQuizz,
+            respuesta1Input: respuesta1Input,
+            respuesta2Input: respuesta2Input,
+            respuesta3Input: respuesta3Input,
+            respuesta4Input: respuesta4Input,
+            respuestaCorrecta: respuestaCorrecta,
+            videolink: videolink,
+            startVideo: startVideo,
+            endVideo: endVideo
+        }
+    }else{
+        var dataPreguntaFull = {
+            preguntaQuiz: preguntaQuiz,
+            selectTime: selectTime,
+            puntosQuizz: puntosQuizz,
+            respuesta1Input: respuesta1Input,
+            respuesta2Input: respuesta2Input,
+            respuesta3Input: respuesta3Input,
+            respuesta4Input: respuesta4Input,
+            respuestaCorrecta: respuestaCorrecta
+        }
+    }
+
+    console.log(dataPreguntaFull)
+    
+
+    socket.emit('sendDataQuiz',tituloQuiz,descriptionQuiz,videoQuiz);
+})

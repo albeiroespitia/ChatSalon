@@ -491,9 +491,9 @@ div#wave {
 }
 
 .adjArchivo {
-    border: #dcdde1 dotted;
+    /*border: #dcdde1 dotted;
     background-color: #f5f6fa;
-    border-radius: 5px;
+    border-radius: 5px;*/
     height: 200px;
 }
 

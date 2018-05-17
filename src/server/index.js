@@ -14,6 +14,7 @@ var fullData = require('./data')
 var multer = require('multer');
 var encuestasInfo = require('./encuestasR')
 var fullDataGroups = require('./workGroup')
+var tituloQuizJSON = require('./tituloQuiz')
 
 
 function letsencryptOptions() {
@@ -270,6 +271,24 @@ io.on('connection', function (socket) {
     socket.on('EstudianteisNotTyping', function (data) {
         io.sockets.emit('EstudianteisNotTypingAll', data);
     })
+
+    //////////// Quizz ///////////////////
+    
+    socket.on('sendDataQuiz',function(tituloQuiz,descriptionQuiz,videoQuiz){
+        tituloQuizJSON.titulo = tituloQuiz;
+        tituloQuizJSON.descripcion = descriptionQuiz;
+        tituloQuizJSON.video = videoQuiz;
+        console.log(util.inspect(tituloQuizJSON, false, null));
+    })
+
+    socket.on('sendDataPreguntasQuiz',function(tituloQuiz,descriptionQuiz,videoQuiz){
+        tituloQuizJSON.titulo = tituloQuiz;
+        tituloQuizJSON.descripcion = descriptionQuiz;
+        tituloQuizJSON.video = videoQuiz;
+        console.log(util.inspect(tituloQuizJSON, false, null));
+    })
+
+    //////////// Quizz ///////////////////
 
     // ------ >  Mensajes <----
     // Mensaje texto
