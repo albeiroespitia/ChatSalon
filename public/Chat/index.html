@@ -222,7 +222,7 @@
 											<label for="textarea1">Descripcion</label>
 										</div>
 									</div>
-									<div class="input-field col l4 adjArchivo">
+									<div class="input-field col l4 adjArchivo2">
 										<i class="material-icons prefix chromreader">chrome_reader_mode</i>
 									</div>
 								</div>
@@ -257,12 +257,104 @@
 								</div>
 								<div class="addPregunta">
 									<div class="cardadd">
-										<a href="#modalNewPregunta">
+										<a class="buttonaddPreguntaQuizz">
 											<i class="material-icons addPreguntaIcon">add_circle</i>
 										</a>
 									</div>
 								</div>
 							</center>
+						</div>
+					</div>
+
+					<!-- Modal crear pregunta papu -->
+					<div id="modalNewPregunta" class="modal modal-fixed-footer">
+						<div class="modal-content">
+							<div class="row">
+								<form class="col s12">
+									<div class="row">
+										<div class="col l8">
+											<div class="input-field col s12">
+												<i class="material-icons prefix">question_answer</i>
+												<input name="preguntaQuizz" required placeholder="(Obligatorio)" id="preguntaQuizz" type="text" class="validate">
+												<label for="preguntaQuizz">Pregunta</label>
+											</div>
+											<div class="input-field col s7">
+												<i class="material-icons prefix">watch_later</i>
+												<select>
+													<option value="5">5 Seg</option>
+													<option value="10">10 Seg</option>
+													<option value="15">15 Seg</option>
+													<option value="20">20 Seg</option>
+													<option value="30" selected>30 Seg</option>
+													<option value="60">60 Seg</option>
+													<option value="90">90 Seg</option>
+													<option value="120">120 Seg</option>
+												</select>
+												<label>Tiempo limite</label>
+											</div>
+											<div class="input-field col s4 offset-s1">
+												<i class="material-icons prefix">control_point</i>
+												<input name="puntosQuizz" required placeholder="30" id="puntosQuizz" type="text" class="validate">
+												<label for="puntosQuizz">Puntos</label>
+											</div>
+										</div>
+										<div class="input-field col l4 adjArchivo">
+											<div class="row">
+												<b>
+													<h5 class="center">Añadir</h5>
+												</b>
+											</div>
+											<a onClick="selVideo();" class="col l8 pull-l2 push-l2 waves-effect waves-light btn-large">
+												<i class="material-icons left">ondemand_video</i>VIDEO</a>
+										</div>
+									</div>
+									<div class="row">
+										<div class="input-field col l5">
+											<i class="material-icons prefix">filter_1</i>
+											<input name="respuesta1Input" placeholder="Gato" required id="respuesta1Input" type="text" class="validate">
+											<label for="respuesta1Input">Respuesta 1</label>
+										</div>
+										<p class="col l1">
+											<input name="check" onclick="onlyOne(this)" type="checkbox" id="respuesta1" />
+											<label for="respuesta1"></label>
+										</p>
+										<div class="input-field col l5">
+											<i class="material-icons prefix">filter_2</i>
+											<input name="respuesta2Input" placeholder="Perro" required id="respuesta2Input" type="text" class="validate">
+											<label for="respuesta2Input">Respuesta 2</label>
+										</div>
+										<p class="col l1">
+											<input name="check" onclick="onlyOne(this)" type="checkbox" id="respuesta2" />
+											<label for="respuesta2"></label>
+										</p>
+									</div>
+									<div class="row">
+										<div class="input-field col l5">
+											<i class="material-icons prefix">filter_3</i>
+											<input name="respuesta3Input" placeholder="Gato" required id="respuesta3Input" type="text" class="validate">
+											<label for="respuesta3Input">Respuesta 3</label>
+										</div>
+										<p class="col l1">
+											<input name="check" onclick="onlyOne(this)" type="checkbox" id="respuesta3" />
+											<label for="respuesta3"></label>
+										</p>
+										<div class="input-field col l5">
+											<i class="material-icons prefix">filter_4</i>
+											<input required name="respuesta4Input" placeholder="Perro" id="respuesta4Input" type="text" class="validate">
+											<label for="respuesta4Input">Respuesta 4</label>
+										</div>
+										<p class="col l1">
+											<input name="check" onclick="onlyOne(this)" type="checkbox" id="respuesta4" />
+											<label for="respuesta4"></label>
+										</p>
+									</div>
+									<center>
+										<button class="btn-large waves-effect waves-light" type="submit" name="action">Crear
+											<i class="material-icons right">send</i>
+										</button>
+									</center>
+								</form>
+							</div>
 						</div>
 					</div>
 

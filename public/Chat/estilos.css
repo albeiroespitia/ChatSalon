@@ -1,28 +1,34 @@
-nav{
+nav {
     background-color: transparent;
 }
-.nav-wrapper{
+
+.nav-wrapper {
     background-color: #f5f6fa !important;
 }
-body{
+
+body {
     background-color: #FF794D !important;
 }
+
 ul {
     text-align: center;
 }
-.logo{
+
+.logo {
     font-weight: 300;
 }
-audio{
+
+audio {
     width: 95%;
 }
-#modalBroadcastVideo{
+
+#modalBroadcastVideo {
     top: 5% !important;
     width: 60% !important;
     max-height: 90% !important;
 }
 
-iframe{
+iframe {
     width: 100% !important;
 }
 
@@ -35,137 +41,141 @@ video {
     width: 100%;
     max-width: 100%;
 }
+
 .pagination li.active {
     background-color: #e67e22;
 }
-#preguntaCanvas{
+
+#preguntaCanvas {
     text-align: center;
 }
 
-canvas{
+canvas {
     width: 450px !important;
     height: 450px !important;
 }
 
-#modal4{
+#modal4 {
     max-height: none !important;
     height: 88vh !important;
     top: 10% !important;
 }
 
-.cardInput{
-    height: 70px;
-    box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.14), 2px 2px 2px 2px rgba(0, 0, 0, 0.12), 2px 2px 2px 5px rgba(0, 0, 0, 0.2);
-    padding: 2px;
-}
-.cardInputPv2{
+.cardInput {
     height: 70px;
     box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.14), 2px 2px 2px 2px rgba(0, 0, 0, 0.12), 2px 2px 2px 5px rgba(0, 0, 0, 0.2);
     padding: 2px;
 }
 
-
-.cardInputPg2{
+.cardInputPv2 {
     height: 70px;
     box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.14), 2px 2px 2px 2px rgba(0, 0, 0, 0.12), 2px 2px 2px 5px rgba(0, 0, 0, 0.2);
     padding: 2px;
 }
 
-.botonRespuestaEncuestas{
+.cardInputPg2 {
+    height: 70px;
+    box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.14), 2px 2px 2px 2px rgba(0, 0, 0, 0.12), 2px 2px 2px 5px rgba(0, 0, 0, 0.2);
+    padding: 2px;
+}
+
+.botonRespuestaEncuestas {
     visibility: hidden !important;
 }
 
-.cardChat{
+.cardChat {
     margin-top: 30px;
     height: 600px;
     margin-left: 20px !important;
     box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.14), 2px 2px 2px 2px rgba(0, 0, 0, 0.12), 2px 2px 2px 5px rgba(0, 0, 0, 0.2);
     overflow-y: scroll;
 }
-.cardChatPv2,.cardChatPg2{
+
+.cardChatPv2,
+.cardChatPg2 {
     margin-top: 30px;
     height: 400px;
     margin-left: 20px !important;
     box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.14), 2px 2px 2px 2px rgba(0, 0, 0, 0.12), 2px 2px 2px 5px rgba(0, 0, 0, 0.2);
     overflow-y: scroll;
-    
 }
-#modalPv2,#modalPg2{
+
+#modalPv2,
+#modalPg2 {
     max-height: 90% !important;
     top: 5% !important;
 }
-.modalEncuesta{
+
+.modalEncuesta {
     height: 400px !important;
 }
 
-.modalQuizz{
+.modalQuizz {
     height: 400px !important;
 }
 
-
-.cardProfesor{
-    
+.cardProfesor {
     margin: auto;
     margin-top: 30px;
     height: 600px;
     box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.14), 2px 2px 2px 2px rgba(0, 0, 0, 0.12), 2px 2px 2px 5px rgba(0, 0, 0, 0.2);
-    text-align:center;
+    text-align: center;
     padding-left: 12px !important;
     padding-right: 12px !important;
 }
 
-.transitionBorder{
+.transitionBorder {
     border: 3px solid #009688 !important;
 }
 
-.iconGroup{
+.iconGroup {
     margin-top: 15px;
     margin-left: 15px;
 }
 
-#modalGrupoTrabajo{
+#modalGrupoTrabajo {
     top: 3% !important;
     text-align: center !important;
     width: 60% !important;
     max-height: 95% !important;
 }
 
-.testModal{
+.testModal {
     padding: 20px !important;
     top: 20% !important;
     display: none;
 }
 
-.box:hover{
+.box:hover {
     cursor: pointer;
 }
 
-.boxGroup:hover{
+.boxGroup:hover {
     cursor: pointer;
 }
 
-.botonSiguiente{
+.botonSiguiente {
     z-index: 2000;
     display: none;
 }
 
-.color-picker{
+.color-picker {
     z-index: 2000;
 }
 
-.tapNextStep{
+.tapNextStep {
     background-color: #009688 !important;
 }
 
-.tap-target-wrapper{
+.tap-target-wrapper {
     z-index: 2000;
 }
 
-.tap-target-origin{
+.tap-target-origin {
     display: none;
 }
 
-.box{
+.box {
     transition: border 500ms ease-out;
     position: relative;
     padding: 0px !important;
@@ -174,10 +184,10 @@ canvas{
     height: 70px;
     width: 12%;
     margin: 5px;
-    display:inline-block;
+    display: inline-block;
 }
 
-#tableGr span{
+#tableGr span {
     float: left;
     padding: 0 .75rem;
     min-height: 1px;
@@ -188,7 +198,7 @@ canvas{
     right: auto;
 }
 
-.boxGroup{
+.boxGroup {
     transition: border 500ms ease-out;
     position: relative;
     padding: 0px !important;
@@ -197,14 +207,14 @@ canvas{
     height: 70px;
     width: 12%;
     margin: 5px;
-    display:inline-block;
+    display: inline-block;
 }
 
-.boxGroupSelected{
+.boxGroupSelected {
     border: 3px solid #006064
 }
 
-.boxProfesor{
+.boxProfesor {
     position: relative;
     box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.14), 1px 1px 1px 1px rgba(0, 0, 0, 0.12), 1px 1px 1px 1px rgba(0, 0, 0, 0.2);
     border: solid 2px #00cec9;
@@ -212,76 +222,78 @@ canvas{
     margin: 320%;
     padding: 0px !important;
     border-radius: 10%;
-    display:inline-block;   
+    display: inline-block;
 }
-.boxProfesor span{
+
+.boxProfesor span {
     color: black;
     font-size: 11px;
 }
-.box span{
+
+.box span {
     overflow: hidden;
     font-size: 12px;
     white-space: nowrap;
 }
-.cardGrilla{
+
+.cardGrilla {
     margin: auto;
     margin-top: 30px;
     height: 600px;
     box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.14), 2px 2px 2px 2px rgba(0, 0, 0, 0.12), 2px 2px 2px 5px rgba(0, 0, 0, 0.2);
-    text-align:center;
+    text-align: center;
     padding-left: 12px !important;
     padding-right: 12px !important;
 }
 
-.input-field{
+.input-field {
     width: 80%;
 }
 
-
-.botonEnviarMensaje{
+.botonEnviarMensaje {
     margin-top: 5px;
-    margin-left: 10px !important; 
+    margin-left: 10px !important;
 }
 
-#modalopcion{
+#modalopcion {
     height: 40% !important;
 }
 
-.botonCrearquizencuesta{
+.botonCrearquizencuesta {
     margin-top: 5px;
     margin-left: 10px !important;
 }
 
-.botonCrearEncuesta{
+.botonCrearEncuesta {
     margin-top: 15px;
     margin-left: 10px !important;
-    float: none !important; 
+    float: none !important;
 }
 
-.botonCrearQuiz{
+.botonCrearQuiz {
     float: none !important;
     margin-top: 10px;
     margin-left: 10px !important;
 }
 
-.chromreader{
+.chromreader {
     font-size: 22rem !important;
     width: 100% !important;
 }
 
-.preguntasGeneral{
+.preguntasGeneral {
     margin-top: 40px;
     padding: 0 60px;
 }
 
-#modalQuizz{
+#modalQuizz {
     top: 5% !important;
     height: 80% !important;
     max-height: 90% !important;
     width: 90% !important;
 }
 
-#modalpreguntas{
+#modalpreguntas {
     top: 5% !important;
     background-color: #7e3ff2;
     height: 80% !important;
@@ -289,117 +301,119 @@ canvas{
     width: 90% !important;
     transition: background-color 1000ms linear;
 }
-/* Modificando el color de el formulario*/ 
+
+/* Modificando el color de el formulario*/
 
 .input-field input[type=text]:focus {
     border-bottom: 1px solid #e65100 !important;
     box-shadow: 0 1px 0 0 #e65100 !important;
 }
 
-input[type=text]:focus + label {
+input[type=text]:focus+label {
     color: #e65100 !important;
 }
-  
+
 .input-field .prefix.active {
     color: #e65100 !important;
 }
 
-.dropdown-content li>span{
+.dropdown-content li>span {
     color: #e65100 !important;
 }
-table.striped>tbody>tr>td{
+
+table.striped>tbody>tr>td {
     border-radius: 10px;
 }
 
-.mensajeUser{
+.mensajeUser {
     background: white;
     border-radius: 8px;
     padding-top: 7px !important;
     margin-bottom: 15px;
 }
-.mensajeUserPv2{
+
+.mensajeUserPv2 {
     background: white;
     border-radius: 8px;
     padding-top: 0px !important;
     margin-bottom: 15px;
 }
-.msjNombre{
+
+.msjNombre {
     position: absolute;
-    
 }
-.msjContenido{
+
+.msjContenido {
     text-align: right;
     text-indent: 30%;
 }
-.cardChat td{
+
+.cardChat td {
     padding: 0px 0px !important;
 }
-.cardChat img{
+
+.cardChat img {
     margin-left: 10px;
 }
 
-.image-upload > input
-{
+.image-upload>input {
     display: none;
 }
 
-.image-upload img
-{
+.image-upload img {
     width: 65px;
     cursor: pointer;
 }
 
-.image-uploadF > input
-{
+.image-uploadF>input {
     display: none;
 }
 
-.image-uploadF img
-{
+.image-uploadF img {
     width: 30px;
     cursor: pointer;
 }
 
-.txtAlign{
+.txtAlign {
     text-align: left !important;
 }
 
 /* //
 
 // ANIMACION ... ESCRIBIENDO */
+
 div#wave {
-    position:absolute;
+    position: absolute;
     bottom: -1px;
-    text-align:center;
-    width:100%;
+    text-align: center;
+    width: 100%;
     margin-top: 20px;
 }
 
 .dot {
-        display:inline-block;
-        width:5px;
-        height:5px;
-        border-radius:50%;
-        margin-right:1px;
-        background:#303131;
-        animation: wave 1.3s linear infinite;
-    }
+    display: inline-block;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    margin-right: 1px;
+    background: #303131;
+    animation: wave 1.3s linear infinite;
+}
 
-    .dot:nth-child(2) {
-            animation-delay: -1.1s;
-        }
+.dot:nth-child(2) {
+    animation-delay: -1.1s;
+}
 
-        .dot:nth-child(3) {
-            animation-delay: -0.9s;
-        }
+.dot:nth-child(3) {
+    animation-delay: -0.9s;
+}
 
-
-        
 @keyframes wave {
-    0%, 60%, 100% {
+    0%,
+    60%,
+    100% {
         transform: initial;
     }
-
     30% {
         transform: translateY(-15px);
     }
@@ -408,6 +422,7 @@ div#wave {
 /* FIN ANIMACION .. ESCRIBIENDO */
 
 /* picker */
+
 .color-picker {
     background: rgba(255, 255, 255, 0.75);
     padding: 10px;
@@ -415,7 +430,7 @@ div#wave {
     border-radius: 2px;
 }
 
-.color-picker > div {
+.color-picker>div {
     width: 40px;
     display: inline-block;
     height: 40px;
@@ -428,17 +443,15 @@ div#wave {
     padding: 20px;
 }
 
-.color-picker > div:hover {
+.color-picker>div:hover {
     opacity: 1;
 }
-    
 
-
-.preguntasGeneral{
+.preguntasGeneral {
     width: 100%;
 }
 
-.cardPregunta{
+.cardPregunta {
     width: 100%;
     height: 100px;
     background-color: white;
@@ -448,24 +461,24 @@ div#wave {
     border-radius: 5px;
 }
 
-.tituloPregunta{
+.tituloPregunta {
     font-size: 22px;
     margin: 0;
 }
 
-.descripcionPregunta{
+.descripcionPregunta {
     font-size: 11px;
     margin: 10px 0px;
 }
 
-.addPregunta{
+.addPregunta {
     width: 100%;
     padding: 0 60px;
     margin-top: 40px;
     height: 100px;
 }
 
-.cardadd{
+.cardadd {
     width: 100%;
     height: 100px;
     background-color: white;
@@ -473,6 +486,25 @@ div#wave {
     border-radius: 5px;
 }
 
-.addPreguntaIcon{
+.addPreguntaIcon {
     font-size: 100px !important;
+}
+
+.adjArchivo {
+    border: #dcdde1 dotted;
+    background-color: #f5f6fa;
+    border-radius: 5px;
+    height: 200px;
+}
+
+#modalNewPregunta {
+    top: 5% !important;
+    height: 90% !important;
+    max-height: 90% !important;
+    width: 90% !important;
+    z-index: 2000 !important;
+}
+
+.buttonaddPreguntaQuizz:hover{
+    cursor: pointer;
 }

@@ -272,3 +272,58 @@ setInterval(function(){
     var item = colorsBackgroundPreguntas[Math.floor(Math.random()*colorsBackgroundPreguntas.length)];
     $('#modalpreguntas').css('background-color',item)
 },4000)
+
+
+
+function onlyOne(checkbox) {
+    var checkboxes = document.getElementsByName('check')
+    checkboxes.forEach((item) => {
+        if (item !== checkbox) item.checked = false
+    })
+}
+
+function selVideo() {
+    $('select').material_select();
+    var htmlVideo;
+    htmlVideo = `<div class="row">
+                    <b><h5 class="center col s11">Video de YouTube</h5></b>
+                    <b><a onClick="selCerrar();" class="rigth gray-text" href="#">X</a></b>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <i class="material-icons prefix">ondemand_video</i>
+                        <input required name="videoQuizz" id="videoQuizz" placeholder="https://www.youtube.com/watch?v=3e3NhzZddEA" type="text" class="validate">
+                        <label for="videoQuizz" class="active">Video</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s5">
+                        <i class="material-icons prefix">play_circle_filled</i>
+                        <input required id="empiezaQuizz" placeholder="0:00" type="text" class="validate">
+                        <label for="empiezaQuizz" class="active">Empieza en:</label>
+                    </div>
+                    <div class="input-field col s5 ">
+                        <i class="material-icons prefix">stop</i>
+                        <input required id="terminaQuizz" placeholder="0:30" type="text" class="validate">
+                        <label for="terminaQuizz" class="active">Termina en:</label>
+                    </div>
+                    <a class=" btn-floating btn waves-effect waves-light green"><i class="material-icons">check</i></a>
+                </div>`;
+    $('.adjArchivo').html(htmlVideo);
+}
+
+
+function selCerrar() {
+    var htmlNormal = `<div class="row">
+                        <b>
+                            <h5 class="center">Añadir</h5>
+                        </b>
+                      </div>
+                        <a onClick="selVideo();" class="col s5 offset-s1 waves-effect waves-light btn-large">
+                        <i class="material-icons left">ondemand_video</i>VIDEO</a>`;
+    $('.adjArchivo').html(htmlNormal);
+}
+
+$('.buttonaddPreguntaQuizz').click(function(){
+    $('#modalNewPregunta').modal('open');
+})
