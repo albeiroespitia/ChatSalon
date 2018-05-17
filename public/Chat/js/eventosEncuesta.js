@@ -260,10 +260,15 @@ $(document).on('click','.botonCrearQuiz',function(){
     $('#modalopcion').modal('close');
 })
 
+$('.formQuiz').submit(function(e){
+    e.preventDefault()
+    $('#modalpreguntas').modal('open');
+    $('#modalQuizz').modal('close');
+})
 
-$("#example-basic").steps({
-    headerTag: "h4",
-    bodyTag: "section",
-    transitionEffect: "slideLeft",
-    autoFocus: true
-});
+var colorsBackgroundPreguntas = ['#7e3ff2','#0000d6','#008b00','#f47100','#283593','#1DE9B6']
+
+setInterval(function(){
+    var item = colorsBackgroundPreguntas[Math.floor(Math.random()*colorsBackgroundPreguntas.length)];
+    $('#modalpreguntas').css('background-color',item)
+},4000)
