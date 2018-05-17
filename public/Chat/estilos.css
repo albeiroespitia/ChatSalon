@@ -259,6 +259,20 @@ canvas{
     margin-top: 10px;
     margin-left: 10px !important;
 }
+
+.adjArchivo{
+  
+    border: #dcdde1 dotted;
+    background-color: #f5f6fa;
+    border-radius: 5px;
+}
+
+#modalQuizz{
+    top: 5% !important;
+    height: 80% !important;
+    max-height: 90% !important;
+    width: 90% !important;
+}
 /* Modificando el color de el formulario*/ 
 
 .input-field input[type=text]:focus {

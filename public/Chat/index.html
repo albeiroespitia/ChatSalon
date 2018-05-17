@@ -193,51 +193,61 @@
 					<div id="modalopcion" class="modal modal-fixed-footer">
 						<div class="modal-content">
 							<center>
-							<h4>Selecciona una opcion</h4>
-							<a class="col s6 botonCrearEncuesta waves-effect modal-trigger waves-light teal darken-1 btn-large" href="#modal1">
-								<i class="material-icons right">format_indent_increase</i>Crear Encuesta</a>
-							<a class="col s6 botonCrearQuiz waves-effect modal-trigger waves-light teal darken-1 btn-large" href="#modal1">
-								<i class="material-icons right">format_indent_increase</i>Crear Quizz</a>
+								<h4>Selecciona una opcion</h4>
+								<a class="col s6 botonCrearEncuesta waves-effect modal-trigger waves-light teal darken-1 btn-large" href="#modal1">
+									<i class="material-icons right">format_indent_increase</i>Crear Encuesta</a>
+								<a class="col s6 botonCrearQuiz waves-effect modal-trigger waves-light teal darken-1 btn-large" href="#modalQuizz">
+									<i class="material-icons right">format_indent_increase</i>Crear Quizz</a>
 							</center>
 						</div>
 					</div>
 
-					<!-- Modal Structure -->
-					<div id="modal1" class="modal modalEncuesta">
+					<!-- Modal crear quiz -->
+					<div id="modalQuizz" class="modal modalEncuesta">
 						<div class="modal-content">
 							<form class="formEncuesta">
 								<center>
-									<h4>Añadir nueva encuesta</h4>
+									<h4>Añadir nuevo quizz</h4>
 								</center>
-								<div class="col s1">
-								</div>
+								<div class="row">
+									<div class="col l8">
+										<div class="input-field col s12">
+											<i class="material-icons prefix">account_circle</i>
+											<input placeholder="(Obligatorio)  " id="first_name" type="text" class="validate">
+											<label for="first_name">Titulo</label>
+										</div>
+										<div class="input-field col s12">
+											<i class="material-icons prefix">phone</i>
+											<textarea id="textarea1" class="materialize-textarea"></textarea>
+											<label for="textarea1">Descripcion</label>
+										</div>
 
-								<div class="input-field col s10">
-									<i class="material-icons prefix">help</i>
-									<input type="text" name="preguntaInput" required class="validate">
-									<label>Pregunta</label>
-								</div>
-								<div class="input-field col s6">
-									<i class="material-icons prefix">label</i>
-									<input name="opcion1Input" type="text" required class="validate">
-									<label>Opcion A</label>
-								</div>
-								<div class="input-field col s6">
-									<i class="material-icons prefix">label</i>
-									<input name="opcion2Input" type="text" required class="validate">
-									<label>Opcion B</label>
-								</div>
-								<div class="input-field col s6">
-									<i class="material-icons prefix">label</i>
-									<input name="opcion3Input" type="text" required class="validate">
-									<label>Opcion C</label>
-								</div>
-								<div class="input-field col s6">
-									<i class="material-icons prefix">label</i>
-									<input name="opcion4Input" type="text" required class="validate">
-									<label>Opcion D</label>
-								</div>
+									</div>
+									<div class="input-field col l4 adjArchivo">
+										<form action="#">
+											<div class="file-field input-field">
+												<div class="row">
+													<div class="btn-large waves-effect waves-light  col s12">
+														<i class="large material-icons right">image</i> Imagen
+														<input type="file">
+													</div>
+												</div>
+												<div class="file-path-wrapper">
+													<input class="file-path validate" type="text">
+												</div>
+											</div>
+										</form>
 
+									</div>
+								</div>
+								<div class="row">
+									<div class="input-field col l7">
+										<i class="material-icons prefix">phone</i>
+										<input placeholder="https://www.youtube.com/watch?v=3e3NhzZddEA" id="first_name" type="text" class="validate">
+										<label for="first_name">Video</label>
+									</div>
+									<div class="col l5"></div>
+								</div>
 						</div>
 						<div class="modal-footer">
 							<center>
@@ -248,10 +258,56 @@
 					</div>
 				</div>
 
+				<!-- Modal Structure -->
+				<div id="modal1" class="modal modalEncuesta">
+					<div class="modal-content">
+						<form class="formEncuesta">
+							<center>
+								<h4>Añadir nueva encuesta</h4>
+							</center>
+							<div class="col s1">
+							</div>
+
+							<div class="input-field col s10">
+								<i class="material-icons prefix">help</i>
+								<input type="text" name="preguntaInput" required class="validate">
+								<label>Pregunta</label>
+							</div>
+							<div class="input-field col s6">
+								<i class="material-icons prefix">label</i>
+								<input name="opcion1Input" type="text" required class="validate">
+								<label>Opcion A</label>
+							</div>
+							<div class="input-field col s6">
+								<i class="material-icons prefix">label</i>
+								<input name="opcion2Input" type="text" required class="validate">
+								<label>Opcion B</label>
+							</div>
+							<div class="input-field col s6">
+								<i class="material-icons prefix">label</i>
+								<input name="opcion3Input" type="text" required class="validate">
+								<label>Opcion C</label>
+							</div>
+							<div class="input-field col s6">
+								<i class="material-icons prefix">label</i>
+								<input name="opcion4Input" type="text" required class="validate">
+								<label>Opcion D</label>
+							</div>
+
+					</div>
+					<div class="modal-footer">
+						<center>
+							<button type="submit" href="#!" class="modal-action waves-effect waves-green btn-large sendEncuesta">Crear</button>
+						</center>
+					</div>
+					</form>
+				</div>
 			</div>
 
-			<div class="col s1"></div>
 		</div>
+
+		<div class="col s1"></div>
+	</div>
 	</div>
 
 	<!-- Modal Structure -->

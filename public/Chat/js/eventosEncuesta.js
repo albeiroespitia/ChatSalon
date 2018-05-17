@@ -255,3 +255,15 @@ function hayEncuestaPendientes() {
 $(document).on('click','.botonCrearEncuesta',function(){
     $('#modalopcion').modal('close');
 })
+
+$(document).on('click','.botonCrearQuiz',function(){
+    $('#modalopcion').modal('close');
+})
+
+
+$("#example-basic").steps({
+    headerTag: "h4",
+    bodyTag: "section",
+    transitionEffect: "slideLeft",
+    autoFocus: true
+});
