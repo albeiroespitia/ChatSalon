@@ -16,6 +16,8 @@ var encuestasInfo = require('./encuestasR')
 var fullDataGroups = require('./workGroup')
 var tituloQuizJSON = require('./tituloQuiz')
 var preguntasQuizJSON = require('./preguntasQuiz')
+var respuestasQuizJSON = require('./respuestasQuiz')
+
 
 
 function letsencryptOptions() {
@@ -285,6 +287,21 @@ io.on('connection', function (socket) {
     socket.on('sendDataPreguntasQuiz',function(preguntaQuiz){
         preguntasQuizJSON.preguntas.push(preguntaQuiz);
         socket.emit('nuevaPregunta',preguntasQuizJSON.preguntas)
+    })
+
+    socket.on('starQuiz',function(){
+        console.log('llego el quiz valemia')
+        io.sockets.emit('startQuizResponse',tituloQuizJSON,preguntasQuizJSON.preguntas);
+    })
+
+    socket.on('respuestaUser',function(data,respuestaElejida){
+        respuestasQuizJSON.respuestas.push({
+            nombreEstudiante : data.nombre,
+            filaEstudiante : data.fila-1,
+            columnaEstudiante: data.columna-1,
+            respuestaElejida : respuestaElejida
+        })
+        console.log(util.inspect(respuestasQuizJSON.respuestas, false, null))
     })
 
     //////////// Quizz ///////////////////

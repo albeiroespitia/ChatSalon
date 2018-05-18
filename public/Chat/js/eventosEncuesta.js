@@ -9,10 +9,10 @@ function inicializarCanvas(n) {
 
     window.oilData = {
         labels: [
-            "A. "+DataEncuestas[n].opcion1,
-            "B. "+DataEncuestas[n].opcion2,
-            "C. "+DataEncuestas[n].opcion3,
-            "D. "+DataEncuestas[n].opcion4,
+            "A. " + DataEncuestas[n].opcion1,
+            "B. " + DataEncuestas[n].opcion2,
+            "C. " + DataEncuestas[n].opcion3,
+            "D. " + DataEncuestas[n].opcion4,
         ],
         datasets: [{
             data: [0, 0, 0, 0],
@@ -40,14 +40,15 @@ function inicializarCanvas(n) {
         maintainAspectRatio: true,
         showScale: true,
         animateScale: true,
-    
+
 
     };
 
     graficaDonas[n] = new Chart(oilCanvas, {
         type: 'doughnut',
         data: oilData,
-        options: {chartOptions,
+        options: {
+            chartOptions,
             legend: {
                 display: true,
                 align: 'right',
@@ -88,145 +89,145 @@ $(document).on('click', '.btn-PagCanvas', function () {
 function mostrarCanvasHtml(n) { // N es la posicion del canvas a mostrar
     $('#contenedorCanvas canvas').css("display", "none"); // Ocultar todos los canvas
     $(`#grafica${n-1}`).css("display", "block");
-    $('#preguntaCanvas').html(DataEncuestas[n-1].pregunta)
+    $('#preguntaCanvas').html(DataEncuestas[n - 1].pregunta)
 }
 
-    // <------- EMIT ---->
+// <------- EMIT ---->
 
-    // Crear encuesta con el rol de profesor
-    $('.formEncuesta').submit(function (event) {
-        event.preventDefault();
-        var pregunta = $('input[name="preguntaInput"]').val()
-        var opcion1 = $('input[name="opcion1Input"]').val()
-        var opcion2 = $('input[name="opcion2Input"]').val()
-        var opcion3 = $('input[name="opcion3Input"]').val()
-        var opcion4 = $('input[name="opcion4Input"]').val()
+// Crear encuesta con el rol de profesor
+$('.formEncuesta').submit(function (event) {
+    event.preventDefault();
+    var pregunta = $('input[name="preguntaInput"]').val()
+    var opcion1 = $('input[name="opcion1Input"]').val()
+    var opcion2 = $('input[name="opcion2Input"]').val()
+    var opcion3 = $('input[name="opcion3Input"]').val()
+    var opcion4 = $('input[name="opcion4Input"]').val()
 
-        var dataEncuesta = {
-            pregunta: pregunta,
-            opcion1: opcion1,
-            opcion2: opcion2,
-            opcion3: opcion3,
-            opcion4: opcion4
+    var dataEncuesta = {
+        pregunta: pregunta,
+        opcion1: opcion1,
+        opcion2: opcion2,
+        opcion3: opcion3,
+        opcion4: opcion4
+    }
+    $('.formEncuesta')[0].reset()
+    $('#modal1').modal('close');
+
+    $('input[name="preguntaInput"]').val('')
+    $('input[name="opcion1Input"]').val('')
+    $('input[name="opcion2Input"]').val('')
+    $('input[name="opcion3Input"]').val('')
+    $('input[name="opcion4Input"]').val('')
+
+    socket.emit('sendEncuesta', dataEncuesta);
+    // Crear pagination 
+    var numCanvas = $('#contenedorCanvas canvas').length;
+    agregarCanvasHTML(numCanvas);
+    inicializarCanvas(numCanvas);
+
+
+})
+
+// Escuchar que hay una nueva encuesta
+socket.on('newEncuesta', function (data, respuesta) {
+    $('.btnSelEncuesta').html('');
+    $('#contenedorPagination').html('');
+    $('#contenedorCanvas').html('');
+    DataEncuestas = data;
+    var n = EncuestaRespondidas.length;
+
+    $.each(data, function (index, value) { // btnEnc
+        var htmlPg = '';
+        if (index == n) {
+            htmlPg = '<li class="waves-effect active"><a class="btnEnc">' + (index + 1) + '</a></li>'
+        } else {
+            htmlPg = '<li class="waves-effect"><a class="btnEnc">' + (index + 1) + '</a></li>'
         }
-        $('.formEncuesta')[0].reset()
-        $('#modal1').modal('close');
-
-        $('input[name="preguntaInput"]').val('')
-        $('input[name="opcion1Input"]').val('')
-        $('input[name="opcion2Input"]').val('')
-        $('input[name="opcion3Input"]').val('')
-        $('input[name="opcion4Input"]').val('')
-
-        socket.emit('sendEncuesta', dataEncuesta);
-        // Crear pagination 
-        var numCanvas = $('#contenedorCanvas canvas').length;
-        agregarCanvasHTML(numCanvas);
-        inicializarCanvas(numCanvas);
-
-
-    })
-
-    // Escuchar que hay una nueva encuesta
-    socket.on('newEncuesta', function (data, respuesta) {
-        $('.btnSelEncuesta').html('');
-        $('#contenedorPagination').html('');
-        $('#contenedorCanvas').html('');
-        DataEncuestas = data;
-        var n = EncuestaRespondidas.length;
-
-        $.each(data, function (index, value) { // btnEnc
-            var htmlPg = '';
-            if (index == n) {
-                htmlPg = '<li class="waves-effect active"><a class="btnEnc">' + (index + 1) + '</a></li>'
-            } else {
-                htmlPg = '<li class="waves-effect"><a class="btnEnc">' + (index + 1) + '</a></li>'
-            }
-            $('.btnSelEncuesta').append(htmlPg)
-            agregarCanvasHTML(index);
-            inicializarCanvas(index);
-        });
-
-        if (data != '') {
-            $('.botonRespuestaEncuestas').css("cssText", "visibility: visible !important;");
-        }
-
-        if (datatoSend.rol == "Estudiante") {
-            console.log('DATAAAAAAA')
-            console.log(data);
-            if (data == '') {
-                $('.botonCrearEncuesta').addClass('disabled');
-            } else {
-                MostrarEncuestaEnModal(n);
-                $('.botonCrearEncuesta').removeClass('disabled');
-            }
-        }
-        // ----------------------------------------
-        $.each(respuesta, function (index, value) { // Actualiza todos los canvas del DOM
-            ActualizarCanvas(value, index);
-        });
-
-    })
-
-    // 
-    socket.on('checkButton', function (data) {
-        console.log("Check")
-        console.log(datatoSend)
-        if (data.encuestas[0] != undefined) {
-            data.encuestas.forEach(function (value, index) {
-
-                if (value.person == datatoSend.nombre) {
-                    $('.botonCrearEncuesta').addClass('disabled');
-                } else {
-                    $('.botonCrearEncuesta').removeClass('disabled');
-                }
-            })
-        }
-
-
-    })
-
-    socket.on('newResponseEncuesta', function (data, respuesta) {
-        $.each(respuesta, function (index, value) { // Actualiza todos los canvas del DOM
-            ActualizarCanvas(value, index);
-        });
-
-    })
-
-    $(document).on('click', '.btnEnc', function () {
-        // 
-        Materialize.toast('Envia la encuesta actual para seguir a la siguiente', 4000)
+        $('.btnSelEncuesta').append(htmlPg)
+        agregarCanvasHTML(index);
+        inicializarCanvas(index);
     });
 
-    // --- EMIT
-    $('.formsendREncuesta').submit(function (event) {
-        event.preventDefault();
+    if (data != '') {
+        $('.botonRespuestaEncuestas').css("cssText", "visibility: visible !important;");
+    }
 
-        // Enviamos la encuesta al servidor
-        var idEncuesta = $("#idEncuesta").val();
-        var selectedOption = $("input[name=group1]:checked").next().text();
-        var selectedOptionid = $("input[name=group1]:checked").attr('id');
-        socket.emit('sendEncuestaResponse', idEncuesta, selectedOption, datatoSend.nombre, selectedOptionid);
-        EncuestaRespondidas.push({
-            id: idEncuesta
-        });
-        $('.formsendREncuesta')[0].reset(); // Limpiar form
-        // Nos situamos en la siguiente encuesta
-        var a = $('.btnSelEncuesta > li.active');
-
-        if (!a.is(':last-child')) {
-            a.next().addClass('active');
-            a.removeClass('active')
-            a.addClass('disabled')
-            var n = parseInt(a.next().children().html());
-            MostrarEncuestaEnModal(n - 1);
+    if (datatoSend.rol == "Estudiante") {
+        console.log('DATAAAAAAA')
+        console.log(data);
+        if (data == '') {
+            $('.botonCrearEncuesta').addClass('disabled');
+        } else {
+            MostrarEncuestaEnModal(n);
+            $('.botonCrearEncuesta').removeClass('disabled');
         }
+    }
+    // ----------------------------------------
+    $.each(respuesta, function (index, value) { // Actualiza todos los canvas del DOM
+        ActualizarCanvas(value, index);
+    });
 
-        if ('no' == hayEncuestaPendientes()) {
-            $('#modal2').modal('close');
-            $('.botonCrearEncuesta').addClass('disabled'); // Si no existen mas encuestas
-        }
-    })
+})
+
+// 
+socket.on('checkButton', function (data) {
+    console.log("Check")
+    console.log(datatoSend)
+    if (data.encuestas[0] != undefined) {
+        data.encuestas.forEach(function (value, index) {
+
+            if (value.person == datatoSend.nombre) {
+                $('.botonCrearEncuesta').addClass('disabled');
+            } else {
+                $('.botonCrearEncuesta').removeClass('disabled');
+            }
+        })
+    }
+
+
+})
+
+socket.on('newResponseEncuesta', function (data, respuesta) {
+    $.each(respuesta, function (index, value) { // Actualiza todos los canvas del DOM
+        ActualizarCanvas(value, index);
+    });
+
+})
+
+$(document).on('click', '.btnEnc', function () {
+    // 
+    Materialize.toast('Envia la encuesta actual para seguir a la siguiente', 4000)
+});
+
+// --- EMIT
+$('.formsendREncuesta').submit(function (event) {
+    event.preventDefault();
+
+    // Enviamos la encuesta al servidor
+    var idEncuesta = $("#idEncuesta").val();
+    var selectedOption = $("input[name=group1]:checked").next().text();
+    var selectedOptionid = $("input[name=group1]:checked").attr('id');
+    socket.emit('sendEncuestaResponse', idEncuesta, selectedOption, datatoSend.nombre, selectedOptionid);
+    EncuestaRespondidas.push({
+        id: idEncuesta
+    });
+    $('.formsendREncuesta')[0].reset(); // Limpiar form
+    // Nos situamos en la siguiente encuesta
+    var a = $('.btnSelEncuesta > li.active');
+
+    if (!a.is(':last-child')) {
+        a.next().addClass('active');
+        a.removeClass('active')
+        a.addClass('disabled')
+        var n = parseInt(a.next().children().html());
+        MostrarEncuestaEnModal(n - 1);
+    }
+
+    if ('no' == hayEncuestaPendientes()) {
+        $('#modal2').modal('close');
+        $('.botonCrearEncuesta').addClass('disabled'); // Si no existen mas encuestas
+    }
+})
 
 
 function MostrarEncuestaEnModal(n) {
@@ -252,21 +253,21 @@ function hayEncuestaPendientes() {
     return sw;
 }
 
-$(document).on('click','.botonCrearEncuesta',function(){
+$(document).on('click', '.botonCrearEncuesta', function () {
     $('#modalopcion').modal('close');
 })
 
-$(document).on('click','.botonCrearQuiz',function(){
+$(document).on('click', '.botonCrearQuiz', function () {
     $('#modalopcion').modal('close');
 })
 
-$('.formQuiz').submit(function(e){
+$('.formQuiz').submit(function (e) {
     e.preventDefault()
     $('#modalpreguntas').modal('open');
     $('#modalQuizz').modal('close');
 })
 
-var colorsBackgroundPreguntas = ['#7e3ff2','#0000d6','#008b00','#f47100','#283593','#1DE9B6']
+var colorsBackgroundPreguntas = ['#7e3ff2', '#0000d6', '#008b00', '#f47100', '#283593', '#1DE9B6']
 
 /*setInsetInterval(function(){
     var item = colorsBackgroundPreguntas[Math.floor(Math.random()*colorsBackgroundPreguntas.length)];
@@ -324,28 +325,28 @@ function selCerrar() {
     $('.adjArchivo').html(htmlNormal);
 }
 
-$('.buttonaddPreguntaQuizz').click(function(){
+$('.buttonaddPreguntaQuizz').click(function () {
     $('#modalNewPregunta').modal('open');
 })
 
 var checkboxes = $("input[type='checkbox']"),
     submitButt = $(".submitPreguntaButton");
-    
+
 submitButt.attr("disabled", !checkboxes.is(":checked"));
 
-checkboxes.click(function() {
+checkboxes.click(function () {
     submitButt.attr("disabled", !checkboxes.is(":checked"));
 });
 
-$('.formQuiz').submit(function(e){
+$('.formQuiz').submit(function (e) {
     e.preventDefault();
     var tituloQuiz = $('#tituloQuiz').val()
     var descriptionQuiz = $('#descriptionQuizz').val()
     var videoQuiz = $('#videopregunta').val()
-    socket.emit('sendDataQuiz',tituloQuiz,descriptionQuiz,videoQuiz);
+    socket.emit('sendDataQuiz', tituloQuiz, descriptionQuiz, videoQuiz);
 })
 
-$('.formCrearPregunta').submit(function(e){
+$('.formCrearPregunta').submit(function (e) {
     e.preventDefault();
     var preguntaQuiz = $('#preguntaQuizz').val()
     var selectTime = $('#selectTimePregunta').val()
@@ -358,17 +359,17 @@ $('.formCrearPregunta').submit(function(e){
     var videolink;
     var startVideo;
     var endVideo;
-    if($('#respuesta1').is(":checked")){
+    if ($('#respuesta1').is(":checked")) {
         respuestaCorrecta = 'respuesta1';
-    }else if($('#respuesta2').is(":checked")){
+    } else if ($('#respuesta2').is(":checked")) {
         respuestaCorrecta = 'respuesta2';
-    }else if($('#respuesta3').is(":checked")){
+    } else if ($('#respuesta3').is(":checked")) {
         respuestaCorrecta = 'respuesta3';
-    }else if($('#respuesta4').is(":checked")){
+    } else if ($('#respuesta4').is(":checked")) {
         respuestaCorrecta = 'respuesta4';
     }
 
-    if($('#videoQuizz').val()){
+    if ($('#videoQuizz').val()) {
         var videolink = $('#videoQuizz').val()
         var startVideo = $('#empiezaQuizz').val()
         var endVideo = $('#terminaQuizz').val()
@@ -385,7 +386,7 @@ $('.formCrearPregunta').submit(function(e){
             startVideo: startVideo,
             endVideo: endVideo
         }
-    }else{
+    } else {
         var dataPreguntaFull = {
             preguntaQuiz: preguntaQuiz,
             selectTime: selectTime,
@@ -397,9 +398,9 @@ $('.formCrearPregunta').submit(function(e){
             respuestaCorrecta: respuestaCorrecta
         }
     }
-    
 
-    socket.emit('sendDataPreguntasQuiz',dataPreguntaFull);
+
+    socket.emit('sendDataPreguntasQuiz', dataPreguntaFull);
 
     $('#modalNewPregunta').modal('close')
     $('#preguntaQuizz').val('')
@@ -416,16 +417,198 @@ $('.formCrearPregunta').submit(function(e){
     $('#respuesta2').prop('checked', false);
     $('#respuesta3').prop('checked', false);
     $('#respuesta4').prop('checked', false);
-
 })
 
-socket.on('nuevaPregunta',function(preguntasArr){
+socket.on('nuevaPregunta', function (preguntasArr) {
     var htmlPregunta = '';
-    preguntasArr.forEach(function(element){
+    preguntasArr.forEach(function (element) {
         htmlPregunta += `<div class="cardPregunta">
                             <p class="tituloPregunta">${element.preguntaQuiz}</p>
-                            <p class="descripcionPregunta">${element.puntosQuizz}</p>
+                            <p class="descripcionPregunta">Puntaje: ${element.puntosQuizz}</p>
                         </div>`
     })
     $('.preguntasGeneral').html(htmlPregunta);
+})
+
+$(document).on('click', '.startQuizz', function () {
+    if ($('.preguntasGeneral').html() == '') {
+        alert('No has creado ninguna pregunta')
+    } else {
+        console.log('entroasd')
+        socket.emit('starQuiz')
+    }
+})
+
+socket.on('startQuizResponse', function (tituloQuizJSON, preguntasQuizJSON) {
+    if (datatoSend.rol == "Estudiante") {
+        var grillaEstudiantes = $('.cardGrilla').html();
+        var htmlPreguntaQuiz = `<div class="progressbar"></div>
+                            <div class="row">
+                                <h5 class="center white-text flow-text">${preguntasQuizJSON[0].preguntaQuiz}</h5>
+                            </div>
+                            <div class="row">
+                                <!--	<iframe width="620" height="215" src="http://www.youtube.com/embed/0Bmhjf0rKe8?start=11&end=14" frameborder="0" allow="autoplay; encrypted-media"
+                                    allowfullscreen></iframe> -->
+                            </div>
+                            <div class="middle">
+                                <div class="row">
+                                    <div class="col s6">
+                                        <label>
+                                            <input id="radiobutton1Respuesta" type="radio" name="radio" />
+                                            <div class="opcionAQuizz box">
+                                                <span>A. ${preguntasQuizJSON[0].respuesta1Input}</span>
+                                            </div>
+                                        </label>
+                                    </div>
+                                    <div class="col s6">
+                                        <label>
+                                            <input id="radiobutton2Respuesta" type="radio" name="radio" />
+                                            <div class="opcionBQuizz box">
+                                                <span>B. ${preguntasQuizJSON[0].respuesta2Input}</span>
+                                            </div>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col s6">
+                                        <label>
+                                            <input id="radiobutton3Respuesta" type="radio" name="radio" />
+                                            <div class="opcionCQuizz box">
+                                                <span>C. ${preguntasQuizJSON[0].respuesta3Input}</span>
+                                            </div>
+                                        </label>
+                                    </div>
+                                    <div class="col s6">
+                                        <label>
+                                            <input id="radiobutton4Respuesta" type="radio" name="radio" />
+                                            <div class="opcionDQuizz box">
+                                                <span>D. ${preguntasQuizJSON[0].respuesta4Input}</span>
+                                            </div>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>`
+        $('.cardGrilla').html(htmlPreguntaQuiz);
+        $('.cardGrilla').attr('style', 'background-color: #343436 !important');
+
+
+        var selectTimeTotal;
+        var countTime = 0;
+        var flag = 0;
+        $('.progressbar').html(`<div class="progress">
+                                    <div class="determinate" style="width: 0%"></div>
+                                </div>`)
+        var handlingTime = workerTimer.setInterval(function () {
+            countTime = countTime + 0.1;
+            selectTimeTotal = (countTime / preguntasQuizJSON[0].selectTime) * 100;
+            $('.determinate').css({
+                'width': selectTimeTotal + '%'
+            })
+            if (selectTimeTotal >= 100) {
+
+                var respuestaElejida;
+                if ($("#radiobutton1Respuesta").prop("checked", true)) {
+                    respuestaElejida = 'respuesta1';
+                } else if ($("#radiobutton2Respuesta").prop("checked", true)) {
+                    respuestaElejida = 'respuesta2';
+                } else if ($("#radiobutton3Respuesta").prop("checked", true)) {
+                    respuestaElejida = 'respuesta3';
+                } else if ($("#radiobutton4Respuesta").prop("checked", true)) {
+                    respuestaElejida = 'respuesta4';
+                }
+                console.log(respuestaElejida)
+                socket.emit('respuestaUser', datatoSend, respuestaElejida)
+                workerTimer.clearInterval(handlingTime);
+            }
+
+            if ((selectTimeTotal >= 70) && (flag == 0)) {
+                flag = 1;
+                $('.determinate').css({
+                    'background-color': '#c62828'
+                });
+            }
+        }, 100)
+
+
+
+    } else if (datatoSend.rol == 'Profesor') {
+        var buttonBackup = $('.comenzarQuizzSection').html();
+        $('.comenzarQuizzSection').html(`<center>
+                                            <button href="#!" class="modal-action waves-effect waves-green btn-large disabled nextQuestionQuizz">Siguiente</button>
+                                        </center>`);
+        var htmlPreguntaQuiz = `<div class="progressbar"></div>
+                            <div class="row">
+                                <h5 class="center white-text flow-text">${preguntasQuizJSON[0].preguntaQuiz}</h5>
+                            </div>
+                            <div class="row">
+                                <!--	<iframe width="620" height="215" src="http://www.youtube.com/embed/0Bmhjf0rKe8?start=11&end=14" frameborder="0" allow="autoplay; encrypted-media"
+                                    allowfullscreen></iframe> -->
+                            </div>
+                            <div class="middle">
+                                <div class="row">
+                                    <div class="col s6">
+                                        <label>
+                                            <input type="radio" name="radio" disabled="disabled" />
+                                            <div class="opcionAQuizz box">
+                                                <span>A. ${preguntasQuizJSON[0].respuesta1Input}</span>
+                                            </div>
+                                        </label>
+                                    </div>
+                                    <div class="col s6">
+                                        <label>
+                                            <input type="radio" name="radio" disabled="disabled" />
+                                            <div class="opcionBQuizz box">
+                                                <span>B. ${preguntasQuizJSON[0].respuesta2Input}</span>
+                                            </div>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col s6">
+                                        <label>
+                                            <input type="radio" name="radio" disabled="disabled" />
+                                            <div class="opcionCQuizz box">
+                                                <span>C. ${preguntasQuizJSON[0].respuesta3Input}</span>
+                                            </div>
+                                        </label>
+                                    </div>
+                                    <div class="col s6">
+                                        <label>
+                                            <input type="radio" name="radio" disabled="disabled" />
+                                            <div class="opcionDQuizz box">
+                                                <span>D. ${preguntasQuizJSON[0].respuesta4Input}</span>
+                                            </div>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>`
+        var switchquizzBackup = $('.switchquizz').html();
+        $('.switchquizz').html(htmlPreguntaQuiz);
+        $('.switchquizz').attr('style', 'background-color: #343436 !important');
+
+
+        var selectTimeTotal;
+        var countTime = 0;
+        var flag = 0;
+        $('.progressbar').html(`<div class="progress">
+                                    <div class="determinate" style="width: 0%"></div>
+                                </div>`)
+        var handlingTime = workerTimer.setInterval(function () {
+            countTime = countTime + 0.01;
+            selectTimeTotal = (countTime / preguntasQuizJSON[0].selectTime) * 100;
+            $('.determinate').css({
+                'width': selectTimeTotal + '%'
+            })
+            if (selectTimeTotal >= 100) {
+                workerTimer.clearInterval(handlingTime);
+            }
+
+            if ((selectTimeTotal >= 70) && (flag == 0)) {
+                flag = 1;
+                $('.determinate').css({
+                    'background-color': '#c62828'
+                });
+            }
+        }, 10)
+    }
 })
