@@ -404,7 +404,6 @@ $('.formCrearPregunta').submit(function (e) {
 
     $('#modalNewPregunta').modal('close')
     $('#preguntaQuizz').val('')
-    $('#selectTimePregunta').val('')
     $('#puntosQuizz').val('')
     $('#respuesta1Input').val('')
     $('#respuesta2Input').val('')
@@ -439,12 +438,24 @@ $(document).on('click', '.startQuizz', function () {
     }
 })
 
+var tituloQuizJSONlocal;
+var preguntasQuizJSONlocal;
+var grillaEstudiantes;
+var buttonBackup;
 socket.on('startQuizResponse', function (tituloQuizJSON, preguntasQuizJSON) {
+    grillaEstudiantes = $('.cardGrilla').html();
+    buttonBackup = $('.comenzarQuizzSection').html();
+    tituloQuizJSONlocal = tituloQuizJSON;
+    preguntasQuizJSONlocal = preguntasQuizJSON;
+    listQuestions(tituloQuizJSON,preguntasQuizJSON,0);
+})
+
+
+function listQuestions(tituloQuizJSON,preguntasQuizJSON,iterateNumber) {
     if (datatoSend.rol == "Estudiante") {
-        var grillaEstudiantes = $('.cardGrilla').html();
         var htmlPreguntaQuiz = `<div class="progressbar"></div>
                             <div class="row">
-                                <h5 class="center white-text flow-text">${preguntasQuizJSON[0].preguntaQuiz}</h5>
+                                <h5 class="center white-text flow-text">${preguntasQuizJSON[iterateNumber].preguntaQuiz}</h5>
                             </div>
                             <div class="row">
                                 <!--	<iframe width="620" height="215" src="http://www.youtube.com/embed/0Bmhjf0rKe8?start=11&end=14" frameborder="0" allow="autoplay; encrypted-media"
@@ -456,7 +467,7 @@ socket.on('startQuizResponse', function (tituloQuizJSON, preguntasQuizJSON) {
                                         <label>
                                             <input id="radiobutton1Respuesta" type="radio" name="radio" />
                                             <div class="opcionAQuizz box">
-                                                <span>A. ${preguntasQuizJSON[0].respuesta1Input}</span>
+                                                <span>A. ${preguntasQuizJSON[iterateNumber].respuesta1Input}</span>
                                             </div>
                                         </label>
                                     </div>
@@ -464,7 +475,7 @@ socket.on('startQuizResponse', function (tituloQuizJSON, preguntasQuizJSON) {
                                         <label>
                                             <input id="radiobutton2Respuesta" type="radio" name="radio" />
                                             <div class="opcionBQuizz box">
-                                                <span>B. ${preguntasQuizJSON[0].respuesta2Input}</span>
+                                                <span>B. ${preguntasQuizJSON[iterateNumber].respuesta2Input}</span>
                                             </div>
                                         </label>
                                     </div>
@@ -474,7 +485,7 @@ socket.on('startQuizResponse', function (tituloQuizJSON, preguntasQuizJSON) {
                                         <label>
                                             <input id="radiobutton3Respuesta" type="radio" name="radio" />
                                             <div class="opcionCQuizz box">
-                                                <span>C. ${preguntasQuizJSON[0].respuesta3Input}</span>
+                                                <span>C. ${preguntasQuizJSON[iterateNumber].respuesta3Input}</span>
                                             </div>
                                         </label>
                                     </div>
@@ -482,7 +493,7 @@ socket.on('startQuizResponse', function (tituloQuizJSON, preguntasQuizJSON) {
                                         <label>
                                             <input id="radiobutton4Respuesta" type="radio" name="radio" />
                                             <div class="opcionDQuizz box">
-                                                <span>D. ${preguntasQuizJSON[0].respuesta4Input}</span>
+                                                <span>D. ${preguntasQuizJSON[iterateNumber].respuesta4Input}</span>
                                             </div>
                                         </label>
                                     </div>
@@ -500,20 +511,20 @@ socket.on('startQuizResponse', function (tituloQuizJSON, preguntasQuizJSON) {
                                 </div>`)
         var handlingTime = workerTimer.setInterval(function () {
             countTime = countTime + 0.1;
-            selectTimeTotal = (countTime / preguntasQuizJSON[0].selectTime) * 100;
+            selectTimeTotal = (countTime / preguntasQuizJSON[iterateNumber].selectTime) * 100;
             $('.determinate').css({
                 'width': selectTimeTotal + '%'
             })
             if (selectTimeTotal >= 100) {
 
                 var respuestaElejida;
-                if ($("#radiobutton1Respuesta").prop("checked", true)) {
+                if ($('#radiobutton1Respuesta').is(':checked')) {
                     respuestaElejida = 'respuesta1';
-                } else if ($("#radiobutton2Respuesta").prop("checked", true)) {
+                } else if ($('#radiobutton2Respuesta').is(':checked')) {
                     respuestaElejida = 'respuesta2';
-                } else if ($("#radiobutton3Respuesta").prop("checked", true)) {
+                } else if ($('#radiobutton3Respuesta').is(':checked')) {
                     respuestaElejida = 'respuesta3';
-                } else if ($("#radiobutton4Respuesta").prop("checked", true)) {
+                } else if ($('#radiobutton4Respuesta').is(':checked')) {
                     respuestaElejida = 'respuesta4';
                 }
                 console.log(respuestaElejida)
@@ -532,13 +543,12 @@ socket.on('startQuizResponse', function (tituloQuizJSON, preguntasQuizJSON) {
 
 
     } else if (datatoSend.rol == 'Profesor') {
-        var buttonBackup = $('.comenzarQuizzSection').html();
         $('.comenzarQuizzSection').html(`<center>
                                             <button href="#!" class="modal-action waves-effect waves-green btn-large disabled nextQuestionQuizz">Siguiente</button>
                                         </center>`);
         var htmlPreguntaQuiz = `<div class="progressbar"></div>
                             <div class="row">
-                                <h5 class="center white-text flow-text">${preguntasQuizJSON[0].preguntaQuiz}</h5>
+                                <h5 class="center white-text flow-text">${preguntasQuizJSON[iterateNumber].preguntaQuiz}</h5>
                             </div>
                             <div class="row">
                                 <!--	<iframe width="620" height="215" src="http://www.youtube.com/embed/0Bmhjf0rKe8?start=11&end=14" frameborder="0" allow="autoplay; encrypted-media"
@@ -550,7 +560,7 @@ socket.on('startQuizResponse', function (tituloQuizJSON, preguntasQuizJSON) {
                                         <label>
                                             <input type="radio" name="radio" disabled="disabled" />
                                             <div class="opcionAQuizz box">
-                                                <span>A. ${preguntasQuizJSON[0].respuesta1Input}</span>
+                                                <span>A. ${preguntasQuizJSON[iterateNumber].respuesta1Input}</span>
                                             </div>
                                         </label>
                                     </div>
@@ -558,7 +568,7 @@ socket.on('startQuizResponse', function (tituloQuizJSON, preguntasQuizJSON) {
                                         <label>
                                             <input type="radio" name="radio" disabled="disabled" />
                                             <div class="opcionBQuizz box">
-                                                <span>B. ${preguntasQuizJSON[0].respuesta2Input}</span>
+                                                <span>B. ${preguntasQuizJSON[iterateNumber].respuesta2Input}</span>
                                             </div>
                                         </label>
                                     </div>
@@ -568,7 +578,7 @@ socket.on('startQuizResponse', function (tituloQuizJSON, preguntasQuizJSON) {
                                         <label>
                                             <input type="radio" name="radio" disabled="disabled" />
                                             <div class="opcionCQuizz box">
-                                                <span>C. ${preguntasQuizJSON[0].respuesta3Input}</span>
+                                                <span>C. ${preguntasQuizJSON[iterateNumber].respuesta3Input}</span>
                                             </div>
                                         </label>
                                     </div>
@@ -576,7 +586,7 @@ socket.on('startQuizResponse', function (tituloQuizJSON, preguntasQuizJSON) {
                                         <label>
                                             <input type="radio" name="radio" disabled="disabled" />
                                             <div class="opcionDQuizz box">
-                                                <span>D. ${preguntasQuizJSON[0].respuesta4Input}</span>
+                                                <span>D. ${preguntasQuizJSON[iterateNumber].respuesta4Input}</span>
                                             </div>
                                         </label>
                                     </div>
@@ -594,8 +604,8 @@ socket.on('startQuizResponse', function (tituloQuizJSON, preguntasQuizJSON) {
                                     <div class="determinate" style="width: 0%"></div>
                                 </div>`)
         var handlingTime = workerTimer.setInterval(function () {
-            countTime = countTime + 0.01;
-            selectTimeTotal = (countTime / preguntasQuizJSON[0].selectTime) * 100;
+            countTime = countTime + 0.1;
+            selectTimeTotal = (countTime / preguntasQuizJSON[iterateNumber].selectTime) * 100;
             $('.determinate').css({
                 'width': selectTimeTotal + '%'
             })
@@ -609,6 +619,35 @@ socket.on('startQuizResponse', function (tituloQuizJSON, preguntasQuizJSON) {
                     'background-color': '#c62828'
                 });
             }
-        }, 10)
+        }, 100)
     }
+}
+
+var buttonclicksnumber = 0;
+$(document).on('click', '.nextQuestionQuizz', function () {
+    buttonclicksnumber++;
+    //listQuestions(tituloQuizJSONlocal,preguntasQuizJSONlocal,buttonclicksnumber)
+    socket.emit('nextQuestionQuiz',buttonclicksnumber)
+})
+
+socket.on('nextQuestionQuizResponse',function(buttonclicksnumber){
+    listQuestions(tituloQuizJSONlocal,preguntasQuizJSONlocal,buttonclicksnumber)
+})
+
+socket.on('finishingQuiz',function(){
+    $('.nextQuestionQuizz').html('Finalizar Quiz');
+    $('.nextQuestionQuizz').addClass('quizfinished');
+})
+
+$(document).on('click','.quizfinished',function(){
+    $('.comenzarQuizzSection').html(buttonBackup);
+    $('#modalpreguntas').modal('close');
+    $('#modalopcion').modal('close');
+    socket.emit('finishedquiz')
+})
+
+socket.on('finishedquizresponse',function(){
+    $('.cardGrilla').html(grillaEstudiantes);
+    $('.cardGrilla').attr('style', 'background-color: white !important');
+
 })

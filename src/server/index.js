@@ -17,6 +17,8 @@ var fullDataGroups = require('./workGroup')
 var tituloQuizJSON = require('./tituloQuiz')
 var preguntasQuizJSON = require('./preguntasQuiz')
 var respuestasQuizJSON = require('./respuestasQuiz')
+var respuestasRevisadas = require('./respuestasRevisadas')
+
 
 
 
@@ -291,6 +293,7 @@ io.on('connection', function (socket) {
 
     socket.on('starQuiz',function(){
         console.log('llego el quiz valemia')
+        console.log(util.inspect(preguntasQuizJSON.preguntas, false, null))
         io.sockets.emit('startQuizResponse',tituloQuizJSON,preguntasQuizJSON.preguntas);
     })
 
@@ -302,8 +305,24 @@ io.on('connection', function (socket) {
             respuestaElejida : respuestaElejida
         })
         console.log(util.inspect(respuestasQuizJSON.respuestas, false, null))
+        io.sockets.emit('dataCharts',respuestasQuizJSON);
     })
 
+    socket.on('nextQuestionQuiz',function(buttonclicksnumber){
+        Array.prototype.push.apply(respuestasRevisadas.respuestas,respuestasQuizJSON.respuestas);
+        respuestasQuizJSON.respuestas = [];
+        console.log(buttonclicksnumber)
+        console.log(preguntasQuizJSON.preguntas.length-1)
+        if(buttonclicksnumber > preguntasQuizJSON.preguntas.length-1){
+            socket.emit('finishingQuiz');
+        }else{
+            io.sockets.emit('nextQuestionQuizResponse',buttonclicksnumber)
+        }
+    })
+
+    socket.on('finishedquiz',function(){
+        io.sockets.emit('finishedquizresponse');
+    })
     //////////// Quizz ///////////////////
 
     // ------ >  Mensajes <----
