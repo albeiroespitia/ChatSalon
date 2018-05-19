@@ -643,19 +643,37 @@ socket.on('finishingQuiz', function (puntajes) {
 })
 
 socket.on('showChartsResponse', function (puntajes) {
-    var dataFinalCharts = `<div class="row">
-                              <img width="300" src="https://i.pinimg.com/originals/69/e0/6a/69e06a096ec5e14eefa1b7ff72fddf7f.gif"/>
-                           </div>
-                            <div class="row">
-                                    <canvas id="densityChart2" width="50" height="22"></canvas>
-                            </div>`
+    var variablefinal;
     if (datatoSend.rol == "Estudiante") {
+        var dataFinalCharts = `<div class="row">
+                                   <img width="300" src="https://i.pinimg.com/originals/69/e0/6a/69e06a096ec5e14eefa1b7ff72fddf7f.gif"/>
+                               </div>
+                               <div class="row">
+                                   <canvas id="densityChart2" width="50" height="22"></canvas>
+                               </div>`
         $('.cardGrilla').html(dataFinalCharts)
+        $('.cardGrilla').attr('style', 'background-color: #f7f7f7 !important');
+        variablefinal = 'densityChart2'
     } else if (datatoSend.rol == "Profesor") {
+        var dataFinalCharts = `<div class="row">
+                                   <center>
+                                       <img width="300" src="https://i.pinimg.com/originals/69/e0/6a/69e06a096ec5e14eefa1b7ff72fddf7f.gif"/>
+                                   </center>
+                               </div>
+                               <div class="row">
+                                   <center>
+                                       <canvas id="densityChart3" width="30" height="12"></canvas>
+                                   </center>
+                               </div>`
         $('.switchquizz').html(dataFinalCharts);
+        $('.switchquizz').attr('style', 'background-color: #f7f7f7 !important');
+        //$('#densityChart2').attr('style', 'height: 240px !important');
+        //$('#densityChart2').attr('style', 'width: 70% !important');
+        variablefinal = 'densityChart3'
+
     }
 
-    var densityCanvas = document.getElementById("densityChart2");
+    var densityCanvas = document.getElementById(variablefinal);
 
     Chart.defaults.global.defaultFontFamily = "Lato";
     Chart.defaults.global.defaultFontSize = 34;
@@ -718,8 +736,6 @@ socket.on('showChartsResponse', function (puntajes) {
                     });
                 }
             },
-
-
             line: {
                 dataLabels: {
                     enabled: true
@@ -739,24 +755,27 @@ $(document).on('click', '.quizfinished', function () {
 })
 
 socket.on('finishedquizresponse', function () {
+    console.log("sdasdasdasdasdasdasdasdasdentrooooooo")
+    console.log($('.cardGrilla').html());
     $('.cardGrilla').html(grillaEstudiantes);
     $('.cardGrilla').attr('style', 'background-color: white !important');
 
 })
 
 var respuestaElejida;
-function elegirRes(opcion){
-    console.log("hierba mala pago mi pana esta vaina esta bien bacana tu fumas yo fumo fumamos los dos "+opcion);
-    if (opcion == 'A'){
+
+function elegirRes(opcion) {
+    console.log("hierba mala pago mi pana esta vaina esta bien bacana tu fumas yo fumo fumamos los dos " + opcion);
+    if (opcion == 'A') {
         respuestaElejida = 'respuesta1';
     }
-    if (opcion == 'B'){
+    if (opcion == 'B') {
         respuestaElejida = 'respuesta2';
     }
-    if (opcion == 'C'){
+    if (opcion == 'C') {
         respuestaElejida = 'respuesta3';
     }
-    if (opcion == 'D'){
+    if (opcion == 'D') {
         respuestaElejida = 'respuesta4';
     }
 }
