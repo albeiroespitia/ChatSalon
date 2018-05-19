@@ -537,21 +537,21 @@ div#wave {
     display: none;
 }
 
-.middle input[type="radio"]:checked+.box {
+.middle input[type="radio"]:checked+.box3 {
     background-color: #007e90;
 }
 
-.middle input[type="radio"]:checked+.box span {
+.middle input[type="radio"]:checked+.box3 span {
     color: white;
     transform: translateY(70px);
 }
 
-.middle input[type="radio"]:checked+.box span:before {
+.middle input[type="radio"]:checked+.box3 span:before {
     transform: translateY(0px);
     opacity: 1;
 }
 
-.middle .box {
+.middle .box3 {
     width: 100%;
     height: 120px;
     background-color: #fff;
@@ -565,11 +565,11 @@ div#wave {
     font-weight: 900;
 }
 
-.middle .box:active {
+.middle .box3:active {
     transform: translateY(10px);
 }
 
-.middle .box span {
+.middle .box3 span {
     transform: translate(0, 60px);
     left: 0;
     right: 0;
@@ -583,7 +583,7 @@ div#wave {
     height: 352px !important;
 }
 
-.middle .box span:before {
+.middle .box3 span:before {
     font-size: 1.2em;
     font-family: FontAwesome;
     display: block;
@@ -617,8 +617,18 @@ div#wave {
     font-weight: 400;
 }
 
+.fondoGris{
+    background-color: #f7f7f7 !important;
+}
+
+
 .middle p span:after {
     content: '\f0e7';
     font-family: FontAwesome;
     color: yellow;
+}
+
+#densityChart2{
+    width: 100% !important;
+    height: 325px !important;
 }

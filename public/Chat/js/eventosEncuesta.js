@@ -433,7 +433,6 @@ $(document).on('click', '.startQuizz', function () {
     if ($('.preguntasGeneral').html() == '') {
         alert('No has creado ninguna pregunta')
     } else {
-        console.log('entroasd')
         socket.emit('starQuiz')
     }
 })
@@ -442,16 +441,17 @@ var tituloQuizJSONlocal;
 var preguntasQuizJSONlocal;
 var grillaEstudiantes;
 var buttonBackup;
+
 socket.on('startQuizResponse', function (tituloQuizJSON, preguntasQuizJSON) {
     grillaEstudiantes = $('.cardGrilla').html();
     buttonBackup = $('.comenzarQuizzSection').html();
     tituloQuizJSONlocal = tituloQuizJSON;
     preguntasQuizJSONlocal = preguntasQuizJSON;
-    listQuestions(tituloQuizJSON,preguntasQuizJSON,0);
+    listQuestions(tituloQuizJSON, preguntasQuizJSON, 0);
 })
 
 
-function listQuestions(tituloQuizJSON,preguntasQuizJSON,iterateNumber) {
+function listQuestions(tituloQuizJSON, preguntasQuizJSON, iterateNumber) {
     if (datatoSend.rol == "Estudiante") {
         var htmlPreguntaQuiz = `<div class="progressbar"></div>
                             <div class="row">
@@ -466,7 +466,7 @@ function listQuestions(tituloQuizJSON,preguntasQuizJSON,iterateNumber) {
                                     <div class="col s6">
                                         <label>
                                             <input id="radiobutton1Respuesta" type="radio" name="radio" />
-                                            <div class="opcionAQuizz box">
+                                            <div onclick="elegirRes('A')" class="opcionAQuizz box3">
                                                 <span>A. ${preguntasQuizJSON[iterateNumber].respuesta1Input}</span>
                                             </div>
                                         </label>
@@ -474,7 +474,7 @@ function listQuestions(tituloQuizJSON,preguntasQuizJSON,iterateNumber) {
                                     <div class="col s6">
                                         <label>
                                             <input id="radiobutton2Respuesta" type="radio" name="radio" />
-                                            <div class="opcionBQuizz box">
+                                            <div onclick="elegirRes('B')" class="opcionBQuizz box3">
                                                 <span>B. ${preguntasQuizJSON[iterateNumber].respuesta2Input}</span>
                                             </div>
                                         </label>
@@ -484,7 +484,7 @@ function listQuestions(tituloQuizJSON,preguntasQuizJSON,iterateNumber) {
                                     <div class="col s6">
                                         <label>
                                             <input id="radiobutton3Respuesta" type="radio" name="radio" />
-                                            <div class="opcionCQuizz box">
+                                            <div onclick="elegirRes('C')" class="opcionCQuizz box3">
                                                 <span>C. ${preguntasQuizJSON[iterateNumber].respuesta3Input}</span>
                                             </div>
                                         </label>
@@ -492,7 +492,7 @@ function listQuestions(tituloQuizJSON,preguntasQuizJSON,iterateNumber) {
                                     <div class="col s6">
                                         <label>
                                             <input id="radiobutton4Respuesta" type="radio" name="radio" />
-                                            <div class="opcionDQuizz box">
+                                            <div onclick="elegirRes('D')" class="opcionDQuizz box3">
                                                 <span>D. ${preguntasQuizJSON[iterateNumber].respuesta4Input}</span>
                                             </div>
                                         </label>
@@ -516,18 +516,19 @@ function listQuestions(tituloQuizJSON,preguntasQuizJSON,iterateNumber) {
                 'width': selectTimeTotal + '%'
             })
             if (selectTimeTotal >= 100) {
-
-                var respuestaElejida;
-                if ($('#radiobutton1Respuesta').is(':checked')) {
+                console.log("entro al clearinterval")
+                /*var respuestaElejida;
+                if ($('.opcionAQuizz').css('background-color') == '#007e90') {
+                    console.log("entro al response")
                     respuestaElejida = 'respuesta1';
-                } else if ($('#radiobutton2Respuesta').is(':checked')) {
+                } else if ($('.opcionBQuizz').css('background-color') == '#007e90') {
                     respuestaElejida = 'respuesta2';
-                } else if ($('#radiobutton3Respuesta').is(':checked')) {
+                } else if ($('.opcionCQuizz').css('background-color') == '#007e90') {
                     respuestaElejida = 'respuesta3';
-                } else if ($('#radiobutton4Respuesta').is(':checked')) {
+                } else if ($('.opcionDQuizz').css('background-color') == '#007e90') {
                     respuestaElejida = 'respuesta4';
-                }
-                console.log(respuestaElejida)
+                }*/
+                console.log('vale mia la respuesta es esta' + respuestaElejida);
                 socket.emit('respuestaUser', datatoSend, respuestaElejida)
                 workerTimer.clearInterval(handlingTime);
             }
@@ -559,7 +560,7 @@ function listQuestions(tituloQuizJSON,preguntasQuizJSON,iterateNumber) {
                                     <div class="col s6">
                                         <label>
                                             <input type="radio" name="radio" disabled="disabled" />
-                                            <div class="opcionAQuizz box">
+                                            <div class="opcionAQuizz box3">
                                                 <span>A. ${preguntasQuizJSON[iterateNumber].respuesta1Input}</span>
                                             </div>
                                         </label>
@@ -567,7 +568,7 @@ function listQuestions(tituloQuizJSON,preguntasQuizJSON,iterateNumber) {
                                     <div class="col s6">
                                         <label>
                                             <input type="radio" name="radio" disabled="disabled" />
-                                            <div class="opcionBQuizz box">
+                                            <div class="opcionBQuizz box3">
                                                 <span>B. ${preguntasQuizJSON[iterateNumber].respuesta2Input}</span>
                                             </div>
                                         </label>
@@ -577,7 +578,7 @@ function listQuestions(tituloQuizJSON,preguntasQuizJSON,iterateNumber) {
                                     <div class="col s6">
                                         <label>
                                             <input type="radio" name="radio" disabled="disabled" />
-                                            <div class="opcionCQuizz box">
+                                            <div  class="opcionCQuizz box3">
                                                 <span>C. ${preguntasQuizJSON[iterateNumber].respuesta3Input}</span>
                                             </div>
                                         </label>
@@ -585,7 +586,7 @@ function listQuestions(tituloQuizJSON,preguntasQuizJSON,iterateNumber) {
                                     <div class="col s6">
                                         <label>
                                             <input type="radio" name="radio" disabled="disabled" />
-                                            <div class="opcionDQuizz box">
+                                            <div class="opcionDQuizz box3">
                                                 <span>D. ${preguntasQuizJSON[iterateNumber].respuesta4Input}</span>
                                             </div>
                                         </label>
@@ -627,27 +628,135 @@ var buttonclicksnumber = 0;
 $(document).on('click', '.nextQuestionQuizz', function () {
     buttonclicksnumber++;
     //listQuestions(tituloQuizJSONlocal,preguntasQuizJSONlocal,buttonclicksnumber)
-    socket.emit('nextQuestionQuiz',buttonclicksnumber)
+    socket.emit('nextQuestionQuiz', buttonclicksnumber)
 })
 
-socket.on('nextQuestionQuizResponse',function(buttonclicksnumber){
-    listQuestions(tituloQuizJSONlocal,preguntasQuizJSONlocal,buttonclicksnumber)
+socket.on('nextQuestionQuizResponse', function (buttonclicksnumber) {
+    listQuestions(tituloQuizJSONlocal, preguntasQuizJSONlocal, buttonclicksnumber)
 })
 
-socket.on('finishingQuiz',function(){
+socket.on('finishingQuiz', function (puntajes) {
+    socket.emit('showCharts', puntajes);
+
     $('.nextQuestionQuizz').html('Finalizar Quiz');
     $('.nextQuestionQuizz').addClass('quizfinished');
 })
 
-$(document).on('click','.quizfinished',function(){
+socket.on('showChartsResponse', function (puntajes) {
+    var dataFinalCharts = `<div class="row">
+                              <img width="300" src="https://i.pinimg.com/originals/69/e0/6a/69e06a096ec5e14eefa1b7ff72fddf7f.gif"/>
+                           </div>
+                            <div class="row">
+                                    <canvas id="densityChart2" width="50" height="22"></canvas>
+                            </div>`
+    if (datatoSend.rol == "Estudiante") {
+        $('.cardGrilla').html(dataFinalCharts)
+    } else if (datatoSend.rol == "Profesor") {
+        $('.switchquizz').html(dataFinalCharts);
+    }
+
+    var densityCanvas = document.getElementById("densityChart2");
+
+    Chart.defaults.global.defaultFontFamily = "Lato";
+    Chart.defaults.global.defaultFontSize = 34;
+
+    var densityData = {
+
+        backgroundColor: ["#ced6e0", "#feca57", "#e77f67"],
+        data: [240, 320, 180] // PUNTACION DE LOS 3 PRIMERO EN ESTE ORDEN: 2,1,3
+    };
+
+    var barChart = new Chart(densityCanvas, {
+        type: 'bar',
+
+        data: {
+            labels: [`2. ${puntajes[1].nombreEstudiante}`, `1. ${puntajes[0].nombreEstudiante}`, `3. ${puntajes[2].nombreEstudiante}`],
+            datasets: [densityData],
+        },
+        options: {
+            scaleShowValues: true,
+            scales: {
+                yAxes: [{
+                    display: false
+                }],
+                xAxes: [{
+                    display: false,
+                    categoryPercentage: 1.0,
+                    barPercentage: 1.0
+                }]
+            },
+            legend: {
+                display: false,
+            },
+            tooltips: {
+                enabled: false
+            },
+            hover: {
+                animationDuration: 1
+            },
+            animation: {
+                duration: 1,
+                onComplete: function () {
+                    var chartInstance = this.chart,
+                        ctx = chartInstance.ctx;
+                    ctx.textAlign = 'center';
+                    ctx.fillStyle = "#666666";
+                    ctx.textBaseline = 'bottom';
+
+                    console.log("SAAAAD")
+                    console.log(this.data.labels)
+                    var nombresitos = this.data.labels;
+
+                    this.data.datasets.forEach(function (dataset, i) {
+                        var meta = chartInstance.controller.getDatasetMeta(i);
+                        meta.data.forEach(function (bar, index) {
+                            var data = nombresitos[index];
+
+                            ctx.fillText(data, bar._model.x, bar._model.y - 5);
+
+                        });
+                    });
+                }
+            },
+
+
+            line: {
+                dataLabels: {
+                    enabled: true
+                }
+            }
+        }
+
+    });
+
+})
+
+$(document).on('click', '.quizfinished', function () {
     $('.comenzarQuizzSection').html(buttonBackup);
     $('#modalpreguntas').modal('close');
     $('#modalopcion').modal('close');
     socket.emit('finishedquiz')
 })
 
-socket.on('finishedquizresponse',function(){
+socket.on('finishedquizresponse', function () {
     $('.cardGrilla').html(grillaEstudiantes);
     $('.cardGrilla').attr('style', 'background-color: white !important');
 
 })
+
+var respuestaElejida;
+function elegirRes(opcion){
+    console.log("hierba mala pago mi pana esta vaina esta bien bacana tu fumas yo fumo fumamos los dos "+opcion);
+    if (opcion == 'A'){
+        respuestaElejida = 'respuesta1';
+    }
+    if (opcion == 'B'){
+        respuestaElejida = 'respuesta2';
+    }
+    if (opcion == 'C'){
+        respuestaElejida = 'respuesta3';
+    }
+    if (opcion == 'D'){
+        respuestaElejida = 'respuesta4';
+    }
+}

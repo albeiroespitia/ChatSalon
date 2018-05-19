@@ -36,16 +36,23 @@ function datosFormularioLogin() {
     if (($('.fila select').val() == 0) || ($('.columna select').val() == 0)) {
         Materialize.toast('Aun no has seleccionado un asiento', 3000, 'rounded')
     } else {
-        var data = {
-            rol: $(".selectRol option:selected").text(),
-            nombre: $(".nombreForm").val(),
-            fila: $(".fila option:selected").text(),
-            columna: $(".columna option:selected").text(),
-            avatar: $(".avatar option:selected").val() + '.svg'
-        }
-        sessionStorage.setItem("datos", JSON.stringify(data));
-        socket.disconnect();
-        window.location.replace("/chat");
+        socket.emit('checkName', $(".nombreForm").val());
+        socket.on('responseLoginName', function (flag) {
+            if (!flag) {
+                var data = {
+                    rol: $(".selectRol option:selected").text(),
+                    nombre: $(".nombreForm").val(),
+                    fila: $(".fila option:selected").text(),
+                    columna: $(".columna option:selected").text(),
+                    avatar: $(".avatar option:selected").val() + '.svg'
+                }
+                sessionStorage.setItem("datos", JSON.stringify(data));
+                socket.disconnect();
+                window.location.replace("/chat");
+            }else{
+                Materialize.toast('El nombre ya esta siendo usado', 3000, 'rounded')
+            }
+        })
     }
 }
 
@@ -146,5 +153,5 @@ function anotarPosicion(fil, col) {
     $('.columna select').material_select();
 
     $('#modalPosicion').modal('close');
-    Materialize.toast('Has seleccionado la posición ('+fil+','+col+').', 4000)
+    Materialize.toast('Has seleccionado la posición (' + fil + ',' + col + ').', 4000)
 }

@@ -44,6 +44,10 @@ var contadorSalones = 0;
 var encuestaData = [];
 var respuesta = []; // A, B, C, D
 
+var puntajeUsers = {
+    puntajes: []
+}
+
 var actualImage;
 var arrayImage = [];
 var socketsID = [
@@ -57,7 +61,7 @@ var socketsID = [
 ];
 
 var roomsObj = {
-    roooms : []
+    roooms: []
 }
 
 var storage = multer.diskStorage({
@@ -85,20 +89,20 @@ var upload = multer({
     {
         name: 'filetouploadpv2',
         maxCount: 1
-    },,
+    }, ,
     {
         name: 'filetouploadpg2',
         maxCount: 1
-    },,
+    }, ,
     {
         name: 'filetouploadpf2',
         maxCount: 1
     }
 ])
 
-app.get('/.well-known/acme-challenge/:content', function(req, res) {
+app.get('/.well-known/acme-challenge/:content', function (req, res) {
     res.send("RI3sVgObGtps8_qhT4xsGdv0Ta9hG9EfsS0oHtkXEEs.ms9KHLFlONQBKkBGDvEQ7m3CEDFM0-Gdd7QcSBQUI54");
-  });
+});
 
 app.post('/imageUpload', function (req, res) {
     console.log(util.inspect(req, false, null))
@@ -114,9 +118,9 @@ app.post('/imageUpload', function (req, res) {
             var archivo = req.files.filetoupload[0]
         } else if (req.files.filetouploadpv2) {
             var archivo = req.files.filetouploadpv2[0]
-        }else if (req.files.filetouploadpg2) {
+        } else if (req.files.filetouploadpg2) {
             var archivo = req.files.filetouploadpg2[0]
-        }else if (req.files.filetouploadpf2) {
+        } else if (req.files.filetouploadpf2) {
             var archivo = req.files.filetouploadpf2[0]
         }
         if (archivo) {
@@ -151,7 +155,9 @@ s.on('connection', function (ws) {
 })
 
 app.use('/', express.static(path.resolve(__dirname, '../../public')));
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.urlencoded({
+    extended: false
+}))
 app.use(bodyParser.json())
 
 
@@ -193,14 +199,14 @@ app.get('/chat', (req, res) => {
     res.sendFile(path.resolve(__dirname + '/../../public/Chat/index.html'))
 })
 
-function searchRooms(value){
+function searchRooms(value) {
     var index;
-    var filteredObj = data.find(function(item, i){
-        if(item.idSalon === value){
-          index = i;
-          return i;
+    var filteredObj = data.find(function (item, i) {
+        if (item.idSalon === value) {
+            index = i;
+            return i;
         }
-      });
+    });
     return index;
 }
 
@@ -257,9 +263,21 @@ io.on('connection', function (socket) {
             io.sockets.emit('dataAllGroups', fullDataGroups.groups);
         }
         contadorPersonas++;
-        
-        
+
+
     });
+
+    socket.on('checkName', function (nombreData) {
+        var checkflag = false;
+        console.log(nombreData)
+        console.log(util.inspect(fullData, false, null));
+        for (var i = 0; fullData.estudiante.length > i; i += 1) {
+            if (fullData.estudiante[i].nombre == nombreData) {
+                checkflag = true;
+            }
+        }
+        socket.emit('responseLoginName', checkflag);
+    })
 
     socket.on('ProfesorTyping', function (data) {
         io.sockets.emit('ProfesorTypingAll', data);
@@ -278,51 +296,103 @@ io.on('connection', function (socket) {
     })
 
     //////////// Quizz ///////////////////
-    
-    socket.on('sendDataQuiz',function(tituloQuiz,descriptionQuiz,videoQuiz){
+
+    socket.on('sendDataQuiz', function (tituloQuiz, descriptionQuiz, videoQuiz) {
         tituloQuizJSON.titulo = tituloQuiz;
         tituloQuizJSON.descripcion = descriptionQuiz;
         tituloQuizJSON.video = videoQuiz;
         console.log(util.inspect(tituloQuizJSON, false, null));
     })
 
-    socket.on('sendDataPreguntasQuiz',function(preguntaQuiz){
+    socket.on('sendDataPreguntasQuiz', function (preguntaQuiz) {
         preguntasQuizJSON.preguntas.push(preguntaQuiz);
-        socket.emit('nuevaPregunta',preguntasQuizJSON.preguntas)
+        socket.emit('nuevaPregunta', preguntasQuizJSON.preguntas)
     })
 
-    socket.on('starQuiz',function(){
+    socket.on('starQuiz', function () {
         console.log('llego el quiz valemia')
         console.log(util.inspect(preguntasQuizJSON.preguntas, false, null))
-        io.sockets.emit('startQuizResponse',tituloQuizJSON,preguntasQuizJSON.preguntas);
+        io.sockets.emit('startQuizResponse', tituloQuizJSON, preguntasQuizJSON.preguntas);
     })
 
-    socket.on('respuestaUser',function(data,respuestaElejida){
+    socket.on('respuestaUser', function (data, respuestaElejida) {
+        console.log('vale mia la respuesta es esta' + respuestaElejida)
         respuestasQuizJSON.respuestas.push({
-            nombreEstudiante : data.nombre,
-            filaEstudiante : data.fila-1,
-            columnaEstudiante: data.columna-1,
-            respuestaElejida : respuestaElejida
+            nombreEstudiante: data.nombre,
+            filaEstudiante: data.fila - 1,
+            columnaEstudiante: data.columna - 1,
+            respuestaElejida: respuestaElejida
         })
         console.log(util.inspect(respuestasQuizJSON.respuestas, false, null))
-        io.sockets.emit('dataCharts',respuestasQuizJSON);
+        io.sockets.emit('dataCharts', respuestasQuizJSON);
     })
 
-    socket.on('nextQuestionQuiz',function(buttonclicksnumber){
-        Array.prototype.push.apply(respuestasRevisadas.respuestas,respuestasQuizJSON.respuestas);
+    socket.on('nextQuestionQuiz', function (buttonclicksnumber) {
+        console.log(buttonclicksnumber);
+
+        if (buttonclicksnumber-1 <= preguntasQuizJSON.preguntas.length - 1) {
+            var correctAnswer = preguntasQuizJSON.preguntas[buttonclicksnumber - 1].respuestaCorrecta;
+            for (var i = 0; respuestasQuizJSON.respuestas.length > i; i += 1) {
+                var jsonStudent = {
+                    nombreEstudiante: null,
+                    puntos: null
+                }
+                console.log(util.inspect(jsonStudent, false, null))
+                if (respuestasQuizJSON.respuestas[i].respuestaElejida == correctAnswer) {
+                    jsonStudent.nombreEstudiante = respuestasQuizJSON.respuestas[i].nombreEstudiante
+                    jsonStudent.puntos = preguntasQuizJSON.preguntas[buttonclicksnumber - 1].puntosQuizz
+                    puntajeUsers.puntajes.push(jsonStudent);
+                }
+            }
+            console.log("PUNTAJEEEES")
+            console.log(util.inspect(puntajeUsers.puntajes, false, null))
+        }
+
+
+        Array.prototype.push.apply(respuestasRevisadas.respuestas, respuestasQuizJSON.respuestas);
         respuestasQuizJSON.respuestas = [];
-        console.log(buttonclicksnumber)
-        console.log(preguntasQuizJSON.preguntas.length-1)
-        if(buttonclicksnumber > preguntasQuizJSON.preguntas.length-1){
-            socket.emit('finishingQuiz');
-        }else{
-            io.sockets.emit('nextQuestionQuizResponse',buttonclicksnumber)
+        if (buttonclicksnumber > preguntasQuizJSON.preguntas.length - 1) {
+            socket.emit('finishingQuiz', puntajeUsers.puntajes);
+        } else {
+            io.sockets.emit('nextQuestionQuizResponse', buttonclicksnumber)
         }
     })
 
-    socket.on('finishedquiz',function(){
+    socket.on('finishedquiz', function () {
         io.sockets.emit('finishedquizresponse');
     })
+
+    socket.on('showCharts', function (puntajes) {
+        var puntajesOrganizado = [];
+            puntajesOrganizado.push(puntajes[0])
+        // Pasamos todo a un vector sin repetimos
+        for (var i = 1; i < puntajes.length; i++) {
+            if (puntajesOrganizado.find(x => x.nombreEstudiante === puntajes[i].nombreEstudiante)) {
+                puntajesOrganizado.find(x => x.nombreEstudiante === puntajes[i].nombreEstudiante).puntos += parseInt(puntajes[i].puntos);
+                console.log('asdasdasdasdasdasdasdasd2')
+            } else {
+                console.log('asdasdasdasdasdasdasdasd')
+                puntajes[i].puntos = parseInt(puntajes[i].puntos)
+                puntajesOrganizado.push(puntajes[i])
+            }
+        }
+
+        // Lo orgnizamos forma ascendente
+        for (var i = 0; i < puntajesOrganizado.length; i += 1) {
+            for (var j = i + 1; j < puntajesOrganizado.length; j++) {
+                if (puntajesOrganizado[i].puntos < puntajesOrganizado[j].puntos) {
+                    var aux = puntajesOrganizado[i];
+                    puntajesOrganizado[i] = puntajesOrganizado[j];
+                    puntajesOrganizado[j] = aux;
+                }
+            }
+        }
+        puntajes = puntajesOrganizado;
+        console.log('----------------')
+        console.log(util.inspect(puntajes, false, null))
+        io.sockets.emit('showChartsResponse',puntajes);
+    })
+
     //////////// Quizz ///////////////////
 
     // ------ >  Mensajes <----
@@ -362,18 +432,18 @@ io.on('connection', function (socket) {
     socket.on('newImageProfile', function (data, fila, columna) {
         //io.sockets.emit('newImageProfile', data, arrayImage[arrayImage.length - 1], data.fila - 1, data.columna - 1);
         console.log(util.inspect(fullData, false, null))
-        if(data.rol == "Profesor"){
+        if (data.rol == "Profesor") {
             fullData.profesor.avatar = arrayImage[arrayImage.length - 1];
-        }else{
+        } else {
             for (var key in fullData.estudiante) {
                 if (fullData.estudiante[key].id == socket.id) {
                     fullData.estudiante[key].avatar = arrayImage[arrayImage.length - 1];
                 }
             }
         }
-        
-        fs.rename(path.resolve(__dirname + '/../../public/uploads/'+arrayImage[arrayImage.length - 1]), path.resolve(__dirname + '/../../public/Chat/img/'+ arrayImage[arrayImage.length - 1]),function (err){
-            if(err){
+
+        fs.rename(path.resolve(__dirname + '/../../public/uploads/' + arrayImage[arrayImage.length - 1]), path.resolve(__dirname + '/../../public/Chat/img/' + arrayImage[arrayImage.length - 1]), function (err) {
+            if (err) {
                 console.log(err)
             }
         });
@@ -526,7 +596,7 @@ io.on('connection', function (socket) {
     })
 
     socket.on('remoto', function (fila, col) {
-        socket.to(socketsID[fila-1][col-1]).emit('remoteOn');
+        socket.to(socketsID[fila - 1][col - 1]).emit('remoteOn');
     })
 
     socket.on('receiveIdBroadcast', function (broadcastId) {
@@ -535,27 +605,27 @@ io.on('connection', function (socket) {
         console.log(fullData.profesor.id)
     })
 
-    
-    socket.on('errorRemote',function(message){    
-        socket.to(fullData.profesor.id).emit('newRemoteError',message);
+
+    socket.on('errorRemote', function (message) {
+        socket.to(fullData.profesor.id).emit('newRemoteError', message);
     })
 
-    socket.on('videoCall',function(fila,col,idVideoCall){    
-        socket.emit('videoOn',fila,col,idVideoCall);
+    socket.on('videoCall', function (fila, col, idVideoCall) {
+        socket.emit('videoOn', fila, col, idVideoCall);
     })
 
-    socket.on('videoOnFlag',function(fila,col,idVideoCall){    
-        socket.to(socketsID[fila-1][col-1]).emit('videoOnClient',idVideoCall,socket.id);
+    socket.on('videoOnFlag', function (fila, col, idVideoCall) {
+        socket.to(socketsID[fila - 1][col - 1]).emit('videoOnClient', idVideoCall, socket.id);
     })
 
-    socket.on('errorVideo',function(idSocket){    
+    socket.on('errorVideo', function (idSocket) {
         socket.to(idSocket).emit('videoErrorClient');
     })
 
-    socket.on('successVideo',function(idSocket,idVideoCall){    
-        socket.to(idSocket).emit('videoSuccesClient',idVideoCall);
+    socket.on('successVideo', function (idSocket, idVideoCall) {
+        socket.to(idSocket).emit('videoSuccesClient', idVideoCall);
     })
-    
+
 
     // Recibe encuesta creada
     socket.on('sendEncuesta', function (data) {
@@ -611,8 +681,8 @@ io.on('connection', function (socket) {
         socket.disconnect();
     });
 
-    socket.on('newNotaVoz',function(url,data){
-        io.sockets.emit('newMessageAudio',url,data);
+    socket.on('newNotaVoz', function (url, data) {
+        io.sockets.emit('newMessageAudio', url, data);
     });
 
     socket.on('disconnect', function () {
@@ -706,4 +776,4 @@ server2.listen(port, () => {
 https.createServer(options, function (req, res) {
     res.writeHead(200);
     res.end("hello world\n");
-  }).listen(8000);
+}).listen(8000);

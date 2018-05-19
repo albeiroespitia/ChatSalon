@@ -29,6 +29,7 @@
     "build": "react-scripts build",
     "serve": "nodemon src/server/index.js",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "debug": "node --nolazy src/server/index.js"
   }
 }
