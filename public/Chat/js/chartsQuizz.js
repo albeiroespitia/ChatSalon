@@ -81,7 +81,40 @@ socket.on('dataCharts', function (respuestasQuizJSON,respuestaCorrectaPapu) {
                                 </div>
                             </div>
                             <div id="test-swipe-2" class="col s12 red">
-
+                                <div class="row">
+                                    <div class="col s8 offset-s2">
+                                        <table class="centered ranking responsive-table white-text">
+                                            <h4 class="white-text">MEJORES PUNTUACIONES</h4>
+                                            <tbody>
+                                                <tr>
+                                                    <td>Jose</td>
+                                                    <td>1200</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Guillermo</td>
+                                                    <td>1000</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Pedro</td>
+                                                    <td>900</td>
+                                                </tr>
+                                                <tr>
+                                                    <td> Alan</td>
+                                                    <td>800</td>
+                                                </tr>
+                                                <tr>
+                                                    <td> Jonathan</td>
+                                                    <td>300</td>
+                                                </tr>
+                                                <tr>
+                                                    <td> Johan</td>
+                                                    <td>0</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="col s2"></div>
+                                </div>
                             </div>`
         $('.tabs').tabs();
         $('ul.tabs').tabs({
@@ -137,7 +170,44 @@ socket.on('dataCharts', function (respuestasQuizJSON,respuestaCorrectaPapu) {
                                     </div>
                                 </div>
                                 <div id="test-swipe-2" class="col s12 red">
+                                    <div class="row">
+                                    <div class="col s8 offset-s2">
+                                        <table class="centered ranking responsive-table white-text">
 
+                                            <h4 class="white-text">MEJORES PUNTUACIONES</h4>
+                                            <tbody>
+                                                
+                                                <tr>
+                                                    <td>Jose</td>
+                                                    <td>1200</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Guillermo</td>
+                                                    <td>1000</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Pedro</td>
+                                                    <td>900</td>
+                                                </tr>
+                                                <tr>
+                                                    <td> Alan</td>
+                                                    <td>800</td>
+                                                </tr>
+                                                <tr>
+                                                    <td> Jonathan</td>
+                                                    <td>300</td>
+                                                </tr>
+                                                <tr>
+                                                    <td> Johan</td>
+                                                    <td>0</td>
+                                                </tr>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="col s2"></div>
+
+                                </div>
                                 </div>`
         
         $('ul.tabs').tabs({

@@ -650,3 +650,28 @@ div#wave {
 #tabs-swipe-demo{
     background-color: #343436 !important;
 }
+
+.fondoNaranja{
+    background-color: #343436 !important;
+    color: #f1f2f6;
+}
+.ranking{
+    font-size: 22px;
+    border: inset;
+}
+
+
+.ranking tr:first-child {
+    background-color: #feca57 !important;
+    color: #343436;
+    
+}
+
+.ranking tr:nth-child(2) {
+    background-color: #e0dfe5 !important;
+    color: #343436;
+}
+.ranking tr:nth-child(3) {
+    background-color: #ec8e46 !important;
+    color: #343436;
+}
