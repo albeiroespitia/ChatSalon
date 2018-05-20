@@ -615,6 +615,8 @@ function listQuestions(tituloQuizJSON, preguntasQuizJSON, iterateNumber) {
     }
 }
 
+
+
 $(document).on('click', '.nextQuestionQuizz', function () {
     buttonclicksnumber++;
     //listQuestions(tituloQuizJSONlocal,preguntasQuizJSONlocal,buttonclicksnumber)

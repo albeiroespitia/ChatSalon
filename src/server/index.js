@@ -362,6 +362,30 @@ io.on('connection', function (socket) {
             io.sockets.emit('nextQuestionQuizResponse', buttonclicksnumber)
         }
     })
+    socket.on('NecesitoPuntajes', function (buttonclicksnumber) {  
+        console.log("joda me estan pidiendo los puntajes")
+        buttonclicksnumber++; 
+        var puntajes = puntajeUsers.puntajes;
+        if (buttonclicksnumber-1 <= preguntasQuizJSON.preguntas.length - 1) {
+            var correctAnswer = preguntasQuizJSON.preguntas[buttonclicksnumber - 1].respuestaCorrecta;
+            for (var i = 0; respuestasQuizJSON.respuestas.length > i; i += 1) {
+                var jsonStudent = {
+                    nombreEstudiante: null,
+                    puntos: null
+                }
+                
+                if (respuestasQuizJSON.respuestas[i].respuestaElejida == correctAnswer) {
+                    jsonStudent.nombreEstudiante = respuestasQuizJSON.respuestas[i].nombreEstudiante
+                    jsonStudent.puntos = preguntasQuizJSON.preguntas[buttonclicksnumber - 1].puntosQuizz
+                    puntajes.push(jsonStudent);
+                }
+            }
+           
+            io.sockets.emit('TomaLosPuntajes', puntajes);
+            console.log("Ya envie los puntajes y dejen de jdr")
+        }
+
+    }) 
 
     socket.on('finishedquiz', function () {
         console.log('Tengo q respondeler a todos q el quiz ya finalizo')
