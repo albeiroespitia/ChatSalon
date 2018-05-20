@@ -517,17 +517,7 @@ function listQuestions(tituloQuizJSON, preguntasQuizJSON, iterateNumber) {
             })
             if (selectTimeTotal >= 100) {
                 console.log("entro al clearinterval")
-                /*var respuestaElejida;
-                if ($('.opcionAQuizz').css('background-color') == '#007e90') {
-                    console.log("entro al response")
-                    respuestaElejida = 'respuesta1';
-                } else if ($('.opcionBQuizz').css('background-color') == '#007e90') {
-                    respuestaElejida = 'respuesta2';
-                } else if ($('.opcionCQuizz').css('background-color') == '#007e90') {
-                    respuestaElejida = 'respuesta3';
-                } else if ($('.opcionDQuizz').css('background-color') == '#007e90') {
-                    respuestaElejida = 'respuesta4';
-                }*/
+   
                 console.log('vale mia la respuesta es esta' + respuestaElejida);
                 socket.emit('respuestaUser', datatoSend, respuestaElejida)
                 workerTimer.clearInterval(handlingTime);
@@ -640,6 +630,9 @@ socket.on('finishingQuiz', function (puntajes) {
 
     $('.nextQuestionQuizz').html('Finalizar Quiz');
     $('.nextQuestionQuizz').addClass('quizfinished');
+    $('.nextQuestionQuizz').removeClass('nextQuestionQuizz');
+    $('.cardGrilla').attr('style', 'background-color: #eee !important');
+    
 })
 
 socket.on('showChartsResponse', function (puntajes) {
@@ -757,9 +750,10 @@ $(document).on('click', '.quizfinished', function () {
 })
 
 socket.on('finishedquizresponse', function () {
+    console.log("Tengo que quitar el html, por que el quiz ya finalizo")
     $('.cardGrilla').html(grillaEstudiantes);
     $('.cardGrilla').attr('style', 'background-color: white !important');
-
+    console.log("TYa quite html, por que el quiz ya finalizo")
 })
 
 var respuestaElejida;

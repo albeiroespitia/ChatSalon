@@ -262,7 +262,14 @@ io.on('connection', function (socket) {
         if (fullDataGroups.groups.length > 0) {
             io.sockets.emit('dataAllGroups', fullDataGroups.groups);
         }
+        
+        // PARA PUNTUACION:
+        var jsonStudent = {
+            nombreEstudiante: fullData.estudiante[contadorPersonas].nombre,
+            puntos: 0
+        }
         contadorPersonas++;
+        puntajeUsers.puntajes.push(jsonStudent);
 
 
     });
@@ -310,20 +317,18 @@ io.on('connection', function (socket) {
     })
 
     socket.on('starQuiz', function () {
-        console.log('llego el quiz valemia')
-        console.log(util.inspect(preguntasQuizJSON.preguntas, false, null))
-        io.sockets.emit('startQuizResponse', tituloQuizJSON, preguntasQuizJSON.preguntas);
+            io.sockets.emit('startQuizResponse', tituloQuizJSON, preguntasQuizJSON.preguntas);
     })
 
     socket.on('respuestaUser', function (data, respuestaElejida) {
-        console.log('vale mia la respuesta es esta' + respuestaElejida)
+       
         respuestasQuizJSON.respuestas.push({
             nombreEstudiante: data.nombre,
             filaEstudiante: data.fila - 1,
             columnaEstudiante: data.columna - 1,
             respuestaElejida: respuestaElejida
         })
-        console.log(util.inspect(respuestasQuizJSON.respuestas, false, null))
+     
         io.sockets.emit('dataCharts', respuestasQuizJSON);
     })
 
@@ -344,8 +349,7 @@ io.on('connection', function (socket) {
                     puntajeUsers.puntajes.push(jsonStudent);
                 }
             }
-            console.log("PUNTAJEEEES")
-            console.log(util.inspect(puntajeUsers.puntajes, false, null))
+          
         }
 
 
@@ -359,7 +363,9 @@ io.on('connection', function (socket) {
     })
 
     socket.on('finishedquiz', function () {
+        console.log('Tengo q respondeler a todos q el quiz ya finalizo')
         io.sockets.emit('finishedquizresponse');
+        console.log('Ya les respondi a todos q el quiz finalizo')
     })
 
     socket.on('showCharts', function (puntajes) {
@@ -369,9 +375,9 @@ io.on('connection', function (socket) {
         for (var i = 1; i < puntajes.length; i++) {
             if (puntajesOrganizado.find(x => x.nombreEstudiante === puntajes[i].nombreEstudiante)) {
                 puntajesOrganizado.find(x => x.nombreEstudiante === puntajes[i].nombreEstudiante).puntos += parseInt(puntajes[i].puntos);
-                console.log('asdasdasdasdasdasdasdasd2')
+               
             } else {
-                console.log('asdasdasdasdasdasdasdasd')
+             
                 puntajes[i].puntos = parseInt(puntajes[i].puntos)
                 puntajesOrganizado.push(puntajes[i])
             }
