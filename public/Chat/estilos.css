@@ -638,3 +638,15 @@ div#wave {
     height: 240px !important;
 }
 
+#test-swipe-1,
+#test-swipe-2{
+    background-color: #343436 !important;
+}
+
+.tabs-content{
+    height: 100% !important ;
+}
+
+#tabs-swipe-demo{
+    background-color: #343436 !important;
+}

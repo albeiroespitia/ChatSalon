@@ -19,11 +19,14 @@ var barChart = new Chart(densityCanvas, {
 });*/
 
 
-socket.on('dataCharts', function (respuestasQuizJSON) {
+socket.on('dataCharts', function (respuestasQuizJSON,respuestaCorrectaPapu) {
+    console.log("tomalo papu")
+    console.log(respuestasQuizJSON);
     var countr1 = 0;
     var countr2 = 0;
     var countr3 = 0;
     var countr4 = 0;
+    var isCorrect;
     for (var i = 0; respuestasQuizJSON.respuestas.length > i; i += 1) {
         if (respuestasQuizJSON.respuestas[i].respuestaElejida == 'respuesta1') {
             countr1++;
@@ -38,24 +41,52 @@ socket.on('dataCharts', function (respuestasQuizJSON) {
             countr4++;
             console.log("encontre 4")
         }
+
+        if(respuestasQuizJSON.respuestas[i].nombreEstudiante == datatoSend.nombre){
+            if(respuestasQuizJSON.respuestas[i].respuestaElejida == respuestaCorrectaPapu){
+                isCorrect = true;
+            }else{
+                isCorrect = false;
+            }
+        }
     }
 
-
+    var iconCorrect;
+    var iconColor;
     if (datatoSend.rol == "Estudiante") {
-        var htmlDataCharts = `<div class="row">
-                                <h6 class="grey-text lighten-3 left">Tu puntaje es: 0</h6>
+        if(isCorrect){
+            iconCorrect = 'check_circle_outline';
+            iconColor = '#00c853'
+        }else{
+            iconCorrect = 'cancel'
+            iconColor = '#d50000'
+        }
+        var htmlDataCharts = `<ul id="tabs-swipe-demo" class="tabs">
+                                <li class="tab col l6"><a class="active" href="#test-swipe-1">Respuestas</a></li>
+                                <li class="tab col l6"><a href="#test-swipe-2">Tablas de puntuacion</a></li>
+                            </ul>
+                            <div id="test-swipe-1" class="col s12 blue">
+                                <div class="row" style="margin-top:20px;">
+                                    <center>
+                                        <canvas id="densityChart" width="50" height="28"></canvas>
+                                    </center>        
+                                </div>	
+                                <div class="row">
+                                    <i class="material-icons" style="
+                                        font-size: 100px;
+                                        color: ${iconColor}  !important;
+                                    ">
+                                    ${iconCorrect}
+                                    </i>
+                                </div>
                             </div>
-                            <div class="row">
-                                    <canvas id="densityChart" width="50" height="28"></canvas>
-                            </div>	
-                            <div class="row">
-                            <!-- RESPUESTA INCORRECTA 
-                                <i class="large red-text material-icons">close</i>
-                                <h4 class="red-text">LA RESPUESTA ES LA C</h4>
-                            -->
-                                <i class="large green-text material-icons">check</i>
-                                <h4 class="green-text">LA RESPUESTA ES LA C</h4>
+                            <div id="test-swipe-2" class="col s12 red">
+
                             </div>`
+        $('.tabs').tabs();
+        $('ul.tabs').tabs({
+            swipeable: true
+        })
         $('.cardGrilla').html(htmlDataCharts);
         var densityCanvas = document.getElementById("densityChart");
 
@@ -83,19 +114,35 @@ socket.on('dataCharts', function (respuestasQuizJSON) {
 
         });
     } else if (datatoSend.rol == "Profesor") {
-        var htmlDataCharts = `<div class="row">
-                            </div>
-                            <div class="row">
-                                    <canvas id="densityChart" width="50" height="28"></canvas>
-                            </div>	
-                            <div class="row">
-                            <!-- RESPUESTA INCORRECTA 
-                                <i class="large red-text material-icons">close</i>
-                                <h4 class="red-text">LA RESPUESTA ES LA C</h4>
-                            -->
-                                <i class="large green-text material-icons">check</i>
-                                <h4 class="green-text">LA RESPUESTA ES LA C</h4>
-                            </div>`
+        var htmlDataCharts = `  <ul id="tabs-swipe-demo" class="tabs">
+                                    <li class="tab col l6"><a class="active" href="#test-swipe-1">Respuestas</a></li>
+                                    <li class="tab col l6"><a href="#test-swipe-2">Tablas de puntuacion</a></li>
+                                </ul>
+                                <div id="test-swipe-1" class="col s12 blue">
+                                    <div class="row">
+                                    </div>
+                                    <div class="row">
+                                        <center>
+                                            <canvas id="densityChart" width="50" height="28"></canvas>
+                                        </center>        
+                                    </div>	
+                                    <div class="row">
+                                    <!-- RESPUESTA INCORRECTA 
+                                        <i class="large red-text material-icons">close</i>
+                                        <h4 class="red-text">LA RESPUESTA ES LA C</h4>
+                                    
+                                        <i class="large green-text material-icons">check</i>
+                                        <h4 class="green-text">LA RESPUESTA ES LA C</h4>
+                                    -->
+                                    </div>
+                                </div>
+                                <div id="test-swipe-2" class="col s12 red">
+
+                                </div>`
+        
+        $('ul.tabs').tabs({
+            swipeable: true
+        })        
         $('.switchquizz').html(htmlDataCharts);
         var densityCanvas = document.getElementById("densityChart");
 
@@ -125,4 +172,8 @@ socket.on('dataCharts', function (respuestasQuizJSON) {
 
         $('.nextQuestionQuizz').removeClass('disabled')
     }
+
+    $('ul.tabs').tabs({
+        swipeable: true
+    })
 })

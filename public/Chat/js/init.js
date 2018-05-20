@@ -133,6 +133,10 @@
 	  }
 	);
 
+	$('.tabs').tabs();
+
+
+
 	function RedirectUrlPlugin(){    
 		$('#modalP').modal('close')
 	}

@@ -441,6 +441,7 @@ var tituloQuizJSONlocal;
 var preguntasQuizJSONlocal;
 var grillaEstudiantes;
 var buttonBackup;
+var buttonclicksnumber = 0;
 
 socket.on('startQuizResponse', function (tituloQuizJSON, preguntasQuizJSON) {
     grillaEstudiantes = $('.cardGrilla').html();
@@ -519,7 +520,7 @@ function listQuestions(tituloQuizJSON, preguntasQuizJSON, iterateNumber) {
                 console.log("entro al clearinterval")
    
                 console.log('vale mia la respuesta es esta' + respuestaElejida);
-                socket.emit('respuestaUser', datatoSend, respuestaElejida)
+                socket.emit('respuestaUser', datatoSend, respuestaElejida,buttonclicksnumber)
                 workerTimer.clearInterval(handlingTime);
             }
 
@@ -614,7 +615,6 @@ function listQuestions(tituloQuizJSON, preguntasQuizJSON, iterateNumber) {
     }
 }
 
-var buttonclicksnumber = 0;
 $(document).on('click', '.nextQuestionQuizz', function () {
     buttonclicksnumber++;
     //listQuestions(tituloQuizJSONlocal,preguntasQuizJSONlocal,buttonclicksnumber)
@@ -638,26 +638,28 @@ socket.on('finishingQuiz', function (puntajes) {
 socket.on('showChartsResponse', function (puntajes) {
     var variablefinal;
     if (datatoSend.rol == "Estudiante") {
-        var dataFinalCharts = `<div class="row">
-                                   <img width="300" src="https://i.pinimg.com/originals/69/e0/6a/69e06a096ec5e14eefa1b7ff72fddf7f.gif"/>
-                               </div>
-                               <div class="row">
-                                   <canvas id="densityChart2" width="50" height="22"></canvas>
-                               </div>`
+        var dataFinalCharts =  `<div class="row">
+                                    <img width="300" src="https://i.pinimg.com/originals/69/e0/6a/69e06a096ec5e14eefa1b7ff72fddf7f.gif"/>
+                                </div>
+                                <div class="row">
+                                    <canvas id="densityChart2" width="50" height="22"></canvas>
+                                </div>`
+                                
         $('.cardGrilla').html(dataFinalCharts)
         $('.cardGrilla').attr('style', 'background-color: #f7f7f7 !important');
         variablefinal = 'densityChart2'
     } else if (datatoSend.rol == "Profesor") {
         var dataFinalCharts = `<div class="row">
-                                   <center>
-                                       <img width="300" src="https://i.pinimg.com/originals/69/e0/6a/69e06a096ec5e14eefa1b7ff72fddf7f.gif"/>
-                                   </center>
-                               </div>
-                               <div class="row">
-                                   <center>
-                                       <canvas id="densityChart3" width="30" height="12"></canvas>
-                                   </center>
-                               </div>`
+                                        <center>
+                                            <img width="300" src="https://i.pinimg.com/originals/69/e0/6a/69e06a096ec5e14eefa1b7ff72fddf7f.gif"/>
+                                        </center>
+                                    </div>
+                                    <div class="row">
+                                        <center>
+                                            <canvas id="densityChart3" width="30" height="12"></canvas>
+                                        </center>
+                                    </div> 
+                                </div>`
         $('.switchquizz').html(dataFinalCharts);
         $('.switchquizz').attr('style', 'background-color: #f7f7f7 !important');
         //$('#densityChart2').attr('style', 'height: 240px !important');

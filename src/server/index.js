@@ -320,7 +320,7 @@ io.on('connection', function (socket) {
             io.sockets.emit('startQuizResponse', tituloQuizJSON, preguntasQuizJSON.preguntas);
     })
 
-    socket.on('respuestaUser', function (data, respuestaElejida) {
+    socket.on('respuestaUser', function (data, respuestaElejida,buttonclicksnumber) {
        
         respuestasQuizJSON.respuestas.push({
             nombreEstudiante: data.nombre,
@@ -328,8 +328,9 @@ io.on('connection', function (socket) {
             columnaEstudiante: data.columna - 1,
             respuestaElejida: respuestaElejida
         })
+        var respuestaCorrectaPapu = preguntasQuizJSON.preguntas[buttonclicksnumber].respuestaCorrecta
      
-        io.sockets.emit('dataCharts', respuestasQuizJSON);
+        io.sockets.emit('dataCharts', respuestasQuizJSON,respuestaCorrectaPapu);
     })
 
     socket.on('nextQuestionQuiz', function (buttonclicksnumber) {
