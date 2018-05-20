@@ -610,6 +610,7 @@ function listQuestions(tituloQuizJSON, preguntasQuizJSON, iterateNumber) {
                 'width': selectTimeTotal + '%'
             })
             if (selectTimeTotal >= 100) {
+                socket.emit('NecesitoPuntajes', buttonclicksnumber);
                 workerTimer.clearInterval(handlingTime);
             }
 
