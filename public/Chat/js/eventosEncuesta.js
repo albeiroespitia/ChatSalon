@@ -433,7 +433,15 @@ $(document).on('click', '.startQuizz', function () {
     if ($('.preguntasGeneral').html() == '') {
         alert('No has creado ninguna pregunta')
     } else {
-        socket.emit('starQuiz')
+        socket.emit('check3users');
+        socket.on('check3userResponse',function(is3userconnected){
+            if(is3userconnected){
+                socket.emit('starQuiz')
+            }else{
+                Materialize.Toast.removeAll();
+                Materialize.toast('Se necesitan al menos 3 estudiantes logeados para comenzar el quiz', 3000)
+            }
+        })
     }
 })
 

@@ -286,6 +286,14 @@ io.on('connection', function (socket) {
         socket.emit('responseLoginName', checkflag);
     })
 
+    socket.on('check3users',function(){
+        var is3userconnected = false;
+        if(fullData.estudiante.length>=3){
+            is3userconnected = true;
+        }
+        socket.emit('check3userResponse',is3userconnected);
+    })
+
     socket.on('ProfesorTyping', function (data) {
         io.sockets.emit('ProfesorTypingAll', data);
     })
