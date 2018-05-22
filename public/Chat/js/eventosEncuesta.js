@@ -528,7 +528,7 @@ function listQuestions(tituloQuizJSON, preguntasQuizJSON, iterateNumber) {
                 console.log("entro al clearinterval")
    
                 console.log('vale mia la respuesta es esta' + respuestaElejida);
-                socket.emit('respuestaUser', datatoSend, respuestaElejida,buttonclicksnumber)
+                socket.emit('respuestaUser', datatoSend, respuestaElejida,iterateNumber)
                 workerTimer.clearInterval(handlingTime);
             }
 

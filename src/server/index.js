@@ -277,7 +277,7 @@ io.on('connection', function (socket) {
     socket.on('checkName', function (nombreData) {
         var checkflag = false;
         console.log(nombreData)
-        console.log(util.inspect(fullData, false, null));
+        //console.log(util.inspect(fullData, false, null));
         for (var i = 0; fullData.estudiante.length > i; i += 1) {
             if (fullData.estudiante[i].nombre == nombreData) {
                 checkflag = true;
@@ -328,11 +328,14 @@ io.on('connection', function (socket) {
         io.sockets.emit('startQuizResponse', tituloQuizJSON, preguntasQuizJSON.preguntas);
     })
 
-    socket.on('respuestaUser', function (data, respuestaElejida, buttonclicksnumber) {
-        var correctAnswer = preguntasQuizJSON.preguntas[buttonclicksnumber].respuestaCorrecta;
+    socket.on('respuestaUser', function (data, respuestaElejida, iterateNumber) {
+        var ultimo = parseInt(preguntasQuizJSON.preguntas.length);
+        console.log("Tamaño de preguntas: "+ultimo)
+        console.log("INDEX DE LA PREGUNTA: "+iterateNumber)
+        var correctAnswer = preguntasQuizJSON.preguntas[iterateNumber].respuestaCorrecta;
         var puntosSacados = 0;
         if (correctAnswer == respuestaElejida) {
-            puntosSacados = parseInt(preguntasQuizJSON.preguntas[buttonclicksnumber].puntosQuizz)
+            puntosSacados = parseInt(preguntasQuizJSON.preguntas[iterateNumber].puntosQuizz)
         }
 
         respuestasQuizJSON.respuestas.push({
