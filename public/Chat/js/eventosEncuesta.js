@@ -598,6 +598,7 @@ function listQuestions(tituloQuizJSON, preguntasQuizJSON, iterateNumber) {
 
 
         var selectTimeTotal;
+        var tiempoparaSocket = false;
         var countTime = 0;
         var flag = 0;
         $('.progressbar').html(`<div class="progress">
@@ -610,7 +611,7 @@ function listQuestions(tituloQuizJSON, preguntasQuizJSON, iterateNumber) {
                 'width': selectTimeTotal + '%'
             })
             if (selectTimeTotal >= 100) {
-                socket.emit('NecesitoPuntajes', buttonclicksnumber);
+               tiempoparaSocket = true;
                 workerTimer.clearInterval(handlingTime);
             }
 
@@ -621,8 +622,41 @@ function listQuestions(tituloQuizJSON, preguntasQuizJSON, iterateNumber) {
                 });
             }
         }, 100)
+
+        var intervaloTest = workerTimer.setInterval(function(){
+            setTimeout(function(){
+                if(tiempoparaSocket){
+                    console.log("Voy a enviar un socket NecesitoPuntajes con el profesor")
+                    socket.emit('NecesitoPuntajes', buttonclicksnumber);
+                    tiempoparaSocket= false;
+                    workerTimer.clearInterval(intervaloTest);
+                }
+            },1000)
+        
+        },100)
     }
 }
+socket.on('TomaLosPuntajes', function(puntajes){
+    $('.ranking').html("");
+    console.log("Llegaron los puntajes actualizados para el top score")
+    console.log(puntajes);
+
+    var html = "<tbody>";
+    var n = 5;
+    if(n > puntajes.length){
+        n = puntajes.length;
+    }
+    for(var i=0; i<n; i++){
+        html += "<tr><td>"+puntajes[i].nombreEstudiante+"</td>";
+        html += "<td>"+puntajes[i].puntos+"</td></tr>";
+    }
+    html+="</tbody>"
+    console.log("sin modificaar:")
+    console.log($('.ranking').html())
+    $('.ranking').html(html);
+    console.log("modificado:")
+    console.log($('.ranking').html())
+})
 
 
 

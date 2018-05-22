@@ -17,20 +17,6 @@ var barChart = new Chart(densityCanvas, {
     }
 
 });*/
-socket.on('TomaLosPuntajes', function(puntajes){
-    console.log("Llegaron los puntajes actualizados para el top score")
-    console.log(puntajes);
-    var html = `<tbody>`;
-    var n = 5;
-    if(n > puntajes.length){
-        n = puntajes.length;
-    }
-    for(var i=0; i<n; i++){
-        html += "<tr><td>"+puntajes[i].nombreEstudiante+"</td>";
-        html += "<td>"+puntajes[i].puntos+"</td></tr>";
-    }
-    $('.ranking').html(html);
-})
 
 socket.on('dataCharts', function (respuestasQuizJSON,respuestaCorrectaPapu) {
     

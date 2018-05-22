@@ -329,16 +329,20 @@ io.on('connection', function (socket) {
     })
 
     socket.on('respuestaUser', function (data, respuestaElejida, buttonclicksnumber) {
+        var correctAnswer = preguntasQuizJSON.preguntas[buttonclicksnumber].respuestaCorrecta;
+        var puntosSacados = 0;
+        if (correctAnswer == respuestaElejida) {
+            puntosSacados = parseInt(preguntasQuizJSON.preguntas[buttonclicksnumber].puntosQuizz)
+        }
 
         respuestasQuizJSON.respuestas.push({
             nombreEstudiante: data.nombre,
             filaEstudiante: data.fila - 1,
             columnaEstudiante: data.columna - 1,
-            respuestaElejida: respuestaElejida
+            respuestaElejida: respuestaElejida,
+            puntos: puntosSacados
         })
-        var respuestaCorrectaPapu = preguntasQuizJSON.preguntas[buttonclicksnumber].respuestaCorrecta
 
-        io.sockets.emit('dataCharts', respuestasQuizJSON, respuestaCorrectaPapu);
     })
 
     socket.on('nextQuestionQuiz', function (buttonclicksnumber) {
@@ -372,55 +376,55 @@ io.on('connection', function (socket) {
     })
     socket.on('NecesitoPuntajes', function (buttonclicksnumber) {
 
-        buttonclicksnumber++;
-        var puntajes = puntajeUsers.puntajes;
-        if (buttonclicksnumber - 1 <= preguntasQuizJSON.preguntas.length - 1) {
-            var correctAnswer = preguntasQuizJSON.preguntas[buttonclicksnumber - 1].respuestaCorrecta;
-            for (var i = 0; respuestasQuizJSON.respuestas.length > i; i += 1) {
-                var jsonStudent = {
-                    nombreEstudiante: null,
-                    puntos: null
-                }
+        console.log("Este es el JSON de las respuestas de los estudiantes")
+        console.log(util.inspect(respuestasQuizJSON, false, null))
+        var JSONPuntajes = [];
+        Array.prototype.push.apply(JSONPuntajes, respuestasRevisadas.respuestas);
+        Array.prototype.push.apply(JSONPuntajes, respuestasQuizJSON.respuestas);
+        var puntajes = [];
 
-                if (respuestasQuizJSON.respuestas[i].respuestaElejida == correctAnswer) {
-                    jsonStudent.nombreEstudiante = respuestasQuizJSON.respuestas[i].nombreEstudiante
-                    jsonStudent.puntos = preguntasQuizJSON.preguntas[buttonclicksnumber - 1].puntosQuizz
-                    puntajes.push(jsonStudent);
-                }
+        // Creamos un objeto para puntos
+        for (var i = 0; i < JSONPuntajes.length; i++) {
+            var jsonStudent = {
+                nombreEstudiante: JSONPuntajes[i].nombreEstudiante,
+                puntos: JSONPuntajes[i].puntos
             }
-
-            // ORGANIZAR Y SUMAR LOS PUNTAJES
-            var puntajesOrganizado = [];
-            puntajesOrganizado.push(puntajes[0])
-            // Pasamos todo a un vector sin repetimos
-            for (var i = 1; i < puntajes.length; i++) {
-                if (puntajesOrganizado.find(x => x.nombreEstudiante === puntajes[i].nombreEstudiante)) {
-                    puntajesOrganizado.find(x => x.nombreEstudiante === puntajes[i].nombreEstudiante).puntos += parseInt(puntajes[i].puntos);
-
-                } else {
-
-                    puntajes[i].puntos = parseInt(puntajes[i].puntos)
-                    puntajesOrganizado.push(puntajes[i])
-                }
-            }
-
-            // Lo orgnizamos forma ascendente
-            for (var i = 0; i < puntajesOrganizado.length; i += 1) {
-                for (var j = i + 1; j < puntajesOrganizado.length; j++) {
-                    if (puntajesOrganizado[i].puntos < puntajesOrganizado[j].puntos) {
-                        var aux = puntajesOrganizado[i];
-                        puntajesOrganizado[i] = puntajesOrganizado[j];
-                        puntajesOrganizado[j] = aux;
-                    }
-                }
-            }
-            puntajes = puntajesOrganizado;
-
-
-
-            io.sockets.emit('TomaLosPuntajes', puntajes);
-
+            puntajes.push(jsonStudent);
         }
+
+        var puntajesOrganizado = [];
+        puntajesOrganizado.push(puntajes[0])
+
+        // Pasamos todo a un vector sin repetimos
+        for (var i = 1; i < puntajes.length; i++) {
+            if (puntajesOrganizado.find(x => x.nombreEstudiante === puntajes[i].nombreEstudiante)) {
+                puntajesOrganizado.find(x => x.nombreEstudiante === puntajes[i].nombreEstudiante).puntos += parseInt(puntajes[i].puntos);
+            } else {
+                puntajes[i].puntos = parseInt(puntajes[i].puntos)
+                puntajesOrganizado.push(puntajes[i])
+            }
+        }
+
+
+        // Lo orgnizamos forma ascendente
+        for (var i = 0; i < puntajesOrganizado.length; i += 1) {
+            for (var j = i + 1; j < puntajesOrganizado.length; j++) {
+                if (puntajesOrganizado[i].puntos < puntajesOrganizado[j].puntos) {
+                    var aux = puntajesOrganizado[i];
+                    puntajesOrganizado[i] = puntajesOrganizado[j];
+                    puntajesOrganizado[j] = aux;
+                }
+            }
+        }
+
+        puntajes = puntajesOrganizado;
+        console.log("Puntajes organizados")
+        console.log(util.inspect(puntajes, false, null))
+
+        var respuestaCorrectaPapu = preguntasQuizJSON.preguntas[buttonclicksnumber].respuestaCorrecta
+        io.sockets.emit('dataCharts', respuestasQuizJSON, respuestaCorrectaPapu);
+
+        io.sockets.emit('TomaLosPuntajes', puntajes);
 
     })
 
@@ -435,7 +439,8 @@ io.on('connection', function (socket) {
         // Pasamos todo a un vector sin repetimos
         for (var i = 1; i < puntajes.length; i++) {
             if (puntajesOrganizado.find(x => x.nombreEstudiante === puntajes[i].nombreEstudiante)) {
-                puntajesOrganizado.find(x => x.nombreEstudiante === puntajes[i].nombreEstudiante).puntos += parseInt(puntajes[i].puntos);
+                var puntoAnterior = parseInt(puntajesOrganizado.find(x => x.nombreEstudiante === puntajes[i].nombreEstudiante).puntos);
+                puntajesOrganizado.find(x => x.nombreEstudiante === puntajes[i].nombreEstudiante).puntos = parseInt(puntoAnterior) + parseInt(puntajes[i].puntos);
 
             } else {
 
@@ -496,7 +501,7 @@ io.on('connection', function (socket) {
 
     socket.on('newImageProfile', function (data, fila, columna) {
         //io.sockets.emit('newImageProfile', data, arrayImage[arrayImage.length - 1], data.fila - 1, data.columna - 1);
-        console.log(util.inspect(fullData, false, null))
+
         if (data.rol == "Profesor") {
             fullData.profesor.avatar = arrayImage[arrayImage.length - 1];
         } else {
@@ -584,7 +589,7 @@ io.on('connection', function (socket) {
         })
 
         socket.to(fullData.profesor.id).emit('newMessageImageGrupalRe', data, arrayImage[arrayImage.length - 1], color, messagePosition2.p);
-        console.log(util.inspect(fullDataGroups, false, null))
+        //  console.log(util.inspect(fullDataGroups, false, null))
         fullDataGroups.groups.forEach(function (element) {
             if (element.color == color) {
                 console.log("entro Y")
@@ -633,7 +638,7 @@ io.on('connection', function (socket) {
         })
 
         socket.to(fullData.profesor.id).emit('newMessageVideoGrupalRe', data, arrayImage[arrayImage.length - 1], color, messagePosition2.p);
-        console.log(util.inspect(fullDataGroups, false, null))
+        // console.log(util.inspect(fullDataGroups, false, null))
         fullDataGroups.groups.forEach(function (element) {
             if (element.color == color) {
                 console.log("entro Y")
