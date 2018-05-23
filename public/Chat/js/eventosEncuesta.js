@@ -434,10 +434,10 @@ $(document).on('click', '.startQuizz', function () {
         alert('No has creado ninguna pregunta')
     } else {
         socket.emit('check3users');
-        socket.on('check3userResponse',function(is3userconnected){
-            if(is3userconnected){
+        socket.on('check3userResponse', function (is3userconnected) {
+            if (is3userconnected) {
                 socket.emit('starQuiz')
-            }else{
+            } else {
                 Materialize.Toast.removeAll();
                 Materialize.toast('Se necesitan al menos 3 estudiantes logeados para comenzar el quiz', 3000)
             }
@@ -526,9 +526,9 @@ function listQuestions(tituloQuizJSON, preguntasQuizJSON, iterateNumber) {
             })
             if (selectTimeTotal >= 100) {
                 console.log("entro al clearinterval")
-   
+
                 console.log('vale mia la respuesta es esta' + respuestaElejida);
-                socket.emit('respuestaUser', datatoSend, respuestaElejida,iterateNumber)
+                socket.emit('respuestaUser', datatoSend, respuestaElejida, iterateNumber)
                 workerTimer.clearInterval(handlingTime);
             }
 
@@ -611,7 +611,7 @@ function listQuestions(tituloQuizJSON, preguntasQuizJSON, iterateNumber) {
                 'width': selectTimeTotal + '%'
             })
             if (selectTimeTotal >= 100) {
-               tiempoparaSocket = true;
+                tiempoparaSocket = true;
                 workerTimer.clearInterval(handlingTime);
             }
 
@@ -623,34 +623,34 @@ function listQuestions(tituloQuizJSON, preguntasQuizJSON, iterateNumber) {
             }
         }, 100)
 
-        var intervaloTest = workerTimer.setInterval(function(){
-            setTimeout(function(){
-                if(tiempoparaSocket){
+        var intervaloTest = workerTimer.setInterval(function () {
+            setTimeout(function () {
+                if (tiempoparaSocket) {
                     console.log("Voy a enviar un socket NecesitoPuntajes con el profesor")
                     socket.emit('NecesitoPuntajes', buttonclicksnumber);
-                    tiempoparaSocket= false;
+                    tiempoparaSocket = false;
                     workerTimer.clearInterval(intervaloTest);
                 }
-            },1000)
-        
-        },100)
+            }, 1000)
+
+        }, 100)
     }
 }
-socket.on('TomaLosPuntajes', function(puntajes){
+socket.on('TomaLosPuntajes', function (puntajes) {
     $('.ranking').html("");
     console.log("Llegaron los puntajes actualizados para el top score")
     console.log(puntajes);
 
     var html = "<tbody>";
     var n = 5;
-    if(n > puntajes.length){
+    if (n > puntajes.length) {
         n = puntajes.length;
     }
-    for(var i=0; i<n; i++){
-        html += "<tr><td>"+puntajes[i].nombreEstudiante+"</td>";
-        html += "<td>"+puntajes[i].puntos+"</td></tr>";
+    for (var i = 0; i < n; i++) {
+        html += "<tr><td>" + puntajes[i].nombreEstudiante + "</td>";
+        html += "<td>" + puntajes[i].puntos + "</td></tr>";
     }
-    html+="</tbody>"
+    html += "</tbody>"
     console.log("sin modificaar:")
     console.log($('.ranking').html())
     $('.ranking').html(html);
@@ -677,19 +677,19 @@ socket.on('finishingQuiz', function (puntajes) {
     $('.nextQuestionQuizz').addClass('quizfinished');
     $('.nextQuestionQuizz').removeClass('nextQuestionQuizz');
     $('.cardGrilla').attr('style', 'background-color: #eee !important');
-    
+
 })
 
 socket.on('showChartsResponse', function (puntajes) {
     var variablefinal;
     if (datatoSend.rol == "Estudiante") {
-        var dataFinalCharts =  `<div class="row">
+        var dataFinalCharts = `<div class="row">
                                     <img width="300" src="https://i.pinimg.com/originals/69/e0/6a/69e06a096ec5e14eefa1b7ff72fddf7f.gif"/>
                                 </div>
                                 <div class="row">
                                     <canvas id="densityChart2" width="50" height="22"></canvas>
                                 </div>`
-                                
+
         $('.cardGrilla').html(dataFinalCharts)
         $('.cardGrilla').attr('style', 'background-color: #f7f7f7 !important');
         variablefinal = 'densityChart2'

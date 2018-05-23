@@ -113,9 +113,14 @@
 		startingTop: '4%', // Starting top style attribute
 		endingTop: '10%', // Ending top style attribute
 		ready: function(modal, trigger) { // Callback for Modal open. Modal and trigger parameters available.
-			
+			var checkboxes = $("input[type='checkbox']"),
+			submitButt = $(".submitPreguntaButton");
+			submitButt.attr("disabled", !checkboxes.is(":checked"));
 		},
-		complete: function() {  } // Callback for Modal close
+		complete: function() {  
+			$('input[type=text].invalid:not(.browser-default)').attr('style', 'border-bottom: 1px solid #000 !important; box-shadow: none !important');
+			$('input[type=text].valid:not(.browser-default)').attr('style', 'border-bottom: 1px solid #000 !important; box-shadow: none !important');
+		} // Callback for Modal close
 	  }
 	);
 
