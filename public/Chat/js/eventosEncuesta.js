@@ -153,6 +153,7 @@ socket.on('newEncuesta', function (data, respuesta) {
     }
 
     if (datatoSend.rol == "Estudiante") {
+        $('.botonCrearQuiz').addClass('disabled');
         console.log('DATAAAAAAA')
         console.log(data);
         if (data == '') {
