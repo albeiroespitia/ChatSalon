@@ -321,7 +321,7 @@ function selCerrar() {
                             <h5 class="center">Añadir</h5>
                         </b>
                       </div>
-                        <a onClick="selVideo();" class="col s5 offset-s1 waves-effect waves-light btn-large">
+                        <a onClick="selVideo();" class="col l8 pull-l2 push-l2 waves-effect waves-light btn-large">
                         <i class="material-icons left">ondemand_video</i>VIDEO</a>`;
     $('.adjArchivo').html(htmlNormal);
 }
@@ -417,6 +417,7 @@ $('.formCrearPregunta').submit(function (e) {
     $('#respuesta2').prop('checked', false);
     $('#respuesta3').prop('checked', false);
     $('#respuesta4').prop('checked', false);
+    selCerrar()
 })
 
 socket.on('nuevaPregunta', function (preguntasArr) {
@@ -457,7 +458,47 @@ socket.on('startQuizResponse', function (tituloQuizJSON, preguntasQuizJSON) {
     buttonBackup = $('.comenzarQuizzSection').html();
     tituloQuizJSONlocal = tituloQuizJSON;
     preguntasQuizJSONlocal = preguntasQuizJSON;
-    listQuestions(tituloQuizJSON, preguntasQuizJSON, 0);
+    if(preguntasQuizJSONlocal[buttonclicksnumber].videolink){
+        if(datatoSend.rol == "Estudiante"){
+            var startTimeLocal = preguntasQuizJSONlocal[buttonclicksnumber].startVideo;
+            var endTimeLocal = preguntasQuizJSONlocal[buttonclicksnumber].endVideo;
+            var startDate = new Date(2018,11,24,10,startTimeLocal.split(':')[0],startTimeLocal.split(':')[1],0)
+            var endDate = new Date(2018,11,24,10,endTimeLocal.split(':')[0],endTimeLocal.split(':')[1],0)
+            var seconds = (endDate.getTime() - startDate.getTime()) / 1000;
+            var startTimeSeconds = (parseInt(startTimeLocal.split(':')[0])*60)+(parseInt(startTimeLocal.split(':')[1]))
+            var endTimeSeconds = (parseInt(endTimeLocal.split(':')[0])*60)+(parseInt(endTimeLocal.split(':')[1]))
+            var videoLinkEmbbed = preguntasQuizJSONlocal[buttonclicksnumber].videolink.split('?v=')[1]
+            setTimeout(function(){
+                $('.cardGrilla').removeClass('valign-wrapper');
+                listQuestions(tituloQuizJSONlocal, preguntasQuizJSONlocal, 0)
+            },(seconds+1)*1000)
+            $('.cardGrilla').attr('style', 'background-color: #343436 !important');
+            $('.cardGrilla').addClass('valign-wrapper');
+            $('.cardGrilla').html(`<iframe width="420" height="315" src="http://www.youtube.com/embed/${videoLinkEmbbed}?autoplay=1&start=${startTimeSeconds}&end=${endTimeSeconds}&controls=0&disablekb=1&modestbranding=1&rel=0&showinfo=0&iv_load_policy=3" frameborder="0" allowfullscreen></iframe>`)
+        
+        }else{
+            var startTimeLocal = preguntasQuizJSONlocal[buttonclicksnumber].startVideo;
+            var endTimeLocal = preguntasQuizJSONlocal[buttonclicksnumber].endVideo;
+            var startDate = new Date(2018,11,24,10,startTimeLocal.split(':')[0],startTimeLocal.split(':')[1],0)
+            var endDate = new Date(2018,11,24,10,parseInt(endTimeLocal.split(':')[0]),parseInt(endTimeLocal.split(':')[1]),0)
+            var seconds = (endDate.getTime() - startDate.getTime()) / 1000;
+            var startTimeSeconds = (parseInt(startTimeLocal.split(':')[0])*60)+(parseInt(startTimeLocal.split(':')[1]))
+            var endTimeSeconds = (parseInt(endTimeLocal.split(':')[0])*60)+(parseInt(endTimeLocal.split(':')[1]))
+            var videoLinkEmbbed = preguntasQuizJSONlocal[buttonclicksnumber].videolink.split('?v=')[1]
+            setTimeout(function(){
+                $('.switchquizz').removeClass('valign-wrapper');
+                listQuestions(tituloQuizJSONlocal, preguntasQuizJSONlocal, 0)
+            },(seconds+1)*1000)
+            $('.comenzarQuizzSection').html(`<center>
+                                            <button href="#!" class="modal-action waves-effect waves-green btn-large disabled nextQuestionQuizz">Siguiente</button>
+                                        </center>`);
+            $('.switchquizz').attr('style', 'background-color: #343436 !important');
+            $('.switchquizz').addClass('valign-wrapper');
+            $('.switchquizz').html(`<iframe width="420" height="315" src="http://www.youtube.com/embed/${videoLinkEmbbed}?autoplay=1&start=${startTimeSeconds}&end=${endTimeSeconds}&controls=0&disablekb=1&modestbranding=1&rel=0&showinfo=0&iv_load_policy=3" frameborder="0" allowfullscreen></iframe>`)
+        }
+    }else{
+        listQuestions(tituloQuizJSONlocal, preguntasQuizJSONlocal, 0)
+    }
 })
 
 
@@ -668,7 +709,42 @@ $(document).on('click', '.nextQuestionQuizz', function () {
 })
 
 socket.on('nextQuestionQuizResponse', function (buttonclicksnumber) {
-    listQuestions(tituloQuizJSONlocal, preguntasQuizJSONlocal, buttonclicksnumber)
+    if(preguntasQuizJSONlocal[buttonclicksnumber].videolink){
+        if(datatoSend.rol == "Estudiante"){
+            var startTimeLocal = preguntasQuizJSONlocal[buttonclicksnumber].startVideo;
+            var endTimeLocal = preguntasQuizJSONlocal[buttonclicksnumber].endVideo;
+            var startDate = new Date(2018,11,24,10,startTimeLocal.split(':')[0],startTimeLocal.split(':')[1],0)
+            var endDate = new Date(2018,11,24,10,endTimeLocal.split(':')[0],endTimeLocal.split(':')[1],0)
+            var seconds = (endDate.getTime() - startDate.getTime()) / 1000;
+            var startTimeSeconds = (parseInt(startTimeLocal.split(':')[0])*60)+(parseInt(startTimeLocal.split(':')[1]))
+            var endTimeSeconds = (parseInt(endTimeLocal.split(':')[0])*60)+(parseInt(endTimeLocal.split(':')[1]))
+            var videoLinkEmbbed = preguntasQuizJSONlocal[buttonclicksnumber].videolink.split('?v=')[1]
+            setTimeout(function(){
+                $('.cardGrilla').removeClass('valign-wrapper');
+                listQuestions(tituloQuizJSONlocal, preguntasQuizJSONlocal, buttonclicksnumber)
+            },(seconds+1)*1000)
+            $('.cardGrilla').addClass('valign-wrapper');
+            $('.cardGrilla').html(`<iframe width="420" height="315" src="http://www.youtube.com/embed/${videoLinkEmbbed}?autoplay=1&start=${startTimeSeconds}&end=${endTimeSeconds}&controls=0&disablekb=1&modestbranding=1&rel=0&showinfo=0&iv_load_policy=3" frameborder="0" allowfullscreen></iframe>`)
+        
+        }else{
+            var startTimeLocal = preguntasQuizJSONlocal[buttonclicksnumber].startVideo;
+            var endTimeLocal = preguntasQuizJSONlocal[buttonclicksnumber].endVideo;
+            var startDate = new Date(2018,11,24,10,startTimeLocal.split(':')[0],startTimeLocal.split(':')[1],0)
+            var endDate = new Date(2018,11,24,10,parseInt(endTimeLocal.split(':')[0]),parseInt(endTimeLocal.split(':')[1]),0)
+            var seconds = (endDate.getTime() - startDate.getTime()) / 1000;
+            var startTimeSeconds = (parseInt(startTimeLocal.split(':')[0])*60)+(parseInt(startTimeLocal.split(':')[1]))
+            var endTimeSeconds = (parseInt(endTimeLocal.split(':')[0])*60)+(parseInt(endTimeLocal.split(':')[1]))
+            var videoLinkEmbbed = preguntasQuizJSONlocal[buttonclicksnumber].videolink.split('?v=')[1]
+            setTimeout(function(){
+                $('.switchquizz').removeClass('valign-wrapper');
+                listQuestions(tituloQuizJSONlocal, preguntasQuizJSONlocal, buttonclicksnumber)
+            },(seconds+1)*1000)
+            $('.switchquizz').addClass('valign-wrapper');
+            $('.switchquizz').html(`<iframe width="420" height="315" src="http://www.youtube.com/embed/${videoLinkEmbbed}?autoplay=1&start=${startTimeSeconds}&end=${endTimeSeconds}&controls=0&disablekb=1&modestbranding=1&rel=0&showinfo=0&iv_load_policy=3" frameborder="0" allowfullscreen></iframe>`)
+        }
+    }else{
+        listQuestions(tituloQuizJSONlocal, preguntasQuizJSONlocal, buttonclicksnumber)
+    }
 })
 
 socket.on('finishingQuiz', function (puntajes) {
