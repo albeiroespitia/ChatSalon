@@ -814,3 +814,7 @@ div#wave {
 #js-seconds{
     margin-left: 50vh;
 }
+
+.opcionContentOverflow{
+    overflow-y: hidden !important;
+}
