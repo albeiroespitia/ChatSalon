@@ -328,6 +328,10 @@ io.on('connection', function (socket) {
         io.sockets.emit('startQuizResponse', tituloQuizJSON, preguntasQuizJSON.preguntas);
     })
 
+    socket.on('countdownStudent', function () {
+        io.sockets.emit('countdownStudentResponse');
+    })
+
     socket.on('respuestaUser', function (data, respuestaElejida, iterateNumber) {
         var ultimo = parseInt(preguntasQuizJSON.preguntas.length);
         console.log("Tamaño de preguntas: "+ultimo)
