@@ -334,8 +334,8 @@ io.on('connection', function (socket) {
 
     socket.on('respuestaUser', function (data, respuestaElejida, iterateNumber) {
         var ultimo = parseInt(preguntasQuizJSON.preguntas.length);
-        console.log("Tamaño de preguntas: "+ultimo)
-        console.log("INDEX DE LA PREGUNTA: "+iterateNumber)
+        console.log("Tamaño de preguntas: " + ultimo)
+        console.log("INDEX DE LA PREGUNTA: " + iterateNumber)
         var correctAnswer = preguntasQuizJSON.preguntas[iterateNumber].respuestaCorrecta;
         var puntosSacados = 0;
         if (correctAnswer == respuestaElejida) {
@@ -725,6 +725,10 @@ io.on('connection', function (socket) {
         //console.log(util.inspect(encuestasInfo.encuestas, false, null));
     })
 
+    socket.on('MostrarEmoji', function (nombre, link) {
+        io.sockets.emit('MostrarEmoji', nombre, link);
+    })
+
     socket.on('sendEncuestaResponse', function (idEncuesta, response, person, option) {
         encuestasInfo.encuestas.push({
             id: idEncuesta,
@@ -741,6 +745,7 @@ io.on('connection', function (socket) {
     socket.on('IniciarCanvasExistentes', function () {
         socket.emit('IniciarCanvasExistentes', encuestaData.length, respuesta);
     })
+
 
 
     socket.on('sendGroupData', function (data) {

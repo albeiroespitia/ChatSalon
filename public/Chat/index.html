@@ -427,6 +427,18 @@
 		</a>
 	</div>
 
+	<!-- Boton emojis -->
+	<div class="fixed-action-btn horizontal botonEmojis">
+        <input type="image" class="btn-floating btn-large yellow darken-1" src="Chat/emojis/default.svg" />
+      
+        <ul>
+          <li><input id="emojiLike" type="image" class="btn-floating blue darken-1" src="Chat/emojis/like.gif"/></li>
+          <li><input id="emojiRisa" type="image" class="btn-floating yellow darken-1" src="Chat/emojis/risa.gif"/></li>
+          <li><input id="emojiAngry" type="image" class="btn-floating red darken-1" src="Chat/emojis/angry.gif"/></li>
+          <li><input id="emojiLlorar" type="image" class="btn-floating yellow darken-1" src="Chat/emojis/llorar.gif"/></li>
+        </ul>
+      </div>
+
 	<!-- Modal mensaje privado -->
 	<div id="modalPv2" class="modal">
 		<div class="modal-content">
@@ -659,6 +671,8 @@
 	<script src="Chat/js/timer-worker.js"></script>
 	<script src="Chat/js/worker-timer.js"></script>
 	<script src="Chat/js/eventosEncuesta.js"></script>
+	<script src="https://unpkg.com/floating.js"></script>
+	<script src="Chat/js/emojis.js"></script>
 </body>
 
 </html>

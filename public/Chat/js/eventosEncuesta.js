@@ -517,6 +517,7 @@ socket.on('startQuizResponse', function (tituloQuizJSON, preguntasQuizJSON) {
 
 
 function listQuestions(tituloQuizJSON, preguntasQuizJSON, iterateNumber) {
+
     if (datatoSend.rol == "Estudiante") {
         var htmlPreguntaQuiz = `<div class="progressbar"></div>
                             <div class="row">

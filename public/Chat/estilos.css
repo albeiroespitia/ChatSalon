@@ -576,7 +576,7 @@ div#wave {
     transition: all 300ms ease;
     font-size: 1.5em;
     user-select: none;
-    color: #007e90;
+    color: #ecf0f1;
 }
 
 #densityChart{
@@ -592,6 +592,19 @@ div#wave {
     transition: all 300ms ease-in-out;
     font-weight: normal;
     color: white;
+}
+.opcionAQuizz{
+    background-color: #c0392b !important;
+}
+.opcionBQuizz{
+    background-color: #8e44ad !important;
+}
+.opcionCQuizz{
+    background-color: #f1c40f !important;
+}
+.opcionDQuizz{
+    background-color: #27ae60 !important;
+
 }
 
 .middle .opcionAQuizz span:before {
@@ -817,4 +830,25 @@ div#wave {
 
 .opcionContentOverflow{
     overflow-y: hidden !important;
+}
+
+.cardEmoji {
+    display: inline-block;
+    height: auto !important;
+    font-size: 18px !important;
+    font-weight: 900;
+    color: rgba(0,0,0,0.6);
+    line-height: 32px;
+    padding: 0 12px;
+    border-radius: 16px;
+    background-color: #ffffff00  !important; 
+    margin-bottom: 5px;
+    margin-right: 5px;
+}
+.cardEmoji>img {
+    float: left;
+    margin: 0 8px 0 -12px;
+    height: 80px !important;
+    width: 80px !important;
+    border-radius: 0% !important;
 }
