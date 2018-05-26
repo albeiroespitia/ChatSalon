@@ -57,8 +57,12 @@ canvas {
 
 #modal4 {
     max-height: none !important;
-    height: 88vh !important;
-    top: 10% !important;
+    height: 95vh !important;
+    top: 2% !important;
+}
+
+#grafica0{
+    margin: auto !important;
 }
 
 .cardInput {
@@ -813,6 +817,10 @@ div#wave {
     transform: translate(-50%, -50%);
     visibility: hidden;
     z-index: 4000;
+}
+
+body{
+    overflow-x: hidden;
 }
 
 

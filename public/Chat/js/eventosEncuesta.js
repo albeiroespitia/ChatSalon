@@ -150,8 +150,9 @@ socket.on('newEncuesta', function (data, respuesta) {
 
     if (data != '') {
         $('.botonRespuestaEncuestas').css("cssText", "visibility: visible !important;");
+        $('.botonEmojis').attr('style','right: 100px !important')
     }
-
+    ///
     if (datatoSend.rol == "Estudiante") {
         $('.botonCrearQuiz').addClass('disabled');
         console.log('DATAAAAAAA')
@@ -488,7 +489,7 @@ socket.on('startQuizResponse', function (tituloQuizJSON, preguntasQuizJSON) {
             }, (seconds + 1) * 1000)
             $('.cardGrilla').attr('style', 'background-color: #343436 !important');
             $('.cardGrilla').addClass('valign-wrapper');
-            $('.cardGrilla').html(`<iframe width="420" height="315" src="http://www.youtube.com/embed/${videoLinkEmbbed}?autoplay=1&start=${startTimeSeconds}&end=${endTimeSeconds}&controls=0&disablekb=1&modestbranding=1&rel=0&showinfo=0&iv_load_policy=3" frameborder="0" allowfullscreen></iframe>`)
+            $('.cardGrilla').html(`<iframe width="420" height="315" src="https://www.youtube.com/embed/${videoLinkEmbbed}?autoplay=1&start=${startTimeSeconds}&end=${endTimeSeconds}&controls=0&disablekb=1&modestbranding=1&rel=0&showinfo=0&iv_load_policy=3" frameborder="0" allowfullscreen></iframe>`)
 
         } else {
             var startTimeLocal = preguntasQuizJSONlocal[buttonclicksnumber].startVideo;
