@@ -790,6 +790,31 @@ io.on('connection', function (socket) {
                 [-1, -1, -1, -1, -1, -1, -1],
             ];
 
+            preguntasQuizJSON = {
+                preguntas : []
+            }
+
+            respuestasQuizJSON = {
+                respuestas : []
+            }
+
+            respuestasRevisadas = {
+                respuestas : []
+            }
+
+            tituloQuizJSON = {
+                titulo : null,
+                descripcion : null,
+                video : null
+            }
+
+            puntajeUsers = {
+                puntajes: []
+            }
+            
+            
+            
+
             fullDataGroups = {
                 groups: []
             }

@@ -509,7 +509,7 @@ socket.on('startQuizResponse', function (tituloQuizJSON, preguntasQuizJSON) {
                                         </center>`);
             $('.switchquizz').attr('style', 'background-color: #343436 !important');
             $('.switchquizz').addClass('valign-wrapper');
-            $('.switchquizz').html(`<iframe width="420" height="315" src="http://www.youtube.com/embed/${videoLinkEmbbed}?autoplay=1&start=${startTimeSeconds}&end=${endTimeSeconds}&controls=0&disablekb=1&modestbranding=1&rel=0&showinfo=0&iv_load_policy=3" frameborder="0" allowfullscreen></iframe>`)
+            $('.switchquizz').html(`<iframe width="420" height="315" src="https://www.youtube.com/embed/${videoLinkEmbbed}?autoplay=1&start=${startTimeSeconds}&end=${endTimeSeconds}&controls=0&disablekb=1&modestbranding=1&rel=0&showinfo=0&iv_load_policy=3" frameborder="0" allowfullscreen></iframe>`)
         }
     } else {
         listQuestions(tituloQuizJSONlocal, preguntasQuizJSONlocal, 0)
@@ -525,7 +525,7 @@ function listQuestions(tituloQuizJSON, preguntasQuizJSON, iterateNumber) {
                                 <h5 class="center white-text flow-text">${preguntasQuizJSON[iterateNumber].preguntaQuiz}</h5>
                             </div>
                             <div class="row">
-                                <!--	<iframe width="620" height="215" src="http://www.youtube.com/embed/0Bmhjf0rKe8?start=11&end=14" frameborder="0" allow="autoplay; encrypted-media"
+                                <!--	<iframe width="620" height="215" src="https://www.youtube.com/embed/0Bmhjf0rKe8?start=11&end=14" frameborder="0" allow="autoplay; encrypted-media"
                                     allowfullscreen></iframe> -->
                             </div>
                             <div class="middle">
@@ -609,7 +609,7 @@ function listQuestions(tituloQuizJSON, preguntasQuizJSON, iterateNumber) {
                                 <h5 class="center white-text flow-text">${preguntasQuizJSON[iterateNumber].preguntaQuiz}</h5>
                             </div>
                             <div class="row">
-                                <!--	<iframe width="620" height="215" src="http://www.youtube.com/embed/0Bmhjf0rKe8?start=11&end=14" frameborder="0" allow="autoplay; encrypted-media"
+                                <!--	<iframe width="620" height="215" src="https://www.youtube.com/embed/0Bmhjf0rKe8?start=11&end=14" frameborder="0" allow="autoplay; encrypted-media"
                                     allowfullscreen></iframe> -->
                             </div>
                             <div class="middle">
@@ -740,7 +740,7 @@ socket.on('nextQuestionQuizResponse', function (buttonclicksnumber) {
                 listQuestions(tituloQuizJSONlocal, preguntasQuizJSONlocal, buttonclicksnumber)
             }, (seconds + 1) * 1000)
             $('.cardGrilla').addClass('valign-wrapper');
-            $('.cardGrilla').html(`<iframe width="420" height="315" src="http://www.youtube.com/embed/${videoLinkEmbbed}?autoplay=1&start=${startTimeSeconds}&end=${endTimeSeconds}&controls=0&disablekb=1&modestbranding=1&rel=0&showinfo=0&iv_load_policy=3" frameborder="0" allowfullscreen></iframe>`)
+            $('.cardGrilla').html(`<iframe width="420" height="315" src="https://www.youtube.com/embed/${videoLinkEmbbed}?autoplay=1&start=${startTimeSeconds}&end=${endTimeSeconds}&controls=0&disablekb=1&modestbranding=1&rel=0&showinfo=0&iv_load_policy=3" frameborder="0" allowfullscreen></iframe>`)
 
         } else {
             var startTimeLocal = preguntasQuizJSONlocal[buttonclicksnumber].startVideo;
@@ -756,7 +756,7 @@ socket.on('nextQuestionQuizResponse', function (buttonclicksnumber) {
                 listQuestions(tituloQuizJSONlocal, preguntasQuizJSONlocal, buttonclicksnumber)
             }, (seconds + 1) * 1000)
             $('.switchquizz').addClass('valign-wrapper');
-            $('.switchquizz').html(`<iframe width="420" height="315" src="http://www.youtube.com/embed/${videoLinkEmbbed}?autoplay=1&start=${startTimeSeconds}&end=${endTimeSeconds}&controls=0&disablekb=1&modestbranding=1&rel=0&showinfo=0&iv_load_policy=3" frameborder="0" allowfullscreen></iframe>`)
+            $('.switchquizz').html(`<iframe width="420" height="315" src="https://www.youtube.com/embed/${videoLinkEmbbed}?autoplay=1&start=${startTimeSeconds}&end=${endTimeSeconds}&controls=0&disablekb=1&modestbranding=1&rel=0&showinfo=0&iv_load_policy=3" frameborder="0" allowfullscreen></iframe>`)
         }
     } else {
         listQuestions(tituloQuizJSONlocal, preguntasQuizJSONlocal, buttonclicksnumber)
